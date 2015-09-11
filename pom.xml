@@ -11,16 +11,19 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <javax.persistence.version>1.0.2</javax.persistence.version>
         <spring.version>4.2.1.RELEASE</spring.version>
         <spring.data.jpa.version>1.9.0.RELEASE</spring.data.jpa.version>
+        <spring.boot.version>1.2.5.RELEASE</spring.boot.version>
+        <commons-lang3.version>3.3.2</commons-lang3.version>
+        <assertj.version>3.1.0</assertj.version>
+        <hibernate.version>4.3.10.Final</hibernate.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>1.2.5.RELEASE</version>
+            <version>${spring.boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -48,15 +51,24 @@
             <version>${spring.data.jpa.version}</version>
         </dependency>
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>${javax.persistence.version}</version>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
         </dependency>
-
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.2</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
         </dependency>
 
         <dependency>
@@ -69,6 +81,18 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.186</version>
             <scope>test</scope>
         </dependency>
 
@@ -88,7 +112,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <includes>
-                        <include>**/*Tests.java</include>
+                        <include>**/*Test.java</include>
                     </includes>
                 </configuration>
             </plugin>
