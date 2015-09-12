@@ -33,6 +33,21 @@ public class Department implements Serializable {
     public Department() {
     }
 
+    /**
+     * Build method for a Department
+     * @param id
+     * @param name
+     * @param labelId
+     * @return
+     */
+    public static Department buidl(Long id, String name, String labelId) {
+        Department d = new Department();
+        d.id = id;
+        d.name = name;
+        d.labelId = labelId;
+        return d;
+    }
+
     public Long getId() {
         return id;
     }

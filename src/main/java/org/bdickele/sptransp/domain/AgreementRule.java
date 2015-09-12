@@ -25,7 +25,7 @@ public class AgreementRule implements Serializable {
 
     @Version
     @Column(name = "VERSION")
-    private Long version;
+    private Integer version;
 
     @Column(name = "DELETED")
     private boolean deleted;
@@ -60,11 +60,11 @@ public class AgreementRule implements Serializable {
         return id;
     }
 
-    public Long getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(Long version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 

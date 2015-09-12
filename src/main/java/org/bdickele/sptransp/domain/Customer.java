@@ -35,12 +35,14 @@ public class Customer implements Serializable {
 
     /**
      * Build method
+     * @param id
      * @param uid
      * @param fullName
      * @return New Customer
      */
-    public static Customer build(String uid, String fullName) {
+    public static Customer build(Long id, String uid, String fullName) {
         Customer c = new Customer();
+        c.id = id;
         c.uid = uid;
         c.fullName = fullName;
         return c;

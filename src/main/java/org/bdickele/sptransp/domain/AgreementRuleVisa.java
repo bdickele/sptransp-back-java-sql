@@ -35,6 +35,23 @@ public class AgreementRuleVisa implements Serializable {
     private Seniority seniority;
 
 
+    /**
+     * Build method for an agreement visa
+     * @param id
+     * @param rank
+     * @param department
+     * @param seniority
+     * @return
+     */
+    public static AgreementRuleVisa build(Long id, Integer rank, Department department, Seniority seniority) {
+        AgreementRuleVisa v = new AgreementRuleVisa();
+        v.id = id;
+        v.rank = rank;
+        v.department = department;
+        v.seniority = seniority;
+        return v;
+    }
+
     public Long getId() {
         return id;
     }

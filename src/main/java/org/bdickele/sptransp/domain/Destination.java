@@ -34,6 +34,23 @@ public class Destination implements Serializable {
     public Destination() {
     }
 
+    /**
+     * Build method for a destination
+     * @param id
+     * @param code3
+     * @param name
+     * @param labelId
+     * @return
+     */
+    public static Destination build(Long id, String code3, String name, String labelId) {
+        Destination d = new Destination();
+        d.id = id;
+        d.code3 = code3;
+        d.name = name;
+        d.labelId = labelId;
+        return d;
+    }
+
     public Long getId() {
         return id;
     }

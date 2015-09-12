@@ -36,6 +36,15 @@ public class Good implements Serializable {
     public Good() {
     }
 
+    public static Good build(Long id, String code3, String name, String labelId) {
+        Good g = new Good();
+        g.id = id;
+        g.code3 = code3;
+        g.name = name;
+        g.labelId = labelId;
+        return g;
+    }
+
     public Long getId() {
         return id;
     }

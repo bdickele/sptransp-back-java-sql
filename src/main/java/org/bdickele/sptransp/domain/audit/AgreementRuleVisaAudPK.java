@@ -17,7 +17,7 @@ public class AgreementRuleVisaAudPK implements Serializable {
 
     private Long idRule;
 
-    private Long version;
+    private Integer version;
 
     private Integer rank;
 
@@ -27,7 +27,7 @@ public class AgreementRuleVisaAudPK implements Serializable {
         //
     }
 
-    public static AgreementRuleVisaAudPK build(Long idRule, Long version, Integer rank) {
+    public static AgreementRuleVisaAudPK build(Long idRule, Integer version, Integer rank) {
         AgreementRuleVisaAudPK pk = new AgreementRuleVisaAudPK();
         pk.idRule = idRule;
         pk.version = version;
@@ -39,7 +39,7 @@ public class AgreementRuleVisaAudPK implements Serializable {
         return idRule;
     }
 
-    public Long getVersion() {
+    public Integer getVersion() {
         return version;
     }
 

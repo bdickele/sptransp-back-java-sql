@@ -15,7 +15,7 @@ public class AgreementRuleAudPK implements Serializable {
 
     private Long id;
 
-    private Long version;
+    private Integer version;
 
 
     /** Constructor */
@@ -23,7 +23,7 @@ public class AgreementRuleAudPK implements Serializable {
         //
     }
 
-    public static AgreementRuleAudPK build(Long id, Long version) {
+    public static AgreementRuleAudPK build(Long id, Integer version) {
         AgreementRuleAudPK pk = new AgreementRuleAudPK();
         pk.id = id;
         pk.version = version;
@@ -34,7 +34,7 @@ public class AgreementRuleAudPK implements Serializable {
         return id;
     }
 
-    public Long getVersion() {
+    public Integer getVersion() {
         return version;
     }
 

@@ -24,7 +24,7 @@ public class Employee implements Serializable {
     private Long id;
 
     @Version
-    private Long version;
+    private Integer version;
 
     @Column(name = "UID")
     private String uid;
@@ -53,15 +53,44 @@ public class Employee implements Serializable {
     private String updateUser;
 
 
+    /**
+     * Build method for an employee
+     * @param id
+     * @param uid
+     * @param fullName
+     * @param department
+     * @param seniority
+     * @param creationUserUid
+     * @return
+     */
+    public static Employee build(Long id, String uid, String fullName, Department department,
+                                 Seniority seniority, String creationUserUid) {
+        Employee e = new Employee();
+        e.id = id;
+        e.uid = uid;
+        e.fullName = fullName;
+        e.department = department;
+        e.seniority = seniority;
+
+        LocalDateTime date = LocalDateTime.now();
+        e.creationDate = date;
+        e.updateDate = date;
+
+        e.creationUser = creationUserUid;
+        e.updateUser = creationUserUid;
+
+        return e;
+    }
+
     public Long getId() {
         return id;
     }
 
-    public Long getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(Long version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 
