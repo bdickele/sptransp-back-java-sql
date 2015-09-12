@@ -64,6 +64,7 @@ public class IntegrationTestConfig {
                 .addScript("classpath:sql/create_tables.sql")
                 .addScript("classpath:sql/basedata_destination.sql")
                 .addScript("classpath:sql/basedata_good.sql")
+                .addScript("classpath:sql/basedata_department.sql")
                 .build();
     }
 }
