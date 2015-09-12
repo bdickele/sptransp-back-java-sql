@@ -1,16 +1,13 @@
 package org.bdickele.sptransp.repository;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.tuple;
-
-import org.bdickele.sptransp.configuration.IntegrationTestConfig;
 import org.bdickele.sptransp.domain.Destination;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 /**
  * Created by Bertrand DICKELE

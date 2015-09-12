@@ -1,6 +1,5 @@
 package org.bdickele.sptransp.repository;
 
-import org.bdickele.sptransp.domain.Destination;
 import org.bdickele.sptransp.domain.Good;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
