@@ -72,7 +72,7 @@ public class CustomerRepositoryTest extends AbstractRepositoryTest {
     @Test
     public void insertion_through_repository_should_work() {
         // The test writes to the database, so dbSetupTracker.skipNextLaunch(); must NOT be called
-        Customer customer = Customer.build("CUST3", "NAME3");
+        Customer customer = Customer.build(null, "CUST3", "NAME3");
         assertThat(customer.getId()).isNull();
 
         repository.save(customer);

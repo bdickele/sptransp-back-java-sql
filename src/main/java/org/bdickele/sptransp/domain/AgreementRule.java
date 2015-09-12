@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +56,46 @@ public class AgreementRule implements Serializable {
     @Column(name = "UPDATE_USER")
     private String updateUser;
 
+
+    /**
+     * Build method for a new AgreementRule
+     * @param id
+     * @param destination
+     * @param good
+     * @param creationUserUid
+     * @return
+     */
+    public static AgreementRule build(Long id, Destination destination, Good good, String creationUserUid) {
+        AgreementRule r = new AgreementRule();
+        r.id = id;
+        r.version = 0;
+        r.deleted = false;
+        r.destination = destination;
+        r.good = good;
+
+        r.visas = new ArrayList<>();
+
+        LocalDateTime date = LocalDateTime.now();
+        r.creationDate = date;
+        r.updateDate = date;
+
+        r.creationUser = creationUserUid;
+        r.updateUser = creationUserUid;
+
+        return r;
+    }
+
+    /**
+     * Convenient method to add a visa (at the end of the current list of visas)
+     * @param id
+     * @param department
+     * @param seniority
+     * @return
+     */
+    public AgreementRule addVisa(Long id, Department department, Seniority seniority) {
+        visas.add(AgreementRuleVisa.build(id, visas.size(), department, seniority));
+        return this;
+    }
 
     public Long getId() {
         return id;

@@ -17,7 +17,7 @@ public class EmployeeAudPK implements Serializable {
 
     private Long id;
 
-    private Long version;
+    private Integer version;
 
 
     /** Constructor */
@@ -25,7 +25,7 @@ public class EmployeeAudPK implements Serializable {
         //
     }
 
-    public static EmployeeAudPK build(Long id, Long version) {
+    public static EmployeeAudPK build(Long id, Integer version) {
         EmployeeAudPK pk = new EmployeeAudPK();
         pk.id = id;
         pk.version = version;
@@ -36,7 +36,7 @@ public class EmployeeAudPK implements Serializable {
         return id;
     }
 
-    public Long getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
