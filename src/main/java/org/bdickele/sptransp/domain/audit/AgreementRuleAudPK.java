@@ -4,16 +4,14 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
  * Created by Bertrand DICKELE
  */
-@Embeddable
-public class EmployeeAudPK implements Serializable {
+public class AgreementRuleAudPK implements Serializable {
 
-    private static final long serialVersionUID = 584182696871123483L;
+    private static final long serialVersionUID = 7541457513897132559L;
 
     private Long id;
 
@@ -21,12 +19,12 @@ public class EmployeeAudPK implements Serializable {
 
 
     /** Constructor */
-    public EmployeeAudPK() {
+    public AgreementRuleAudPK() {
         //
     }
 
-    public static EmployeeAudPK build(Long id, Long version) {
-        EmployeeAudPK pk = new EmployeeAudPK();
+    public static AgreementRuleAudPK build(Long id, Long version) {
+        AgreementRuleAudPK pk = new AgreementRuleAudPK();
         pk.id = id;
         pk.version = version;
         return pk;
@@ -51,7 +49,7 @@ public class EmployeeAudPK implements Serializable {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        EmployeeAudPK other = (EmployeeAudPK) obj;
+        AgreementRuleAudPK other = (AgreementRuleAudPK) obj;
         return new EqualsBuilder()
                 .append(this.id, other.id)
                 .append(this.version, other.version)

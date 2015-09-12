@@ -3,12 +3,12 @@ package org.bdickele.sptransp.domain.audit;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.bdickele.sptransp.domain.Department;
 import org.bdickele.sptransp.domain.Employee;
-import org.bdickele.sptransp.domain.Seniority;
-import org.bdickele.sptransp.domain.converter.SeniorityConverter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
