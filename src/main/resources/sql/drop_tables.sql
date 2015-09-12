@@ -7,6 +7,6 @@ drop table if exists ST_AGREEMENT_RULE;
 drop table if exists ST_AGR_RULE_VISA;
 drop table if exists ST_CUSTOMER;
 drop table if exists ST_REQUEST;
-drop table if exists ST_AGR_APPLIED_VISA;
+drop table if exists ST_REQUEST_AGR_VISA;
 drop table if exists ST_AGREEMENT_RULE_AUD;
 drop table if exists ST_AGR_RULE_VISA_AUD;

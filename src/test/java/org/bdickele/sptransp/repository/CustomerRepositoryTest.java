@@ -79,6 +79,4 @@ public class CustomerRepositoryTest extends AbstractRepositoryTest {
 
         assertThat(customer.getId()).isNotNull();
     }
-
-
 }
