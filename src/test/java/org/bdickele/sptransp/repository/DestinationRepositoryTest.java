@@ -23,10 +23,10 @@ public class DestinationRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void should_find_all_destinations() {
-        List<Destination> list = repository.findAll();
-        assertThat(list).hasSize(3);
+        List<Destination> destinations = repository.findAll();
+        assertThat(destinations).hasSize(3);
 
-        assertThat(list).extracting("name", "code3").containsExactly(
+        assertThat(destinations).extracting("name", "code3").containsExactly(
                 tuple("Moon", "MOO"),
                 tuple("Mars", "MAR"),
                 tuple("Titan", "TIT"));
