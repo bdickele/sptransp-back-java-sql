@@ -28,7 +28,7 @@ public class RequestAgreementVisa implements Serializable {
     // For now I don't map the full Employee, even is lazy mode
     // I'm not sure I need the full employee here (let's see)
     @Column(name = "ID_EMPLOYEE")
-    private Long idEmployee;
+    private Long employeeId;
 
     @Column(name = "STATUS")
     @Convert(converter = RequestAgreementStatusConverter.class)
@@ -69,7 +69,7 @@ public class RequestAgreementVisa implements Serializable {
                                              Seniority seniority, LocalDateTime creationDate) {
         RequestAgreementVisa v = new RequestAgreementVisa();
         v.id = id;
-        v.idEmployee = idEmployee;
+        v.employeeId = idEmployee;
         v.status = status;
         v.rank = rank;
         v.comment = comment;
@@ -83,8 +83,8 @@ public class RequestAgreementVisa implements Serializable {
         return id;
     }
 
-    public Long getIdEmployee() {
-        return idEmployee;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
     public RequestAgreementVisaStatus getStatus() {
@@ -139,7 +139,7 @@ public class RequestAgreementVisa implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("employee", idEmployee)
+                .append("employee", employeeId)
                 .append("status", status)
                 .append("rank", rank)
                 .append("department", department.getName())

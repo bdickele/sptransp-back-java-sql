@@ -23,7 +23,9 @@ public enum SpTranspBizError implements SpTranspError {
 
     COULD_NOT_FIND_NEXT_EXPECTED_AGREEMENT_VISA(202, "Could not find next expected agreement visa for the request"),
 
-    COULD_NOT_FIND_LAST_APPLIED_VISA(203, "Could not find last visa applied for the request");
+    COULD_NOT_FIND_LAST_APPLIED_VISA(203, "Could not find last visa applied for the request"),
+
+    EMPLOYEE_HAS_ALREADY_APPLIED_A_VISA(204, "User %s has already granted/denied a visa for that request");
 
 
     private final int errorCode;

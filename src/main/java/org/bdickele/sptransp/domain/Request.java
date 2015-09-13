@@ -139,6 +139,10 @@ public class Request implements Serializable {
             throw REQUEST_DOES_NOT_EXPECT_ANY_AGREEMENT_VISA.exception();
         }
 
+        if (userHasAlreadyAppliedAVisa(employee.getId())) {
+            throw EMPLOYEE_HAS_ALREADY_APPLIED_A_VISA.exception(employee.getFullName());
+        }
+
         AgreementRuleVisaAud nextExpectedVisa = getNextExpectedAgreementVisa()
                 .orElseThrow(() -> COULD_NOT_FIND_NEXT_EXPECTED_AGREEMENT_VISA.exception());
 
@@ -195,6 +199,17 @@ public class Request implements Serializable {
      */
     public boolean waitsForAnAgreementVisa() {
         return agreementStatus==RequestAgreementStatus.PENDING;
+    }
+
+    /**
+     * @param employeeId
+     * @return True if passed employee has already applied an agreement visa for that request
+     */
+    public boolean userHasAlreadyAppliedAVisa(Long employeeId) {
+        return agreementVisas.stream()
+                .filter(v -> v.getEmployeeId().equals(employeeId))
+                .findFirst()
+                .isPresent();
     }
 
     /**
