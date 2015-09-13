@@ -4,12 +4,19 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bdickele.sptransp.domain.audit.AgreementRuleAud;
+import org.bdickele.sptransp.domain.audit.AgreementRuleVisaAud;
 import org.bdickele.sptransp.domain.converter.RequestAgreementStatusConverter;
 import org.bdickele.sptransp.domain.converter.RequestOverallStatusConverter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+
+import static org.bdickele.sptransp.exception.SpTranspBizError.*;
 
 /**
  * Created by Bertrand DICKELE
@@ -62,8 +69,12 @@ public class Request implements Serializable {
     private String cancellationComment;
 
     // -1 when request is refused or granted
-    @Column(name = "NEXT_VSA_RANK")
-    private int nextVisaRank;
+    @Column(name = "NEXT_AGREEMENT_VISA_RANK")
+    private int nextAgreementVisaRank;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_REQUEST")
+    private List<RequestAgreementVisa> agreementVisas;
 
     @Column(name = "CREATION_DATE")
     private LocalDateTime creationDate;
@@ -97,6 +108,10 @@ public class Request implements Serializable {
         r.good = good;
         r.destination = destination;
         r.ruleAud = ruleVersion;
+        r.overallStatus = RequestOverallStatus.PENDING;
+        r.agreementStatus = RequestAgreementStatus.PENDING;
+        r.nextAgreementVisaRank = 0;
+        r.agreementVisas = new ArrayList<>();
 
         LocalDateTime date = LocalDateTime.now();
         r.creationDate = date;
@@ -106,79 +121,125 @@ public class Request implements Serializable {
         r.updateUser = customer.getUid();
 
         return r;
+    }
 
+    /**
+     * Method to call when we want to apply (grant or deny) an agreement visa
+     * @param employee
+     * @param status
+     * @param comment
+     * @param department
+     * @param seniority
+     * @param creationDate We can pass creation date so that it can be synchronized with update date of request
+     * @return
+     */
+    public Request applyAgreementVisa(Employee employee, RequestAgreementVisaStatus status, String comment,
+                                    Department department, Seniority seniority, LocalDateTime creationDate) {
+        if (!waitsForAnAgreementVisa()) {
+            throw REQUEST_DOES_NOT_EXPECT_ANY_AGREEMENT_VISA.exception();
+        }
+
+        AgreementRuleVisaAud nextExpectedVisa = getNextExpectedAgreementVisa()
+                .orElseThrow(() -> COULD_NOT_FIND_NEXT_EXPECTED_AGREEMENT_VISA.exception());
+
+        if (!nextExpectedVisa.canBeAppliedBy(department, seniority)) {
+            throw VISA_TO_APPLY_DOESNT_MATCH_NEXT_EXPECTED_ONE.exception(
+                    department.getName(), seniority.getValue(),
+                    nextExpectedVisa.getDepartment(), nextExpectedVisa.getSeniority().getValue());
+        }
+
+        RequestAgreementVisa appliedVisa = RequestAgreementVisa.build(null, employee.getId(), status,
+                nextAgreementVisaRank, comment, department, seniority, creationDate);
+
+        addAgreementVisa(appliedVisa);
+
+        return this;
+    }
+
+    /**
+     * We know what is the next visa to apply. Let's add it to the list of applied visas and check what is the new
+     * status of the request
+     * @param appliedVisa Visa to add
+     */
+    private void addAgreementVisa(RequestAgreementVisa appliedVisa) {
+        agreementVisas.add(appliedVisa);
+
+        RequestAgreementVisaStatus lastAppliedVisaStatus = appliedVisa.getStatus();
+
+        // If last visa applied has been denied, no need to carry on: request is refused
+        if (lastAppliedVisaStatus == RequestAgreementVisaStatus.DENIED) {
+            nextAgreementVisaRank = -1;
+            agreementStatus = RequestAgreementStatus.REFUSED;
+            overallStatus = RequestOverallStatus.REFUSED;
+        } else if (lastAppliedVisaStatus == RequestAgreementVisaStatus.GRANTED) {
+            // Let's check if granted visa is the last one
+            Integer rankOfLastExpectedVisa = ruleAud.getVisas().stream()
+                    .max(Comparator.comparing(AgreementRuleVisaAud::getRank))
+                    .get().getRank();
+
+            if (appliedVisa.getRank().equals(rankOfLastExpectedVisa)) {
+                nextAgreementVisaRank = -1;
+                agreementStatus = RequestAgreementStatus.GRANTED;
+                overallStatus = RequestOverallStatus.VALIDATED;
+            } else {
+                nextAgreementVisaRank++;
+            }
+        } else {
+            // Not supposed to happen except business rule gets changed
+            throw UNEXPECTED_ERROR.exception("Unknown status of agreement visa: " + lastAppliedVisaStatus);
+        }
+    }
+
+    /**
+     * @return True if that request is still waiting for an agreement visa
+     */
+    public boolean waitsForAnAgreementVisa() {
+        return agreementStatus==RequestAgreementStatus.PENDING;
+    }
+
+    /**
+     * @return Next expected agreement visa (if any)
+     */
+    public Optional<AgreementRuleVisaAud> getNextExpectedAgreementVisa() {
+        return ruleAud.getVisas().stream()
+                .filter(v -> v.getRank().equals(nextAgreementVisaRank))
+                .findFirst();
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Integer getVersion() {
         return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public String getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
     public Customer getCustomer() {
         return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     public Good getGood() {
         return good;
     }
 
-    public void setGood(Good good) {
-        this.good = good;
-    }
-
     public Destination getDestination() {
         return destination;
-    }
-
-    public void setDestination(Destination destination) {
-        this.destination = destination;
     }
 
     public RequestOverallStatus getOverallStatus() {
         return overallStatus;
     }
 
-    public void setOverallStatus(RequestOverallStatus overallStatus) {
-        this.overallStatus = overallStatus;
-    }
-
     public AgreementRuleAud getRuleAud() {
         return ruleAud;
     }
 
-    public void setRuleAud(AgreementRuleAud ruleAud) {
-        this.ruleAud = ruleAud;
-    }
-
     public RequestAgreementStatus getAgreementStatus() {
         return agreementStatus;
-    }
-
-    public void setAgreementStatus(RequestAgreementStatus agreementStatus) {
-        this.agreementStatus = agreementStatus;
     }
 
     public String getCancellationComment() {
@@ -189,44 +250,24 @@ public class Request implements Serializable {
         this.cancellationComment = cancellationComment;
     }
 
-    public int getNextVisaRank() {
-        return nextVisaRank;
-    }
-
-    public void setNextVisaRank(int nextVisaRank) {
-        this.nextVisaRank = nextVisaRank;
+    public int getNextAgreementVisaRank() {
+        return nextAgreementVisaRank;
     }
 
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
     public String getCreationUser() {
         return creationUser;
-    }
-
-    public void setCreationUser(String creationUser) {
-        this.creationUser = creationUser;
     }
 
     public LocalDateTime getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(LocalDateTime updateDate) {
-        this.updateDate = updateDate;
-    }
-
     public String getUpdateUser() {
         return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
     }
 
     @Override

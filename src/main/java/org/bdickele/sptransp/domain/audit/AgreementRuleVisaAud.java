@@ -22,11 +22,13 @@ public class AgreementRuleVisaAud implements Serializable {
     @EmbeddedId
     private AgreementRuleVisaAudPK pk;
 
-    @Column(name = "ID_DEPARTMENT")
-    private Long department;
+    @ManyToOne
+    @JoinColumn(name = "ID_DEPARTMENT")
+    private Department department;
 
     @Column(name = "SENIORITY")
-    private Integer seniority;
+    @Convert(converter = SeniorityConverter.class)
+    private Seniority seniority;
 
 
     /**
@@ -36,20 +38,28 @@ public class AgreementRuleVisaAud implements Serializable {
     public static AgreementRuleVisaAud build(AgreementRule rule, AgreementRuleVisa visa) {
         AgreementRuleVisaAud audit = new AgreementRuleVisaAud();
         audit.pk = AgreementRuleVisaAudPK.build(rule.getId(), rule.getVersion()+1, visa.getRank());
-        audit.department = visa.getDepartment().getId();
-        audit.seniority = visa.getSeniority().getValue();
+        audit.department = visa.getDepartment();
+        audit.seniority = visa.getSeniority();
         return audit;
+    }
+
+    public boolean canBeAppliedBy(Department department, Seniority seniority) {
+        return this.department.getId().equals(department.getId()) && seniority.ge(this.seniority);
     }
 
     public AgreementRuleVisaAudPK getPk() {
         return pk;
     }
 
-    public Long getDepartment() {
+    public Integer getRank() {
+        return pk.getRank();
+    }
+
+    public Department getDepartment() {
         return department;
     }
 
-    public Integer getSeniority() {
+    public Seniority getSeniority() {
         return seniority;
     }
 
@@ -83,8 +93,8 @@ public class AgreementRuleVisaAud implements Serializable {
                 .append("idRule", pk.getIdRule())
                 .append("version", pk.getVersion())
                 .append("rank", pk.getRank())
-                .append("department", department)
-                .append("seniority", seniority)
+                .append("department", department.getName())
+                .append("seniority", seniority.getValue())
                 .toString();
     }
 }

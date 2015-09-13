@@ -90,72 +90,36 @@ public class Employee implements Serializable {
         return version;
     }
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     public String getUid() {
         return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 
     public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public Department getDepartment() {
         return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
 
     public Seniority getSeniority() {
         return seniority;
     }
 
-    public void setSeniority(Seniority seniority) {
-        this.seniority = seniority;
-    }
-
     public LocalDateTime getCreationDate() {
         return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
     }
 
     public String getCreationUser() {
         return creationUser;
     }
 
-    public void setCreationUser(String creationUser) {
-        this.creationUser = creationUser;
-    }
-
     public LocalDateTime getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(LocalDateTime updateDate) {
-        this.updateDate = updateDate;
-    }
-
     public String getUpdateUser() {
         return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
     }
 
     @Override

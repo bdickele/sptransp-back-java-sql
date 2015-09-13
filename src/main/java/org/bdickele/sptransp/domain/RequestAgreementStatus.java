@@ -6,6 +6,8 @@ package org.bdickele.sptransp.domain;
  */
 public enum RequestAgreementStatus {
 
+    CANCELLED("C"),
+
     PENDING("P"),
 
     GRANTED("G"),
