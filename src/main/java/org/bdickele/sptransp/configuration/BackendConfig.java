@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
  * Created by Bertrand DICKELE
  */
 @Configuration
-@Import({PersistenceConfig.class})
+@Import({PersistenceConfig.class, DomainCacheConfig.class})
 @ComponentScan
 public class BackendConfig {
 }

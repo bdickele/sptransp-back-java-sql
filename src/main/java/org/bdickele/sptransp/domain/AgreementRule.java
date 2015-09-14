@@ -14,6 +14,7 @@ import java.util.List;
  * Created by Bertrand DICKELE
  */
 @Entity
+@Cacheable
 @Table(name = "ST_AGREEMENT_RULE")
 @SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
 public class AgreementRule implements Serializable {
