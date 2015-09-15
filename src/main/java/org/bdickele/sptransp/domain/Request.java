@@ -43,8 +43,8 @@ public class Request implements Serializable {
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "ID_GOOD")
-    private Good good;
+    @JoinColumn(name = "ID_GOODS")
+    private Goods goods;
 
     @ManyToOne
     @JoinColumn(name = "ID_DESTINATION")
@@ -93,19 +93,19 @@ public class Request implements Serializable {
      * Build method for a request
      * @param uid
      * @param customer
-     * @param good
+     * @param goods
      * @param destination
      * @param ruleVersion
      * @return
      */
-    public static Request build(Long id, String uid, Customer customer, Good good,
+    public static Request build(Long id, String uid, Customer customer, Goods goods,
                                 Destination destination, AgreementRuleAud ruleVersion) {
         Request r = new Request();
         r.id = id;
         r.version = 0;
         r.uid = uid;
         r.customer = customer;
-        r.good = good;
+        r.goods = goods;
         r.destination = destination;
         r.ruleAud = ruleVersion;
         r.overallStatus = RequestOverallStatus.PENDING;
@@ -237,8 +237,8 @@ public class Request implements Serializable {
         return customer;
     }
 
-    public Good getGood() {
-        return good;
+    public Goods getGoods() {
+        return goods;
     }
 
     public Destination getDestination() {
@@ -316,7 +316,7 @@ public class Request implements Serializable {
                 .append("uid", uid)
                 .append("customer", customer.getFullName())
                 .append("destination", destination.getName())
-                .append("good", good.getName())
+                .append("good", goods.getName())
                 .append("overallStatus", overallStatus)
                 .append("agreementStatus", agreementStatus)
                 .toString();

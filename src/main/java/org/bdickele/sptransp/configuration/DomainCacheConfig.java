@@ -15,6 +15,6 @@ public class DomainCacheConfig {
 
     @Bean
     public CacheManager cacheManager() {
-        return new GuavaCacheManager("employees", "departments", "goods", "destinations", "rules");
+        return new GuavaCacheManager();
     }
 }

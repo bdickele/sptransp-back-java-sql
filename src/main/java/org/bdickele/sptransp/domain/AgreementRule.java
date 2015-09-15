@@ -32,13 +32,11 @@ public class AgreementRule implements Serializable {
     @Column(name = "DELETED")
     private boolean deleted;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_DESTINATION")
-    private Destination destination;
+    @Column(name = "ID_DESTINATION")
+    private Long destinationId;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_GOOD")
-    private Good good;
+    @Column(name = "ID_GOODS")
+    private Long goodsId;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_RULE")
@@ -61,18 +59,18 @@ public class AgreementRule implements Serializable {
     /**
      * Build method for a new AgreementRule
      * @param id
-     * @param destination
-     * @param good
+     * @param destinationId
+     * @param goodsId
      * @param creationUserUid
      * @return
      */
-    public static AgreementRule build(Long id, Destination destination, Good good, String creationUserUid) {
+    public static AgreementRule build(Long id, Long destinationId, Long goodsId, String creationUserUid) {
         AgreementRule r = new AgreementRule();
         r.id = id;
         r.version = 0;
         r.deleted = false;
-        r.destination = destination;
-        r.good = good;
+        r.destinationId = destinationId;
+        r.goodsId = goodsId;
 
         r.visas = new ArrayList<>();
 
@@ -118,20 +116,20 @@ public class AgreementRule implements Serializable {
         this.deleted = deleted;
     }
 
-    public Destination getDestination() {
-        return destination;
+    public Long getDestinationId() {
+        return destinationId;
     }
 
-    public void setDestination(Destination destination) {
-        this.destination = destination;
+    public void setDestinationId(Long destinationId) {
+        this.destinationId = destinationId;
     }
 
-    public Good getGood() {
-        return good;
+    public Long getGoodsId() {
+        return goodsId;
     }
 
-    public void setGood(Good good) {
-        this.good = good;
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
     }
 
     public LocalDateTime getCreationDate() {
@@ -202,8 +200,8 @@ public class AgreementRule implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("destination", destination.getName())
-                .append("good", good.getName())
+                .append("destinationId", destinationId)
+                .append("good", goodsId)
                 .toString();
     }
 }

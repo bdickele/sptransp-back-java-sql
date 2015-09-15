@@ -15,6 +15,8 @@ import java.io.Serializable;
 /**
  * Created by Bertrand DICKELE
  */
+@Entity
+@Table(name = "ST_AGR_RULE_VISA_AUD")
 public class AgreementRuleVisaAud implements Serializable {
 
     private static final long serialVersionUID = 5923236734333092025L;

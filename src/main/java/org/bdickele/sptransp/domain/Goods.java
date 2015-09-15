@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "ST_GOOD")
-public class Good implements Serializable {
+public class Goods implements Serializable {
 
     private static final long serialVersionUID = -2194079517457892877L;
 
@@ -33,11 +33,11 @@ public class Good implements Serializable {
 
 
     /** Constructor */
-    public Good() {
+    public Goods() {
     }
 
-    public static Good build(Long id, String code3, String name, String labelId) {
-        Good g = new Good();
+    public static Goods build(Long id, String code3, String name, String labelId) {
+        Goods g = new Goods();
         g.id = id;
         g.code3 = code3;
         g.name = name;
@@ -72,7 +72,7 @@ public class Good implements Serializable {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        Good other = (Good) obj;
+        Goods other = (Goods) obj;
         return new EqualsBuilder()
                 .append(this.id, other.id)
                 .isEquals();

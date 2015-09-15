@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
@@ -15,10 +16,13 @@ public class AgreementRuleVisaAudPK implements Serializable {
 
     private static final long serialVersionUID = -8995397281778177804L;
 
+    @Column(name = "ID_RULE")
     private Long idRule;
 
+    @Column(name = "RULE_VERSION")
     private Integer version;
 
+    @Column(name = "RANK")
     private Integer rank;
 
 

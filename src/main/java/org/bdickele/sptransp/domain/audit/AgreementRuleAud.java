@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 /**
  * Created by Bertrand DICKELE
  */
+@Entity
+@Table(name = "ST_AGREEMENT_RULE_AUD")
 public class AgreementRuleAud implements Serializable {
 
     private static final long serialVersionUID = -6181403943144041262L;
@@ -25,15 +27,15 @@ public class AgreementRuleAud implements Serializable {
     private boolean deleted;
 
     @Column(name = "ID_DESTINATION")
-    private Long destination;
+    private Long destinationId;
 
-    @Column(name = "ID_GOOD")
-    private Long good;
+    @Column(name = "ID_GOODS")
+    private Long goodsId;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumns({
         @JoinColumn(name="ID_RULE", referencedColumnName="ID_RULE"),
-        @JoinColumn(name="VERSION", referencedColumnName="RULE_VERSION")
+        @JoinColumn(name="RULE_VERSION", referencedColumnName="VERSION")
     })
     @OrderBy("RANK ASC")
     private List<AgreementRuleVisaAud> visas;
@@ -49,8 +51,8 @@ public class AgreementRuleAud implements Serializable {
         AgreementRuleAud audit = new AgreementRuleAud();
         audit.pk = AgreementRuleAudPK.build(rule.getId(), rule.getVersion() + 1);
         audit.deleted = rule.isDeleted();
-        audit.destination = rule.getDestination().getId();
-        audit.good = rule.getGood().getId();
+        audit.destinationId = rule.getDestinationId();
+        audit.goodsId = rule.getGoodsId();
         audit.versionDate = rule.getUpdateDate();
         audit.versionUser = rule.getUpdateUser();
 
@@ -69,12 +71,12 @@ public class AgreementRuleAud implements Serializable {
         return deleted;
     }
 
-    public Long getDestination() {
-        return destination;
+    public Long getDestinationId() {
+        return destinationId;
     }
 
-    public Long getGood() {
-        return good;
+    public Long getGoodsId() {
+        return goodsId;
     }
 
     public List<AgreementRuleVisaAud> getVisas() {
@@ -118,8 +120,8 @@ public class AgreementRuleAud implements Serializable {
         return new ToStringBuilder(this)
                 .append("id/version", pk.getId() + "/" + pk.getVersion())
                 .append("delete", deleted)
-                .append("destination", destination)
-                .append("good", good)
+                .append("destinationId", destinationId)
+                .append("goodsId", goodsId)
                 .toString();
     }
 }

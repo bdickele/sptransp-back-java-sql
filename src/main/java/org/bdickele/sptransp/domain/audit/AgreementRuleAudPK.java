@@ -4,17 +4,22 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
  * Created by Bertrand DICKELE
  */
+@Embeddable
 public class AgreementRuleAudPK implements Serializable {
 
     private static final long serialVersionUID = 7541457513897132559L;
 
+    @Column(name = "ID_RULE")
     private Long id;
 
+    @Column(name = "VERSION")
     private Integer version;
 
 
