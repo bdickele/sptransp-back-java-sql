@@ -29,9 +29,6 @@ public class AgreementRule implements Serializable {
     @Column(name = "VERSION")
     private Integer version;
 
-    @Column(name = "DELETED")
-    private boolean deleted;
-
     @Column(name = "ID_DESTINATION")
     private Long destinationId;
 
@@ -68,7 +65,6 @@ public class AgreementRule implements Serializable {
         AgreementRule r = new AgreementRule();
         r.id = id;
         r.version = 0;
-        r.deleted = false;
         r.destinationId = destinationId;
         r.goodsId = goodsId;
 
@@ -106,14 +102,6 @@ public class AgreementRule implements Serializable {
 
     public void setVersion(Integer version) {
         this.version = version;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     public Long getDestinationId() {

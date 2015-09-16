@@ -1,5 +1,5 @@
 -- Généré par Oracle SQL Developer Data Modeler 4.1.1.888
---   à :        2015-09-16 21:52:38 CEST
+--   à :        2015-09-16 22:05:44 CEST
 --   site :      Oracle Database 11g
 --   type :      Oracle Database 11g
 
@@ -10,7 +10,6 @@ CREATE TABLE ST_AGREEMENT_RULE
   (
     ID             NUMBER NOT NULL ,
     VERSION        NUMBER NOT NULL ,
-    DELETED        CHAR (1) NOT NULL ,
     ID_DESTINATION NUMBER NOT NULL ,
     ID_GOODS       NUMBER NOT NULL ,
     CREATION_DATE  TIMESTAMP NOT NULL ,
@@ -25,7 +24,6 @@ CREATE TABLE ST_AGREEMENT_RULE_AUD
   (
     ID_RULE        NUMBER NOT NULL ,
     VERSION        NUMBER NOT NULL ,
-    DELETED        CHAR (1) NOT NULL ,
     ID_DESTINATION NUMBER NOT NULL ,
     ID_GOODS       NUMBER NOT NULL ,
     VERSION_DATE   TIMESTAMP NOT NULL ,

@@ -23,9 +23,6 @@ public class AgreementRuleAud implements Serializable {
     @EmbeddedId
     private AgreementRuleAudPK pk;
 
-    @Column(name = "DELETED")
-    private boolean deleted;
-
     @Column(name = "ID_DESTINATION")
     private Long destinationId;
 
@@ -56,7 +53,6 @@ public class AgreementRuleAud implements Serializable {
     public static AgreementRuleAud build(AgreementRule rule) {
         AgreementRuleAud audit = new AgreementRuleAud();
         audit.pk = AgreementRuleAudPK.build(rule.getId(), rule.getVersion() + 1);
-        audit.deleted = rule.isDeleted();
         audit.destinationId = rule.getDestinationId();
         audit.goodsId = rule.getGoodsId();
         audit.versionDate = rule.getUpdateDate();
@@ -71,10 +67,6 @@ public class AgreementRuleAud implements Serializable {
 
     public AgreementRuleAudPK getPk() {
         return pk;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
     }
 
     public Long getDestinationId() {
@@ -125,7 +117,6 @@ public class AgreementRuleAud implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id/version", pk.getId() + "/" + pk.getVersion())
-                .append("delete", deleted)
                 .append("destinationId", destinationId)
                 .append("goodsId", goodsId)
                 .toString();

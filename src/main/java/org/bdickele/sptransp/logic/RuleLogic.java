@@ -10,6 +10,10 @@ import java.util.Optional;
  */
 public final class RuleLogic {
 
+    //TODO Deplacer cette methode dans un AgreementRuleService
+    // et la mettre dans une methode ou on fera appel a AgreementRuleRepository pour la liste
+    // repository qu'on mockera pour le test unitaire
+
     /**
      * @param availableRules
      * @param destinationId

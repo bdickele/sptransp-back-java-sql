@@ -24,7 +24,6 @@ public class AgreementRuleAudTest {
         AgreementRuleAud ruleAud = AgreementRuleAud.build(rule);
 
         assertThat(ruleAud.getPk()).isEqualTo(AgreementRuleAudPK.build(1L, 1));
-        assertThat(ruleAud.isDeleted()).isFalse();
         assertThat(ruleAud.getDestinationId()).isEqualTo(DESTINATION_MOON.getId());
         assertThat(ruleAud.getGoodsId()).isEqualTo(GOODS_FOOD.getId());
         assertThat(ruleAud.getVersionDate()).isEqualTo(rule.getUpdateDate());
