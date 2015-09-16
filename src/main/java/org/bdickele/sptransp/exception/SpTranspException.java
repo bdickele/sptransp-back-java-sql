@@ -10,12 +10,20 @@ public class SpTranspException extends RuntimeException {
 
     private static final Logger LOGGER = Logger.getLogger(SpTranspException.class);
 
+    private final SpTranspError error;
 
-    public SpTranspException(String message) {
+
+    public SpTranspException(SpTranspError error, String message) {
         super(message);
+        this.error = error;
     }
 
-    public SpTranspException(String message, Throwable cause) {
+    public SpTranspException(SpTranspError error, Throwable cause, String message) {
         super(message, cause);
+        this.error = error;
+    }
+
+    public SpTranspError getError() {
+        return error;
     }
 }

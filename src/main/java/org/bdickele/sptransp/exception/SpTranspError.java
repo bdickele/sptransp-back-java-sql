@@ -48,10 +48,10 @@ public interface SpTranspError {
     }
 
     default SpTranspException exception(Object... args) {
-        return new SpTranspException(getFormattedMessage(args));
+        return new SpTranspException(this, getFormattedMessage(args));
     }
 
     default SpTranspException exception(Throwable cause, Object... args) {
-        return new SpTranspException(getFormattedMessage(args), cause);
+        return new SpTranspException(this, cause, getFormattedMessage(args));
     }
 }

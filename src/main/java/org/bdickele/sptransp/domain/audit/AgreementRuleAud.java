@@ -47,6 +47,12 @@ public class AgreementRuleAud implements Serializable {
     private String versionUser;
 
 
+    /**
+     * Builds a AgreementRuleAud object based on a AgreementRuleAud.
+     * We increment version by one as version of AgreementRule is incremented by Hibernate on commit
+     * @param rule
+     * @return
+     */
     public static AgreementRuleAud build(AgreementRule rule) {
         AgreementRuleAud audit = new AgreementRuleAud();
         audit.pk = AgreementRuleAudPK.build(rule.getId(), rule.getVersion() + 1);

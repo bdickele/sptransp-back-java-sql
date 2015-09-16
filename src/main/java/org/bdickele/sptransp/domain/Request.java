@@ -128,13 +128,10 @@ public class Request implements Serializable {
      * @param employee
      * @param status
      * @param comment
-     * @param department
-     * @param seniority
      * @param creationDate We can pass creation date so that it can be synchronized with update date of request
      * @return
      */
-    public Request applyAgreementVisa(Employee employee, RequestAgreementVisaStatus status, String comment,
-                                    Department department, Seniority seniority, LocalDateTime creationDate) {
+    public Request applyAgreementVisa(Employee employee, RequestAgreementVisaStatus status, String comment, LocalDateTime creationDate) {
         if (!waitsForAnAgreementVisa()) {
             throw REQUEST_DOES_NOT_EXPECT_ANY_AGREEMENT_VISA.exception();
         }
@@ -145,6 +142,9 @@ public class Request implements Serializable {
 
         AgreementRuleVisaAud nextExpectedVisa = getNextExpectedAgreementVisa()
                 .orElseThrow(() -> COULD_NOT_FIND_NEXT_EXPECTED_AGREEMENT_VISA.exception());
+
+        Department department = employee.getDepartment();
+        Seniority seniority = employee.getSeniority();
 
         if (!nextExpectedVisa.canBeAppliedBy(department, seniority)) {
             throw VISA_TO_APPLY_DOESNT_MATCH_NEXT_EXPECTED_ONE.exception(
