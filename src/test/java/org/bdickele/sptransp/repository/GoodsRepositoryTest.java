@@ -20,14 +20,14 @@ public class GoodsRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void should_find_all_goods() {
-        List<Goods> goodses = repository.findAll();
-        assertThat(goodses).hasSize(5);
+        List<Goods> goods = repository.findAll();
+        assertThat(goods).hasSize(5);
 
-        assertThat(goodses).extracting("name", "code3").containsExactly(
+        assertThat(goods).extracting("name", "code").containsExactly(
                 tuple("Oil", "OIL"),
-                tuple("Food", "FOO"),
-                tuple("Machine tool", "MAT"),
-                tuple("Weapon", "WEA"),
-                tuple("Medicine", "MED"));
+                tuple("Food", "FOOD"),
+                tuple("Machine tool", "MACHINE_TOOL"),
+                tuple("Weapon", "WEAPON"),
+                tuple("Medicine", "MEDICINE"));
     }
 }

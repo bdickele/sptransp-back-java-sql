@@ -35,8 +35,8 @@ public class Request implements Serializable {
     @Version
     private Integer version;
 
-    @Column(name = "UID")
-    private String uid;
+    @Column(name = "REFERENCE")
+    private String reference;
 
     @ManyToOne
     @JoinColumn(name = "ID_CUSTOMER")
@@ -91,19 +91,19 @@ public class Request implements Serializable {
 
     /**
      * Build method for a request
-     * @param uid
+     * @param reference
      * @param customer
      * @param goods
      * @param destination
      * @param ruleVersion
      * @return
      */
-    public static Request build(Long id, String uid, Customer customer, Goods goods,
+    public static Request build(Long id, String reference, Customer customer, Goods goods,
                                 Destination destination, AgreementRuleAud ruleVersion) {
         Request r = new Request();
         r.id = id;
         r.version = 0;
-        r.uid = uid;
+        r.reference = reference;
         r.customer = customer;
         r.goods = goods;
         r.destination = destination;
@@ -229,8 +229,8 @@ public class Request implements Serializable {
         return version;
     }
 
-    public String getUid() {
-        return uid;
+    public String getReference() {
+        return reference;
     }
 
     public Customer getCustomer() {
@@ -313,7 +313,7 @@ public class Request implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("uid", uid)
+                .append("reference", reference)
                 .append("customer", customer.getFullName())
                 .append("destination", destination.getName())
                 .append("good", goods.getName())

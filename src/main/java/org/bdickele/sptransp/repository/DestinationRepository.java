@@ -16,8 +16,8 @@ public interface DestinationRepository extends JpaRepository<Destination, Long> 
     List<Destination> findAll();
 
     /**
-     * @param code3 Destination's code3
+     * @param code Destination's code
      * @return Corresponding Destination
      */
-    Destination findByCode3(String code3);
+    Destination findByCode(String code);
 }

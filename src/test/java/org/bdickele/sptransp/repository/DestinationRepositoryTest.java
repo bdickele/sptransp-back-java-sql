@@ -23,17 +23,17 @@ public class DestinationRepositoryTest extends AbstractRepositoryTest {
         List<Destination> destinations = repository.findAll();
         assertThat(destinations).hasSize(3);
 
-        assertThat(destinations).extracting("name", "code3").containsExactly(
-                tuple("Moon", "MOO"),
-                tuple("Mars", "MAR"),
-                tuple("Titan", "TIT"));
+        assertThat(destinations).extracting("name", "code").containsExactly(
+                tuple("Moon", "MOON"),
+                tuple("Mars", "MARS"),
+                tuple("Titan", "TITAN"));
     }
 
     @Test
-    public void first_destination_should_be_moon() {
-        Destination moon = repository.findByCode3("MOO");
+    public void destination_by_code_should_work() {
+        Destination moon = repository.findByCode("MOON");
         assertThat(moon).isNotNull();
-        assertThat(moon.getCode3()).isEqualTo("MOO");
+        assertThat(moon.getCode()).isEqualTo("MOON");
         assertThat(moon.getName()).isEqualTo("Moon");
     }
 }

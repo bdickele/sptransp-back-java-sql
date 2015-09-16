@@ -27,6 +27,6 @@ public class DepartmentRepositoryTest extends AbstractRepositoryTest {
                 tuple(1L, "Law compliance"),
                 tuple(2L, "Shuttle compliance"),
                 tuple(3L, "Good inspection"),
-                tuple(4L, "Journey supervisor"));
+                tuple(4L, "Journey supervision"));
     }
 }

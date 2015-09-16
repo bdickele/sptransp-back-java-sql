@@ -20,14 +20,11 @@ public class Destination implements Serializable {
     @Id
     private Long id;
 
-    @Column(name = "CODE3")
-    private String code3;
+    @Column(name = "CODE")
+    private String code;
 
     @Column(name = "NAME")
     private String name;
-
-    @Column(name = "LABEL_ID")
-    private String labelId;
 
 
     /** Constructor */
@@ -37,17 +34,15 @@ public class Destination implements Serializable {
     /**
      * Build method for a destination
      * @param id
-     * @param code3
+     * @param code
      * @param name
-     * @param labelId
      * @return
      */
-    public static Destination build(Long id, String code3, String name, String labelId) {
+    public static Destination build(Long id, String code, String name) {
         Destination d = new Destination();
         d.id = id;
-        d.code3 = code3;
+        d.code = code;
         d.name = name;
-        d.labelId = labelId;
         return d;
     }
 
@@ -55,16 +50,12 @@ public class Destination implements Serializable {
         return id;
     }
 
-    public String getCode3() {
-        return code3;
+    public String getCode() {
+        return code;
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getLabelId() {
-        return labelId;
     }
 
     @Override
@@ -95,7 +86,7 @@ public class Destination implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("code3", code3)
+                .append("code", code)
                 .append("name", name)
                 .toString();
     }

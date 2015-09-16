@@ -14,7 +14,7 @@ import java.io.Serializable;
  * Created by Bertrand DICKELE
  */
 @Entity
-@Table(name = "ST_GOOD")
+@Table(name = "ST_GOODS")
 public class Goods implements Serializable {
 
     private static final long serialVersionUID = -2194079517457892877L;
@@ -22,26 +22,29 @@ public class Goods implements Serializable {
     @Id
     private Long id;
 
-    @Column(name = "CODE3")
-    private String code3;
+    @Column(name = "CODE")
+    private String code;
 
     @Column(name = "NAME")
     private String name;
-
-    @Column(name = "LABEL_ID")
-    private String labelId;
 
 
     /** Constructor */
     public Goods() {
     }
 
-    public static Goods build(Long id, String code3, String name, String labelId) {
+    /**
+     * Build method for Goods
+     * @param id
+     * @param code
+     * @param name
+     * @return
+     */
+    public static Goods build(Long id, String code, String name) {
         Goods g = new Goods();
         g.id = id;
-        g.code3 = code3;
+        g.code = code;
         g.name = name;
-        g.labelId = labelId;
         return g;
     }
 
@@ -49,16 +52,12 @@ public class Goods implements Serializable {
         return id;
     }
 
-    public String getCode3() {
-        return code3;
+    public String getCode() {
+        return code;
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getLabelId() {
-        return labelId;
     }
 
     @Override
@@ -89,7 +88,7 @@ public class Goods implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("code3", code3)
+                .append("code", code)
                 .append("name", name)
                 .toString();
     }

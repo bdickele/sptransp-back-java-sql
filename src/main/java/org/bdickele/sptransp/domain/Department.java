@@ -25,8 +25,8 @@ public class Department implements Serializable {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "LABEL_ID")
-    private String labelId;
+    @Column(name = "CODE")
+    private String code;
 
 
     /** Constructor */
@@ -36,15 +36,15 @@ public class Department implements Serializable {
     /**
      * Build method for a Department
      * @param id
+     * @param code
      * @param name
-     * @param labelId
      * @return
      */
-    public static Department buidl(Long id, String name, String labelId) {
+    public static Department buidl(Long id, String code, String name) {
         Department d = new Department();
         d.id = id;
         d.name = name;
-        d.labelId = labelId;
+        d.code = code;
         return d;
     }
 
@@ -56,8 +56,8 @@ public class Department implements Serializable {
         return name;
     }
 
-    public String getLabelId() {
-        return labelId;
+    public String getCode() {
+        return code;
     }
 
     @Override
@@ -88,6 +88,7 @@ public class Department implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
+                .append("code", code)
                 .append("name", name)
                 .toString();
     }

@@ -9,20 +9,20 @@ public final class DomainTestData {
 
     public static final String USER_UID = "userUid";
 
-    public static final Goods GOODS_OIL = Goods.build(ID++, "OIL", "Oil", "");
-    public static final Goods GOODS_FOOD = Goods.build(ID++, "FOO", "Food", "");
-    public static final Goods GOODS_MACHINE = Goods.build(ID++, "MAT", "Machine tool", "");
-    public static final Goods GOODS_WEAPON = Goods.build(ID++, "WEA", "Weapon", "");
-    public static final Goods GOODS_MEDICINE = Goods.build(ID++, "MED", "Medicine", "");
+    public static final Goods GOODS_OIL = Goods.build(ID++, "OIL", "Oil");
+    public static final Goods GOODS_FOOD = Goods.build(ID++, "FOOD", "Food");
+    public static final Goods GOODS_MACHINE = Goods.build(ID++, "MACHINE_TOOL", "Machine tool");
+    public static final Goods GOODS_WEAPON = Goods.build(ID++, "WEAPON", "Weapon");
+    public static final Goods GOODS_MEDICINE = Goods.build(ID++, "MEDICINE", "Medicine");
 
-    public static final Destination DESTINATION_MOON = Destination.build(ID++, "MOO", "Moon", "");
-    public static final Destination DESTINATION_MARS = Destination.build(ID++, "MAR", "Mars", "");
-    public static final Destination DESTINATION_TITAN = Destination.build(ID++, "TIT", "Titan", "");
+    public static final Destination DESTINATION_MOON = Destination.build(ID++, "MOON", "Moon");
+    public static final Destination DESTINATION_MARS = Destination.build(ID++, "MARS", "Mars");
+    public static final Destination DESTINATION_TITAN = Destination.build(ID++, "TITAN", "Titan");
 
-    public static final Department DEPARTMENT_LAW_COMPLIANCE = Department.buidl(ID++, "Law compliance", "");
-    public static final Department DEPARTMENT_SHUTTLE_COMPLIANCE = Department.buidl(ID++, "Shuttle compliance", "");
-    public static final Department DEPARTMENT_GOODS_INSPECTION = Department.buidl(ID++, "Good inspection", "");
-    public static final Department DEPARTMENT_JOURNEY_SUPERVISOR = Department.buidl(ID++, "Journey supervisor", "");
+    public static final Department DEPARTMENT_LAW_COMPLIANCE = Department.buidl(ID++, "LC", "Law compliance");
+    public static final Department DEPARTMENT_SHUTTLE_COMPLIANCE = Department.buidl(ID++, "SC", "Shuttle compliance");
+    public static final Department DEPARTMENT_GOODS_INSPECTION = Department.buidl(ID++, "GI", "Good inspection");
+    public static final Department DEPARTMENT_JOURNEY_SUPERVISOR = Department.buidl(ID++, "JS", "Journey supervisor");
 
     public static final Seniority SENIORITY_10 = new Seniority(10);
     public static final Seniority SENIORITY_50 = new Seniority(50);

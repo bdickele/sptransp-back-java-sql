@@ -1,4 +1,4 @@
-INSERT INTO ST_DEPARTMENT(ID, NAME, LABEL_ID) VALUES (1, 'Law compliance', 'department.lawCompliance');
-INSERT INTO ST_DEPARTMENT(ID, NAME, LABEL_ID) VALUES (2, 'Shuttle compliance', 'department.shuttleCompliance');
-INSERT INTO ST_DEPARTMENT(ID, NAME, LABEL_ID) VALUES (3, 'Good inspection', 'department.goodInspection');
-INSERT INTO ST_DEPARTMENT(ID, NAME, LABEL_ID) VALUES (4, 'Journey supervisor', 'department.journeySupervisor');
+INSERT INTO ST_DEPARTMENT(ID, NAME, CODE) VALUES (1, 'Law compliance', 'LAW_COMPLIANCE');
+INSERT INTO ST_DEPARTMENT(ID, NAME, CODE) VALUES (2, 'Shuttle compliance', 'SHUTTLE_COMPLIANCE');
+INSERT INTO ST_DEPARTMENT(ID, NAME, CODE) VALUES (3, 'Good inspection', 'GOOD_INSPECTION');
+INSERT INTO ST_DEPARTMENT(ID, NAME, CODE) VALUES (4, 'Journey supervision', 'JOURNEY_SUPERVISION');
