@@ -44,7 +44,7 @@ public class PersistenceConfig {
     }
 
     // TODO
-    // ------ CONFIG DE TEST
+    // ------ CONFIG DE TEST : essayer de pointer sur une base PostGreSQL
 
     private Properties getHibernateProperties() {
         Properties prop = new Properties();

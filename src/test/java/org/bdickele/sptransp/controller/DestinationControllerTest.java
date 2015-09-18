@@ -3,15 +3,10 @@ package org.bdickele.sptransp.controller;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import org.bdickele.sptransp.SpaceTransportBackEnd;
 import org.bdickele.sptransp.controller.dto.DestinationDTO;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -28,10 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration test for DestinationController
  * Created by Bertrand DICKELE
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SpaceTransportBackEnd.class)
-@WebAppConfiguration
-public class DestinationControllerTest {
+public class DestinationControllerTest extends AbstractControllerTest {
 
     @Autowired
     private WebApplicationContext context;
