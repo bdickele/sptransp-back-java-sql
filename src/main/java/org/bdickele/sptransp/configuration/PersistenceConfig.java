@@ -58,7 +58,12 @@ public class PersistenceConfig {
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
+                .setName("testdb")
+                .addScript("classpath:sql/create_sequences.sql")
                 .addScript("classpath:sql/create_tables.sql")
+                .addScript("classpath:sql/basedata_destination.sql")
+                .addScript("classpath:sql/basedata_goods.sql")
+                .addScript("classpath:sql/basedata_department.sql")
                 .build();
     }
 
