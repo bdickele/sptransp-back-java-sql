@@ -11,9 +11,8 @@ import java.util.List;
  */
 public interface DestinationRepository extends JpaRepository<Destination, Long> {
 
-    @Override
     @Cacheable("destinations")
-    List<Destination> findAll();
+    List<Destination> findAllByOrderByNameAsc();
 
     /**
      * @param code Destination's code

@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bdickele.sptransp.domain.audit.AgreementRuleAud;
 import org.bdickele.sptransp.domain.audit.AgreementRuleVisaAud;
+import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
 import org.bdickele.sptransp.domain.converter.RequestAgreementStatusConverter;
 import org.bdickele.sptransp.domain.converter.RequestOverallStatusConverter;
 
@@ -77,12 +78,14 @@ public class Request implements Serializable {
     private List<RequestAgreementVisa> agreementVisas;
 
     @Column(name = "CREATION_DATE")
+    @Convert(converter = LocalDateTImeConverter.class)
     private LocalDateTime creationDate;
 
     @Column(name = "CREATION_USER")
     private String creationUser;
 
     @Column(name = "UPDATE_DATE")
+    @Convert(converter = LocalDateTImeConverter.class)
     private LocalDateTime updateDate;
 
     @Column(name = "UPDATE_USER")

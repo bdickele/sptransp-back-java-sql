@@ -5,20 +5,19 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.bdickele.sptransp.domain.Destination;
+import org.bdickele.sptransp.domain.Department;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Destination object returned by web services
  * Created by Bertrand DICKELE
  */
 @JsonPropertyOrder({"code", "name"})
-public class DestinationDTO implements SpaceTranspDTO, Serializable {
+public class DepartmentDTO implements SpaceTranspDTO, Serializable {
 
-    private static final long serialVersionUID = -4111120841917837925L;
+    private static final long serialVersionUID = 6129408205740913875L;
 
     @JsonProperty(value = "code")
     private String code;
@@ -29,19 +28,19 @@ public class DestinationDTO implements SpaceTranspDTO, Serializable {
 
     /**
      * Build method
-     * @param destination
+     * @param department
      * @return
      */
-    public static DestinationDTO build(Destination destination) {
-        DestinationDTO dto = new DestinationDTO();
-        dto.code = destination.getCode();
-        dto.name = destination.getName();
+    public static DepartmentDTO build(Department department) {
+        DepartmentDTO dto = new DepartmentDTO();
+        dto.code = department.getCode();
+        dto.name = department.getName();
         return dto;
     }
 
-    public static List<DestinationDTO> build(List<Destination> destinations) {
-        return destinations.stream()
-                .map(DestinationDTO::build)
+    public static List<DepartmentDTO> build(List<Department> departments) {
+        return departments.stream()
+                .map(DepartmentDTO::build)
                 .collect(Collectors.toList());
     }
 
@@ -56,7 +55,7 @@ public class DestinationDTO implements SpaceTranspDTO, Serializable {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        DestinationDTO other = (DestinationDTO) obj;
+        DepartmentDTO other = (DepartmentDTO) obj;
         return new EqualsBuilder()
                 .append(this.code, other.code)
                 .isEquals();

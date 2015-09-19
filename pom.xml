@@ -16,7 +16,7 @@
         <spring.boot.version>1.2.5.RELEASE</spring.boot.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
         <assertj.version>3.1.0</assertj.version>
-        <hibernate.version>4.3.10.Final</hibernate.version>
+        <hibernate.version>5.0.1.Final</hibernate.version>
         <guava.version>18.0</guava.version>
         <jackson.version>2.6.2</jackson.version>
     </properties>

@@ -3,6 +3,7 @@ package org.bdickele.sptransp.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
 import org.bdickele.sptransp.domain.converter.RequestAgreementStatusConverter;
 import org.bdickele.sptransp.domain.converter.SeniorityConverter;
 
@@ -49,6 +50,7 @@ public class RequestAgreementVisa implements Serializable {
     private Seniority seniority;
 
     @Column(name = "CREATION_DATE")
+    @Convert(converter = LocalDateTImeConverter.class)
     private LocalDateTime creationDate;
 
 

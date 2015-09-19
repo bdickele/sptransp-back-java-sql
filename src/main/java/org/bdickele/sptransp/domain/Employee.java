@@ -3,6 +3,7 @@ package org.bdickele.sptransp.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
 import org.bdickele.sptransp.domain.converter.SeniorityConverter;
 
 import javax.persistence.*;
@@ -41,12 +42,14 @@ public class Employee implements Serializable {
     private Seniority seniority;
 
     @Column(name = "CREATION_DATE")
+    @Convert(converter = LocalDateTImeConverter.class)
     private LocalDateTime creationDate;
 
     @Column(name = "CREATION_USER")
     private String creationUser;
 
     @Column(name = "UPDATE_DATE")
+    @Convert(converter = LocalDateTImeConverter.class)
     private LocalDateTime updateDate;
 
     @Column(name = "UPDATE_USER")

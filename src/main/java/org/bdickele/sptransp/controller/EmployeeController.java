@@ -1,7 +1,7 @@
 package org.bdickele.sptransp.controller;
 
-import org.bdickele.sptransp.controller.dto.DestinationDTO;
-import org.bdickele.sptransp.repository.DestinationRepository;
+import org.bdickele.sptransp.controller.dto.EmployeeDTO;
+import org.bdickele.sptransp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,16 +13,16 @@ import java.util.List;
  * Created by Bertrand DICKELE
  */
 @RestController
-public class DestinationController {
+public class EmployeeController {
 
     @Autowired
-    private DestinationRepository repository;
+    private EmployeeRepository repository;
 
 
-    @RequestMapping(path="/destinations",
+    @RequestMapping(path="/employees",
             method= RequestMethod.GET,
             produces="application/json")
-    public List<DestinationDTO> destinations() {
-        return DestinationDTO.build(repository.findAllByOrderByNameAsc());
+    public List<EmployeeDTO> employees() {
+        return EmployeeDTO.build(repository.findAllByOrderByFullNameAsc());
     }
 }

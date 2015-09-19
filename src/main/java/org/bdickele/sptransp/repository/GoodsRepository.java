@@ -9,9 +9,8 @@ import java.util.List;
 /**
  * Created by Bertrand DICKELE
  */
-public interface GoodRepository extends JpaRepository<Goods, Long> {
+public interface GoodsRepository extends JpaRepository<Goods, Long> {
 
-    @Override
     @Cacheable("goods")
-    List<Goods> findAll();
+    List<Goods> findAllByOrderByNameAsc();
 }

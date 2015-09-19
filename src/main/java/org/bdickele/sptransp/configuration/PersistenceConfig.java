@@ -64,7 +64,7 @@ public class PersistenceConfig {
                 .addScript("classpath:sql/basedata_destination.sql")
                 .addScript("classpath:sql/basedata_goods.sql")
                 .addScript("classpath:sql/basedata_department.sql")
+                .addScript("classpath:sql/testdata_employees.sql")
                 .build();
     }
-
 }

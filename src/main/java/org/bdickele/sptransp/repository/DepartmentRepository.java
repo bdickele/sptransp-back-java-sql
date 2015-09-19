@@ -11,7 +11,6 @@ import java.util.List;
  */
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
-    @Override
     @Cacheable("departments")
     List<Department> findAll();
 }

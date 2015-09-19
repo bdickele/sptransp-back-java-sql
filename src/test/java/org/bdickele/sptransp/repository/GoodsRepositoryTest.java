@@ -15,19 +15,19 @@ import static org.assertj.core.api.StrictAssertions.tuple;
 public class GoodsRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
-    private GoodRepository repository;
+    private GoodsRepository repository;
 
 
     @Test
     public void should_find_all_goods() {
-        List<Goods> goods = repository.findAll();
+        List<Goods> goods = repository.findAllByOrderByNameAsc();
         assertThat(goods).hasSize(5);
 
         assertThat(goods).extracting("name", "code").containsExactly(
-                tuple("Oil", "OIL"),
                 tuple("Food", "FOOD"),
                 tuple("Machine tool", "MACHINE_TOOL"),
-                tuple("Weapon", "WEAPON"),
-                tuple("Medicine", "MEDICINE"));
+                tuple("Medicine", "MEDICINE"),
+                tuple("Oil", "OIL"),
+                tuple("Weapon", "WEAPON"));
     }
 }
