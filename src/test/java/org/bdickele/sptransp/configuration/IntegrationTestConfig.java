@@ -1,5 +1,6 @@
 package org.bdickele.sptransp.configuration;
 
+import org.bdickele.sptransp.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cache.CacheManager;
@@ -32,6 +33,10 @@ public class IntegrationTestConfig {
     @Autowired
     Environment env;
 
+    @Bean
+    public EmployeeService employeeService() {
+        return new EmployeeService();
+    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

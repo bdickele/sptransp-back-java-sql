@@ -61,6 +61,30 @@ public class EmployeeDTO implements SpaceTranspDTO, Serializable {
                 .collect(Collectors.toList());
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public DepartmentDTO getDepartment() {
+        return department;
+    }
+
+    public int getSeniority() {
+        return seniority;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public String getCreationUser() {
+        return creationUser;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

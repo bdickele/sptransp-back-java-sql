@@ -13,4 +13,7 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
     @Cacheable("departments")
     List<Department> findAll();
+
+    @Cacheable("department")
+    Department findByCode(String code);
 }

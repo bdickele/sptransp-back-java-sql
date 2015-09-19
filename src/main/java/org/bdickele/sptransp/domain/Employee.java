@@ -141,6 +141,14 @@ public class Employee implements Serializable {
         return updateUser;
     }
 
+    public void setUpdateDate(LocalDateTime updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

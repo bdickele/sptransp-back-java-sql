@@ -1,12 +1,15 @@
 package org.bdickele.sptransp.controller;
 
 import org.bdickele.sptransp.controller.dto.EmployeeDTO;
+import org.bdickele.sptransp.domain.Employee;
 import org.bdickele.sptransp.repository.EmployeeRepository;
+import org.bdickele.sptransp.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -18,11 +21,23 @@ public class EmployeeController {
     @Autowired
     private EmployeeRepository repository;
 
+    @Autowired
+    private EmployeeService service;
+
 
     @RequestMapping(path="/employees",
             method= RequestMethod.GET,
             produces="application/json")
     public List<EmployeeDTO> employees() {
         return EmployeeDTO.build(repository.findAllByOrderByFullNameAsc());
+    }
+
+    @RequestMapping(path="/employee",
+            method= RequestMethod.PUT,
+            consumes="application/json")
+    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO, Principal principal) {
+        Employee employee = service.update(employeeDTO.getUid(), employeeDTO.getDepartment().getCode(),
+                employeeDTO.getSeniority(), principal.getName());
+        return EmployeeDTO.build(employee);
     }
 }

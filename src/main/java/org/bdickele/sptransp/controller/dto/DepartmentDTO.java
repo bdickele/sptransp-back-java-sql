@@ -44,6 +44,14 @@ public class DepartmentDTO implements SpaceTranspDTO, Serializable {
                 .collect(Collectors.toList());
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
