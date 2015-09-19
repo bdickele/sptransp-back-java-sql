@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * Employee object returned by web services
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"uid", "fullName", "department", "seniority", "creationDate", "creationUser"})
+@JsonPropertyOrder({"uid", "fullName", "departmentCode", "seniority", "creationDate", "creationUser"})
 public class EmployeeDTO implements SpaceTranspDTO, Serializable {
 
     private static final long serialVersionUID = -603242397122687641L;
@@ -26,11 +26,11 @@ public class EmployeeDTO implements SpaceTranspDTO, Serializable {
     @JsonProperty(value = "fullName")
     private String fullName;
 
-    @JsonProperty(value = "department")
-    private DepartmentDTO department;
+    @JsonProperty(value = "departmentCode")
+    private String departmentCode;
 
     @JsonProperty(value = "seniority")
-    private int seniority;
+    private Integer seniority;
 
     @JsonProperty(value = "creationDate")
     private String creationDate;
@@ -48,7 +48,7 @@ public class EmployeeDTO implements SpaceTranspDTO, Serializable {
         EmployeeDTO dto = new EmployeeDTO();
         dto.uid = employee.getUid();
         dto.fullName = employee.getFullName();
-        dto.department = DepartmentDTO.build(employee.getDepartment());
+        dto.departmentCode = employee.getDepartment().getCode();
         dto.seniority = employee.getSeniority().getValue();
         dto.creationDate = dto.formatDate(employee.getCreationDate());
         dto.creationUser = employee.getCreationUser();
@@ -69,11 +69,11 @@ public class EmployeeDTO implements SpaceTranspDTO, Serializable {
         return fullName;
     }
 
-    public DepartmentDTO getDepartment() {
-        return department;
+    public String getDepartmentCode() {
+        return departmentCode;
     }
 
-    public int getSeniority() {
+    public Integer getSeniority() {
         return seniority;
     }
 

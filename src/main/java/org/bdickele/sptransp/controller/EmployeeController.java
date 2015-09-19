@@ -5,9 +5,8 @@ import org.bdickele.sptransp.domain.Employee;
 import org.bdickele.sptransp.repository.EmployeeRepository;
 import org.bdickele.sptransp.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -35,9 +34,10 @@ public class EmployeeController {
     @RequestMapping(path="/employee",
             method= RequestMethod.PUT,
             consumes="application/json")
-    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO, Principal principal) {
-        Employee employee = service.update(employeeDTO.getUid(), employeeDTO.getDepartment().getCode(),
-                employeeDTO.getSeniority(), principal.getName());
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO dto, Principal principal) {
+        Employee employee = service.update(dto.getUid(), dto.getFullName(), dto.getDepartmentCode(),
+                dto.getSeniority(), principal.getName());
         return EmployeeDTO.build(employee);
     }
 }

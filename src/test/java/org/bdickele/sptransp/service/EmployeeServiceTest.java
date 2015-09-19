@@ -29,10 +29,12 @@ public class EmployeeServiceTest extends AbstractServiceTest {
 
         int currentVersion = employee.getVersion();
 
-        Employee updatedEmployee = service.update(uid, "SHUTTLE_COMPLIANCE", 80, "testuser");
+        Employee updatedEmployee = service.update(uid, "John DOE2", "SHUTTLE_COMPLIANCE", 80, "testuser");
 
+        assertThat(updatedEmployee.getFullName()).isEqualTo("John DOE2");
         assertThat(updatedEmployee.getDepartment().getCode()).isEqualTo("SHUTTLE_COMPLIANCE");
         assertThat(updatedEmployee.getSeniority().getValue()).isEqualTo(80);
         assertThat(updatedEmployee.getVersion()).isEqualTo(currentVersion + 1);
+        assertThat(updatedEmployee.getUpdateUser()).isEqualTo("testuser");
     }
 }

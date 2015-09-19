@@ -27,11 +27,12 @@ public class EmployeeService extends AbstractService {
 
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public Employee update(String uid, String departmentCode, int seniority, String updateUser) {
+    public Employee update(String uid, String fullName, String departmentCode, Integer seniority, String updateUser) {
         // UID cannot be updated : we use it to retrieve current employee
         Employee employee = employeeRepository.findByUid(uid);
         Department department = departmentRepository.findByCode(departmentCode);
 
+        employee.setFullName(fullName);
         employee.setDepartment(department);
         employee.setSeniority(new Seniority(seniority));
         employee.setUpdateUser(updateUser);
