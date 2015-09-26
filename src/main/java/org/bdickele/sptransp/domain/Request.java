@@ -48,8 +48,12 @@ public class Request implements Serializable {
     private Goods goods;
 
     @ManyToOne
-    @JoinColumn(name = "ID_DESTINATION")
-    private Destination destination;
+    @JoinColumn(name = "ID_DEPARTURE")
+    private Destination departure;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_ARRIVAL")
+    private Destination arrival;
 
     @Column(name = "OVERALL_STATUS")
     @Convert(converter = RequestOverallStatusConverter.class)
@@ -97,19 +101,20 @@ public class Request implements Serializable {
      * @param reference
      * @param customer
      * @param goods
-     * @param destination
+     * @param arrival
      * @param ruleVersion
      * @return
      */
     public static Request build(Long id, String reference, Customer customer, Goods goods,
-                                Destination destination, AgreementRuleAud ruleVersion) {
+                                Destination departure, Destination arrival, AgreementRuleAud ruleVersion) {
         Request r = new Request();
         r.id = id;
         r.version = 0;
         r.reference = reference;
         r.customer = customer;
         r.goods = goods;
-        r.destination = destination;
+        r.departure = departure;
+        r.arrival = arrival;
         r.ruleAud = ruleVersion;
         r.overallStatus = RequestOverallStatus.PENDING;
         r.agreementStatus = RequestAgreementStatus.PENDING;
@@ -244,8 +249,12 @@ public class Request implements Serializable {
         return goods;
     }
 
-    public Destination getDestination() {
-        return destination;
+    public Destination getDeparture() {
+        return departure;
+    }
+
+    public Destination getArrival() {
+        return arrival;
     }
 
     public RequestOverallStatus getOverallStatus() {
@@ -266,6 +275,10 @@ public class Request implements Serializable {
 
     public void setCancellationComment(String cancellationComment) {
         this.cancellationComment = cancellationComment;
+    }
+
+    public List<RequestAgreementVisa> getAgreementVisas() {
+        return agreementVisas;
     }
 
     public int getNextAgreementVisaRank() {
@@ -318,7 +331,8 @@ public class Request implements Serializable {
                 .append("id", id)
                 .append("reference", reference)
                 .append("customer", customer.getFullName())
-                .append("destination", destination.getName())
+                .append("departure", departure.getName())
+                .append("arrival", arrival.getName())
                 .append("good", goods.getName())
                 .append("overallStatus", overallStatus)
                 .append("agreementStatus", agreementStatus)

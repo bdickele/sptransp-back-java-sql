@@ -15,6 +15,7 @@ public final class DomainTestData {
     public static final Goods GOODS_WEAPON = Goods.build(ID++, "WEAPON", "Weapon");
     public static final Goods GOODS_MEDICINE = Goods.build(ID++, "MEDICINE", "Medicine");
 
+    public static final Destination DESTINATION_EARTH = Destination.build(ID++, "EARTH", "Earth");
     public static final Destination DESTINATION_MOON = Destination.build(ID++, "MOON", "Moon");
     public static final Destination DESTINATION_MARS = Destination.build(ID++, "MARS", "Mars");
     public static final Destination DESTINATION_TITAN = Destination.build(ID++, "TITAN", "Titan");

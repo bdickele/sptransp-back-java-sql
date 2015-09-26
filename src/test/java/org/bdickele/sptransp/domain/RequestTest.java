@@ -35,7 +35,7 @@ public class RequestTest {
 
     @Before
     public void setUp() {
-        request = Request.build(100L, "UID_REQUEST", CUSTOMER_FOO, GOODS_FOOD, DESTINATION_MOON, RULE_AUD);
+        request = Request.build(100L, "UID_REQUEST", CUSTOMER_FOO, GOODS_FOOD, DESTINATION_EARTH, DESTINATION_MOON, RULE_AUD);
     }
 
     @Test
@@ -101,7 +101,7 @@ public class RequestTest {
         // I override the request with a request without any expected agreement visa
         AgreementRule emptyRule = buildRule(1L, DESTINATION_MOON, GOODS_FOOD);
         AgreementRuleAud emptyRuleAud = AgreementRuleAud.build(emptyRule);
-        request = Request.build(101L, "UID_REQUEST", CUSTOMER_FOO, GOODS_FOOD, DESTINATION_MOON, emptyRuleAud);
+        request = Request.build(101L, "UID_REQUEST", CUSTOMER_FOO, GOODS_FOOD, DESTINATION_EARTH, DESTINATION_MOON, emptyRuleAud);
 
         test_expected_exception(COULD_NOT_FIND_NEXT_EXPECTED_AGREEMENT_VISA,
                 req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C", NOW));
