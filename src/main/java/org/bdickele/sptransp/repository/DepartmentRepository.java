@@ -12,7 +12,7 @@ import java.util.List;
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
     @Cacheable("departments")
-    List<Department> findAll();
+    List<Department> findAllByOrderByNameAsc();
 
     @Cacheable("department")
     Department findByCode(String code);
