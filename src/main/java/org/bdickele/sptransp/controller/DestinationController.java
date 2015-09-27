@@ -13,14 +13,14 @@ import java.util.List;
  * Created by Bertrand DICKELE
  */
 @RestController
+@RequestMapping("/destinations")
 public class DestinationController {
 
     @Autowired
     private DestinationRepository repository;
 
 
-    @RequestMapping(path="/destinations",
-            method= RequestMethod.GET,
+    @RequestMapping(method= RequestMethod.GET,
             produces="application/json")
     public List<DestinationDTO> destinations() {
         return DestinationDTO.build(repository.findAllByOrderByNameAsc());

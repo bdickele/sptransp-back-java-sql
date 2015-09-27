@@ -13,14 +13,14 @@ import java.util.List;
  * Created by Bertrand DICKELE
  */
 @RestController
+@RequestMapping("/goods")
 public class GoodsController {
 
     @Autowired
     private GoodsRepository repository;
 
 
-    @RequestMapping(path="/goods",
-            method= RequestMethod.GET,
+    @RequestMapping(method= RequestMethod.GET,
             produces="application/json")
     public List<GoodsDTO> goods() {
         return GoodsDTO.build(repository.findAllByOrderByNameAsc());

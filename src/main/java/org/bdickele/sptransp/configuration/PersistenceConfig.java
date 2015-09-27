@@ -2,7 +2,6 @@ package org.bdickele.sptransp.configuration;
 
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -19,7 +18,6 @@ import java.util.Properties;
  * Created by Bertrand DICKELE
  */
 @Configuration
-@ComponentScan
 @EnableJpaRepositories(basePackages = {"org.bdickele.sptransp.repository"})
 public class PersistenceConfig {
 

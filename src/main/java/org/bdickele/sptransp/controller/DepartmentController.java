@@ -13,13 +13,13 @@ import java.util.List;
  * Created by Bertrand DICKELE
  */
 @RestController
+@RequestMapping("/departments")
 public class DepartmentController {
 
     @Autowired
     private DepartmentRepository repository;
 
-    @RequestMapping(path="/departments",
-            method= RequestMethod.GET,
+    @RequestMapping(method= RequestMethod.GET,
             produces="application/json")
     public List<DepartmentDTO> departments() {
         return DepartmentDTO.build(repository.findAllByOrderByNameAsc());

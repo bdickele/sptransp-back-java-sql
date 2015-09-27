@@ -15,6 +15,7 @@ import java.util.List;
  * Created by Bertrand DICKELE
  */
 @RestController
+@RequestMapping("/employees")
 public class EmployeeController {
 
     @Autowired
@@ -24,14 +25,13 @@ public class EmployeeController {
     private EmployeeService service;
 
 
-    @RequestMapping(path="/employees",
-            method= RequestMethod.GET,
+    @RequestMapping(method= RequestMethod.GET,
             produces="application/json")
     public List<EmployeeDTO> employees() {
         return EmployeeDTO.build(repository.findAllByOrderByFullNameAsc());
     }
 
-    @RequestMapping(path="/employee",
+    @RequestMapping(
             method= RequestMethod.PUT,
             consumes="application/json")
     @ResponseStatus(HttpStatus.OK)
