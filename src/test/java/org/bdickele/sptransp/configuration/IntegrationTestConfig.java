@@ -24,9 +24,9 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan
-@DirtiesContext
 @EnableAutoConfiguration
 @EnableTransactionManagement
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @EnableJpaRepositories(basePackages = {"org.bdickele.sptransp.repository"})
 public class IntegrationTestConfig {
 
@@ -69,6 +69,7 @@ public class IntegrationTestConfig {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .setName("testdb")
+                .addScript("classpath:sql/drop_tables.sql")
                 .addScript("classpath:sql/create_sequences.sql")
                 .addScript("classpath:sql/create_tables.sql")
                 .addScript("classpath:sql/basedata_destination.sql")

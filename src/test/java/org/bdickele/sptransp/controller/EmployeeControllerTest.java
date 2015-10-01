@@ -58,25 +58,25 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         MappingIterator<EmployeeDTO> mappingIterator = reader.readValues(result);
         List<EmployeeDTO> dtoList = mappingIterator.readAll();
 
-        assertThat(dtoList).hasSize(1);
+        // I check only John DOE, not John DOE 2, because that latter is modified by another test
         assertThat(dtoList)
-                .hasSize(1)
-                .extracting("uid", "fullName", "departmentCode", "seniority").containsExactly(
+                .hasSize(2)
+                .extracting("uid", "fullName", "departmentCode", "seniority").contains(
                     tuple("doejoh01", "John DOE", "LAW_COMPLIANCE", 60));
     }
 
     @Test
     public void update_of_employee_should_work() throws Exception {
-        String uid = "doejoh01";
+        String uid = "doejoh02";
         Employee employee = repository.findByUid(uid);
 
         assertThat(employee.getDepartment().getCode()).isEqualTo("LAW_COMPLIANCE");
         assertThat(employee.getSeniority().getValue()).isEqualTo(60);
 
-        MvcResult mvcResult = mvc.perform(put("/employee")
+        MvcResult mvcResult = mvc.perform(put("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content("{\"uid\": \"doejoh01\", \"fullName\": \"John DOE2\", " +
+                .content("{\"uid\": \"doejoh02\", \"fullName\": \"John DOE 2.2\", " +
                     "\"departmentCode\": \"SHUTTLE_COMPLIANCE\", \"seniority\": 80}")
                 .principal(mockPrincipal))
                 .andExpect(status().isOk())
@@ -85,7 +85,7 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         String result = mvcResult.getResponse().getContentAsString();
 
         EmployeeDTO dto = reader.readValue(result);
-        assertThat(dto.getFullName()).isEqualTo("John DOE2");
+        assertThat(dto.getFullName()).isEqualTo("John DOE 2.2");
         assertThat(dto.getDepartmentCode()).isEqualTo("SHUTTLE_COMPLIANCE");
         assertThat(dto.getSeniority()).isEqualTo(80);
     }

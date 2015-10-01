@@ -1,6 +1,7 @@
 package org.bdickele.sptransp.service;
 
 import org.bdickele.sptransp.configuration.IntegrationTestConfig;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -10,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = IntegrationTestConfig.class)
+@Ignore
 public class AbstractServiceTest {
 
 }
