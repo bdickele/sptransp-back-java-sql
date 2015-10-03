@@ -24,7 +24,7 @@ public class EmployeeAud implements Serializable {
     @EmbeddedId
     private EmployeeAudPK pk;
 
-    @Column(name = "UID")
+    @Column(name = "UID_EMPLOYEE")
     private String uid;
 
     @Column(name = "FULL_NAME")

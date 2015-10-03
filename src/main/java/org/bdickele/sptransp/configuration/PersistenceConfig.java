@@ -59,10 +59,8 @@ public class PersistenceConfig {
                 .setName("testdb")
                 .addScript("classpath:sql/create_sequences.sql")
                 .addScript("classpath:sql/create_tables.sql")
-                .addScript("classpath:sql/basedata_destination.sql")
-                .addScript("classpath:sql/basedata_goods.sql")
-                .addScript("classpath:sql/basedata_department.sql")
-                .addScript("classpath:sql/testdata_employees.sql")
+                .addScript("classpath:sql/basedata.sql")
+                .addScript("classpath:sql/testdata.sql")
                 .build();
     }
 }

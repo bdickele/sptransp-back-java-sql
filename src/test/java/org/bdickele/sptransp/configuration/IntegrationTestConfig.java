@@ -1,6 +1,7 @@
 package org.bdickele.sptransp.configuration;
 
 import org.bdickele.sptransp.service.EmployeeService;
+import org.postgresql.jdbc2.optional.SimpleDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cache.CacheManager;
@@ -11,8 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -60,24 +59,34 @@ public class IntegrationTestConfig {
         Properties prop = new Properties();
         prop.put("hibernate.format_sql", "true");
         prop.put("hibernate.show_sql", "true");
-        prop.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        //prop.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        prop.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         return prop;
     }
 
     @Bean
     public DataSource dataSource() {
+        SimpleDataSource dataSource = new SimpleDataSource();
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/sptransp_dev");
+        dataSource.setCurrentSchema("sptransp");
+        dataSource.setUser("postgres");
+        dataSource.setPassword("admin");
+        return dataSource;
+    }
+
+    /*
+    @Bean
+    public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .setName("testdb")
-                .addScript("classpath:sql/drop_tables.sql")
                 .addScript("classpath:sql/create_sequences.sql")
                 .addScript("classpath:sql/create_tables.sql")
-                .addScript("classpath:sql/basedata_destination.sql")
-                .addScript("classpath:sql/basedata_goods.sql")
-                .addScript("classpath:sql/basedata_department.sql")
-                .addScript("classpath:sql/testdata_employees.sql")
+                .addScript("classpath:sql/basedata.sql")
+                .addScript("classpath:sql/testdata.sql")
                 .build();
     }
+    */
 
     @Bean
     public CacheManager cacheManager() {

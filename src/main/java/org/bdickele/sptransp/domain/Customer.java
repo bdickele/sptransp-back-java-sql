@@ -21,7 +21,7 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MAIN")
     private Long id;
 
-    @Column(name = "UID")
+    @Column(name = "UID_CUSTOMER")
     private String uid;
 
     @Column(name = "FULL_NAME")

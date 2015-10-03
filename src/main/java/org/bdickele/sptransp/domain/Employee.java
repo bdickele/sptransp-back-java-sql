@@ -27,7 +27,7 @@ public class Employee implements Serializable {
     @Version
     private Integer version;
 
-    @Column(name = "UID")
+    @Column(name = "UID_EMPLOYEE")
     private String uid;
 
     @Column(name = "FULL_NAME")
