@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery(
-                        "select uid_user, password, 1 from ST_USER where uid_user=?")
+                        "select uid_user, password, 1 from st_user where uid_user=?")
                 .authoritiesByUsernameQuery(
                         "select u.uid_user, r.user_role " +
                         "from st_user u, st_profile_role r " +

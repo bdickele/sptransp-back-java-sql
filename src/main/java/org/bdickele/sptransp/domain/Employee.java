@@ -3,7 +3,6 @@ package org.bdickele.sptransp.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
 import org.bdickele.sptransp.domain.converter.SeniorityConverter;
 
 import javax.persistence.*;
@@ -15,20 +14,10 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "ST_EMPLOYEE")
-@SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
-public class Employee implements Serializable {
+@DiscriminatorValue(User.USER_TYPE_EMPLOYEE)
+public class Employee extends User implements Serializable {
 
     private static final long serialVersionUID = -7870220121179537659L;
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MAIN")
-    private Long id;
-
-    @Version
-    private Integer version;
-
-    @Column(name = "UID_EMPLOYEE")
-    private String uid;
 
     @Column(name = "FULL_NAME")
     private String fullName;
@@ -40,20 +29,6 @@ public class Employee implements Serializable {
     @Column(name = "SENIORITY")
     @Convert(converter = SeniorityConverter.class)
     private Seniority seniority;
-
-    @Column(name = "CREATION_DATE")
-    @Convert(converter = LocalDateTImeConverter.class)
-    private LocalDateTime creationDate;
-
-    @Column(name = "CREATION_USER")
-    private String creationUser;
-
-    @Column(name = "UPDATE_DATE")
-    @Convert(converter = LocalDateTImeConverter.class)
-    private LocalDateTime updateDate;
-
-    @Column(name = "UPDATE_USER")
-    private String updateUser;
 
 
     /**
@@ -70,7 +45,9 @@ public class Employee implements Serializable {
                                  Seniority seniority, String creationUserUid) {
         Employee e = new Employee();
         e.id = id;
+        e.version = 0;
         e.uid = uid;
+        e.profile = Profile.READER_ALL;
         e.fullName = fullName;
         e.department = department;
         e.seniority = seniority;
@@ -83,22 +60,6 @@ public class Employee implements Serializable {
         e.updateUser = creationUserUid;
 
         return e;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 
     public String getFullName() {
@@ -123,30 +84,6 @@ public class Employee implements Serializable {
 
     public void setSeniority(Seniority seniority) {
         this.seniority = seniority;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public String getCreationUser() {
-        return creationUser;
-    }
-
-    public LocalDateTime getUpdateDate() {
-        return updateDate;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateDate(LocalDateTime updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
     }
 
     @Override

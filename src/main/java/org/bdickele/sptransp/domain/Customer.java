@@ -6,23 +6,17 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Created by Bertrand DICKELE
  */
 @Entity
 @Table(name = "ST_CUSTOMER")
-@SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
-public class Customer implements Serializable {
+@DiscriminatorValue("C")
+public class Customer extends User implements Serializable {
 
     private static final long serialVersionUID = 4802565099997858014L;
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MAIN")
-    private Long id;
-
-    @Column(name = "UID_CUSTOMER")
-    private String uid;
 
     @Column(name = "FULL_NAME")
     private String fullName;
@@ -38,22 +32,25 @@ public class Customer implements Serializable {
      * @param id
      * @param uid
      * @param fullName
+     * @param creationUserUid
      * @return New Customer
      */
-    public static Customer build(Long id, String uid, String fullName) {
+    public static Customer build(Long id, String uid, String fullName, String creationUserUid) {
         Customer c = new Customer();
         c.id = id;
+        c.version = 0;
         c.uid = uid;
+        c.profile = Profile.READER_ALL;
         c.fullName = fullName;
+
+        LocalDateTime date = LocalDateTime.now();
+        c.creationDate = date;
+        c.updateDate = date;
+
+        c.creationUser = creationUserUid;
+        c.updateUser = creationUserUid;
+
         return c;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getUid() {
-        return uid;
     }
 
     public String getFullName() {

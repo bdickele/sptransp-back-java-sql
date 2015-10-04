@@ -45,7 +45,7 @@ public final class DomainTestData {
     public static final Employee EMP_JOU_50 = buildEmployee(ID++, DEPARTMENT_JOURNEY_SUPERVISOR, SENIORITY_50);
     public static final Employee EMP_JOU_80 = buildEmployee(ID++, DEPARTMENT_JOURNEY_SUPERVISOR, SENIORITY_80);
 
-    public static final Customer CUSTOMER_FOO = Customer.build(ID++, "CUSTOMER_UID", "The Customer");
+    public static final Customer CUSTOMER_FOO = Customer.build(ID++, "CUSTOMER_UID", "The Customer", USER_UID);
 
 
     public static AgreementRule buildRule(Long id, Destination destination, Goods goods) {
