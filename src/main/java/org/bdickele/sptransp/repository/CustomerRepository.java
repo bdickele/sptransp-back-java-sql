@@ -13,4 +13,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Cacheable("customers")
     List<Customer> findAllByOrderByFullNameAsc();
+
+    Customer findByUid(String uid);
 }

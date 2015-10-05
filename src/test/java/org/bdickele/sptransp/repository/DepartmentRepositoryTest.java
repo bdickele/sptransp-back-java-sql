@@ -21,12 +21,13 @@ public class DepartmentRepositoryTest extends AbstractRepositoryTest {
     @Test
     public void should_find_all_departments() {
         List<Department> departments = repository.findAllByOrderByNameAsc();
-        assertThat(departments).hasSize(4);
+        assertThat(departments).hasSize(5);
 
-        assertThat(departments).extracting("id", "name").containsExactly(
-                tuple(3L, "Good inspection"),
-                tuple(4L, "Journey supervision"),
-                tuple(1L, "Law compliance"),
-                tuple(2L, "Shuttle compliance"));
+        assertThat(departments).extracting("id", "code", "name").containsExactly(
+                tuple(3L, "GOOD_INSPECTION", "Good inspection"),
+                tuple(5L, "HR", "Human resources"),
+                tuple(4L, "JOURNEY_SUPERVISION", "Journey supervision"),
+                tuple(1L, "LAW_COMPLIANCE", "Law compliance"),
+                tuple(2L, "SHUTTLE_COMPLIANCE", "Shuttle compliance"));
     }
 }

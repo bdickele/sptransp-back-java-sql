@@ -21,6 +21,8 @@ public class EmployeeServiceTest extends AbstractServiceTest {
 
     @Test
     public void update_of_employee_should_work() {
+        //TODO deletion et insertion via DBSetup
+
         String uid = "doejoh01";
         Employee employee = repository.findByUid(uid);
 

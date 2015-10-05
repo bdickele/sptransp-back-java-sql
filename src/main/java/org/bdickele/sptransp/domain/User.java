@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "ST_USER")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "userType", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "USER_TYPE", discriminatorType = DiscriminatorType.STRING)
 @SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
 public class User {
 

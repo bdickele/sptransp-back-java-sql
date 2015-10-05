@@ -1,4 +1,4 @@
-package org.bdickele.sptransp.service;
+package org.bdickele.sptransp.security;
 
 import org.bdickele.sptransp.security.SpTranspUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

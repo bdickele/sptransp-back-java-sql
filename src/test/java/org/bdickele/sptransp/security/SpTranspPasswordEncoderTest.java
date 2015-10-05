@@ -1,6 +1,5 @@
-package org.bdickele.sptransp;
+package org.bdickele.sptransp.security;
 
-import org.bdickele.sptransp.security.SpTranspPasswordEncoder;
 import org.junit.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

@@ -40,8 +40,9 @@ public class DestinationControllerTest extends AbstractControllerTest {
         MappingIterator<DestinationDTO> mappingIterator = reader.readValues(result);
         List<DestinationDTO> dtoList = mappingIterator.readAll();
 
-        assertThat(dtoList).hasSize(3);
+        assertThat(dtoList).hasSize(4);
         assertThat(dtoList).extracting("code", "name").containsExactly(
+                tuple("EARTH", "Earth"),
                 tuple("MARS", "Mars"),
                 tuple("MOON", "Moon"),
                 tuple("TITAN", "Titan"));

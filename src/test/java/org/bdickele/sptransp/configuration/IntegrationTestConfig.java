@@ -1,5 +1,7 @@
 package org.bdickele.sptransp.configuration;
 
+import org.bdickele.sptransp.security.SpTranspUserDetailsService;
+import org.bdickele.sptransp.service.CustomerService;
 import org.bdickele.sptransp.service.EmployeeService;
 import org.postgresql.jdbc2.optional.SimpleDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -25,7 +29,7 @@ import java.util.Properties;
 @ComponentScan
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @EnableJpaRepositories(basePackages = {"org.bdickele.sptransp.repository"})
 public class IntegrationTestConfig {
 
@@ -33,8 +37,23 @@ public class IntegrationTestConfig {
     Environment env;
 
     @Bean
+    public CustomerService customerService() {
+        return new CustomerService();
+    }
+
+    @Bean
     public EmployeeService employeeService() {
         return new EmployeeService();
+    }
+
+    @Bean
+    public SpTranspUserDetailsService userDetailsService() {
+        return new SpTranspUserDetailsService();
+    }
+
+    @Bean
+    public PasswordEncoder devPasswordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean

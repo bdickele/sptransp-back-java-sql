@@ -3,14 +3,13 @@ package org.bdickele.sptransp.controller;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bdickele.sptransp.controller.dto.EmployeeDTO;
-import org.bdickele.sptransp.domain.Employee;
 import org.bdickele.sptransp.repository.EmployeeRepository;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -21,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.StrictAssertions.tuple;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -58,16 +56,18 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         MappingIterator<EmployeeDTO> mappingIterator = reader.readValues(result);
         List<EmployeeDTO> dtoList = mappingIterator.readAll();
 
-        // I check only John DOE, not John DOE 2, because that latter is modified by another test
-        assertThat(dtoList)
-                .hasSize(2)
-                .extracting("uid", "fullName", "departmentCode", "seniority").contains(
-                    tuple("doejoh01", "John DOE", "LAW_COMPLIANCE", 60));
+        // I check only one user (and not the modified one)
+        assertThat(dtoList.size()).isGreaterThanOrEqualTo(30);
+        assertThat(dtoList).extracting("uid", "fullName", "departmentCode", "seniority").contains(
+                tuple("kvcquz31", "Kathleen Carpenter", "JOURNEY_SUPERVISION", 20),
+                tuple("whlofu42", "Helen Cox", "LAW_COMPLIANCE", 20));
     }
 
     @Test
     public void update_of_employee_should_work() throws Exception {
-        String uid = "doejoh02";
+        Assert.fail("Test de MAJ d'un employe re-entrant: utiliser DB Setup");
+        /*
+        String uid = "xhtqyi65";
         Employee employee = repository.findByUid(uid);
 
         assertThat(employee.getDepartment().getCode()).isEqualTo("LAW_COMPLIANCE");
@@ -88,5 +88,7 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         assertThat(dto.getFullName()).isEqualTo("John DOE 2.2");
         assertThat(dto.getDepartmentCode()).isEqualTo("SHUTTLE_COMPLIANCE");
         assertThat(dto.getSeniority()).isEqualTo(80);
+        */
     }
+
 }
