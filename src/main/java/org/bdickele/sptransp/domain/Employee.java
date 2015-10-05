@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bdickele.sptransp.domain.converter.SeniorityConverter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -39,15 +40,18 @@ public class Employee extends User implements Serializable {
      * @param department
      * @param seniority
      * @param creationUserUid
+     * @param passwordEncoder
      * @return
      */
     public static Employee build(Long id, String uid, String fullName, Department department,
-                                 Seniority seniority, String creationUserUid) {
+                                 Seniority seniority, String creationUserUid,
+                                 PasswordEncoder passwordEncoder) {
         Employee e = new Employee();
         e.id = id;
         e.version = 0;
+        e.password = passwordEncoder.encode("changeme");
         e.uid = uid;
-        e.profile = Profile.READER_ALL;
+        e.profile = Profile.ADMIN_READER;
         e.fullName = fullName;
         e.department = department;
         e.seniority = seniority;

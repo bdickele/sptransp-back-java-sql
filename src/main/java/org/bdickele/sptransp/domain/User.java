@@ -13,9 +13,9 @@ import java.util.List;
 @Entity
 @Table(name = "ST_USER")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "userType", discriminatorType = DiscriminatorType.CHAR)
+@DiscriminatorColumn(name = "userType", discriminatorType = DiscriminatorType.STRING)
 @SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
-public abstract class User {
+public class User {
 
     public static final String USER_TYPE_EMPLOYEE = "E";
 

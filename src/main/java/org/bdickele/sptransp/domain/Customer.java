@@ -3,8 +3,12 @@ package org.bdickele.sptransp.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -13,7 +17,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "ST_CUSTOMER")
-@DiscriminatorValue("C")
+@DiscriminatorValue(User.USER_TYPE_CUSTOMER)
 public class Customer extends User implements Serializable {
 
     private static final long serialVersionUID = 4802565099997858014L;
@@ -33,14 +37,16 @@ public class Customer extends User implements Serializable {
      * @param uid
      * @param fullName
      * @param creationUserUid
+     * @param passwordEncoder
      * @return New Customer
      */
-    public static Customer build(Long id, String uid, String fullName, String creationUserUid) {
+    public static Customer build(Long id, String uid, String fullName, String creationUserUid, PasswordEncoder passwordEncoder) {
         Customer c = new Customer();
         c.id = id;
         c.version = 0;
+        c.password = passwordEncoder.encode("changeme");
         c.uid = uid;
-        c.profile = Profile.READER_ALL;
+        c.profile = Profile.CUSTOMER;
         c.fullName = fullName;
 
         LocalDateTime date = LocalDateTime.now();

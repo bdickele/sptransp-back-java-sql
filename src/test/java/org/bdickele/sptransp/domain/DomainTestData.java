@@ -1,5 +1,8 @@
 package org.bdickele.sptransp.domain;
 
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 /**
  * Created by Bertrand DICKELE
  */
@@ -8,6 +11,8 @@ public final class DomainTestData {
     private static Long ID = 1L;
 
     public static final String USER_UID = "userUid";
+
+    public static final PasswordEncoder PASSWORD_ENCODER = NoOpPasswordEncoder.getInstance();
 
     public static final Goods GOODS_OIL = Goods.build(ID++, "OIL", "Oil");
     public static final Goods GOODS_FOOD = Goods.build(ID++, "FOOD", "Food");
@@ -45,7 +50,7 @@ public final class DomainTestData {
     public static final Employee EMP_JOU_50 = buildEmployee(ID++, DEPARTMENT_JOURNEY_SUPERVISOR, SENIORITY_50);
     public static final Employee EMP_JOU_80 = buildEmployee(ID++, DEPARTMENT_JOURNEY_SUPERVISOR, SENIORITY_80);
 
-    public static final Customer CUSTOMER_FOO = Customer.build(ID++, "CUSTOMER_UID", "The Customer", USER_UID);
+    public static final Customer CUSTOMER_FOO = Customer.build(ID++, "CUSTOMER_UID", "The Customer", USER_UID, PASSWORD_ENCODER);
 
 
     public static AgreementRule buildRule(Long id, Destination destination, Goods goods) {
@@ -54,6 +59,6 @@ public final class DomainTestData {
 
     public static Employee buildEmployee(Long id, Department department, Seniority seniority) {
         String name = department.getName() + "-" + seniority.getValue();
-        return Employee.build(id, "UID_" + name, name, department, seniority, USER_UID);
+        return Employee.build(id, "UID_" + name, name, department, seniority, USER_UID, PASSWORD_ENCODER);
     }
 }

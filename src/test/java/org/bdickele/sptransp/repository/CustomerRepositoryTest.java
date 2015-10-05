@@ -8,6 +8,7 @@ import org.bdickele.sptransp.domain.Customer;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -79,7 +80,7 @@ public class CustomerRepositoryTest extends AbstractRepositoryTest {
     @Test
     public void insertion_through_repository_should_work() {
         // The test writes to the database, so dbSetupTracker.skipNextLaunch(); must NOT be called
-        Customer customer = Customer.build(null, "CUST3", "NAME3", "testuser");
+        Customer customer = Customer.build(null, "CUST3", "NAME3", "testuser", NoOpPasswordEncoder.getInstance());
         assertThat(customer.getId()).isNull();
 
         repository.save(customer);
