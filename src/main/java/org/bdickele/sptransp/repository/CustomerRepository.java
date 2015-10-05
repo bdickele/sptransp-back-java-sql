@@ -11,7 +11,6 @@ import java.util.List;
  */
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    @Override
     @Cacheable("customers")
-    List<Customer> findAll();
+    List<Customer> findAllByOrderByFullNameAsc();
 }

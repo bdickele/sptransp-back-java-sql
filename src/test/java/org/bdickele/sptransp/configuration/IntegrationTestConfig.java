@@ -82,8 +82,10 @@ public class IntegrationTestConfig {
                 .setName("testdb")
                 .addScript("classpath:sql/create_sequences.sql")
                 .addScript("classpath:sql/create_tables.sql")
+                .addScript("classpath:sql/table_grants.sql")
                 .addScript("classpath:sql/basedata.sql")
-                .addScript("classpath:sql/testdata.sql")
+                .addScript("classpath:sql/testdata_users.sql")
+                .addScript("classpath:sql/testdata_agr_rules.sql")
                 .build();
     }
     */

@@ -15,13 +15,11 @@ import java.util.stream.Collectors;
  * Employee object returned by web services
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"uid", "fullName", "departmentCode", "seniority", "creationDate", "creationUser"})
-public class EmployeeDTO implements SpaceTranspDTO, Serializable {
+@JsonPropertyOrder({"uid", "fullName", "profile", "departmentCode", "seniority",
+        "creationDate", "creationUser", "updateDate", "updateUser"})
+public class EmployeeDTO extends UserDTO implements Serializable {
 
     private static final long serialVersionUID = -603242397122687641L;
-
-    @JsonProperty(value = "uid")
-    private String uid;
 
     @JsonProperty(value = "fullName")
     private String fullName;
@@ -32,12 +30,6 @@ public class EmployeeDTO implements SpaceTranspDTO, Serializable {
     @JsonProperty(value = "seniority")
     private Integer seniority;
 
-    @JsonProperty(value = "creationDate")
-    private String creationDate;
-
-    @JsonProperty(value = "creationUser")
-    private String creationUser;
-
 
     /**
      * Build method
@@ -47,11 +39,14 @@ public class EmployeeDTO implements SpaceTranspDTO, Serializable {
     public static EmployeeDTO build(Employee employee) {
         EmployeeDTO dto = new EmployeeDTO();
         dto.uid = employee.getUid();
+        dto.profile = employee.getProfile().getCode();
         dto.fullName = employee.getFullName();
         dto.departmentCode = employee.getDepartment().getCode();
         dto.seniority = employee.getSeniority().getValue();
         dto.creationDate = dto.formatDate(employee.getCreationDate());
         dto.creationUser = employee.getCreationUser();
+        dto.updateDate = dto.formatDate(employee.getUpdateDate());
+        dto.updateUser = employee.getUpdateUser();
         return dto;
     }
 
@@ -59,10 +54,6 @@ public class EmployeeDTO implements SpaceTranspDTO, Serializable {
         return employees.stream()
                 .map(EmployeeDTO::build)
                 .collect(Collectors.toList());
-    }
-
-    public String getUid() {
-        return uid;
     }
 
     public String getFullName() {
@@ -75,14 +66,6 @@ public class EmployeeDTO implements SpaceTranspDTO, Serializable {
 
     public Integer getSeniority() {
         return seniority;
-    }
-
-    public String getCreationDate() {
-        return creationDate;
-    }
-
-    public String getCreationUser() {
-        return creationUser;
     }
 
     @Override
