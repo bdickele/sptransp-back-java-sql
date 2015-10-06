@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
-import java.util.Date;
 
 import static com.ninja_squad.dbsetup.Operations.sequenceOf;
 import static com.ninja_squad.dbsetup.Operations.sql;
@@ -22,8 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by Bertrand DICKELE
  */
 public class CustomerServiceTest extends AbstractServiceTest {
-
-    private static final Date NOW = new Date();
 
     public static final Operation TEST_CUSTOMER_DELETE = sequenceOf(
             sql("delete from ST_CUSTOMER where full_name = 'CUST1_NAME' "),

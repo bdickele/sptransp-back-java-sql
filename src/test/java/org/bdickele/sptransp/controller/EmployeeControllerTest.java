@@ -2,24 +2,30 @@ package org.bdickele.sptransp.controller;
 
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import org.assertj.core.api.StrictAssertions;
 import org.bdickele.sptransp.controller.dto.EmployeeDTO;
+import org.bdickele.sptransp.domain.Employee;
 import org.bdickele.sptransp.repository.EmployeeRepository;
-import org.junit.Assert;
+import org.bdickele.sptransp.service.EmployeeServiceTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.sql.DataSource;
 import java.security.Principal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.StrictAssertions.tuple;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -29,6 +35,9 @@ public class EmployeeControllerTest extends AbstractControllerTest {
 
     @Autowired
     private EmployeeRepository repository;
+
+    @Autowired
+    private DataSource dataSource;
 
     @Mock
     private Principal mockPrincipal;
@@ -65,10 +74,20 @@ public class EmployeeControllerTest extends AbstractControllerTest {
 
     @Test
     public void update_of_employee_should_work() throws Exception {
-        Assert.fail("Test de MAJ d'un employe re-entrant: utiliser DB Setup");
-        /*
-        String uid = "xhtqyi65";
+        DbSetup dbSetup = new DbSetup(new DataSourceDestination(dataSource),
+                EmployeeServiceTest.TEST_EMPLOYEE_DELETE);
+        dbSetup.launch();
+
+        String uid = "EMPLOYEE1";
         Employee employee = repository.findByUid(uid);
+        StrictAssertions.assertThat(employee).isNull();
+
+        dbSetup = new DbSetup(new DataSourceDestination(dataSource),
+                EmployeeServiceTest.TEST_EMPLOYEE_INSERT);
+        dbSetup.launch();
+
+        employee = repository.findByUid(uid);
+        assertThat(employee).isNotNull();
 
         assertThat(employee.getDepartment().getCode()).isEqualTo("LAW_COMPLIANCE");
         assertThat(employee.getSeniority().getValue()).isEqualTo(60);
@@ -76,7 +95,7 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         MvcResult mvcResult = mvc.perform(put("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content("{\"uid\": \"doejoh02\", \"fullName\": \"John DOE 2.2\", " +
+                .content("{\"uid\": \"EMPLOYEE1\", \"fullName\": \"EMPLOYEE1_NAME 2\", " +
                     "\"departmentCode\": \"SHUTTLE_COMPLIANCE\", \"seniority\": 80}")
                 .principal(mockPrincipal))
                 .andExpect(status().isOk())
@@ -85,10 +104,9 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         String result = mvcResult.getResponse().getContentAsString();
 
         EmployeeDTO dto = reader.readValue(result);
-        assertThat(dto.getFullName()).isEqualTo("John DOE 2.2");
+        assertThat(dto.getFullName()).isEqualTo("EMPLOYEE1_NAME 2");
         assertThat(dto.getDepartmentCode()).isEqualTo("SHUTTLE_COMPLIANCE");
         assertThat(dto.getSeniority()).isEqualTo(80);
-        */
     }
 
 }
