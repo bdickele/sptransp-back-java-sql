@@ -3,7 +3,7 @@ package org.bdickele.sptransp.domain;
 /**
  * Created by Bertrand DICKELE
  */
-public enum Role {
+public enum UserRole {
 
     ROLE_CUSTOMER("ROLE_CUSTOMER"),
 
@@ -23,7 +23,7 @@ public enum Role {
     private final String code;
 
 
-    Role(String code) {
+    UserRole(String code) {
         this.code = code;
     }
 

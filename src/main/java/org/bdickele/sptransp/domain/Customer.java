@@ -46,7 +46,7 @@ public class Customer extends User implements Serializable {
         c.version = 0;
         c.password = passwordEncoder.encode("changeme");
         c.uid = uid;
-        c.profile = Profile.CUSTOMER;
+        c.profile = UserProfile.CUSTOMER;
         c.fullName = fullName;
 
         LocalDateTime date = LocalDateTime.now();

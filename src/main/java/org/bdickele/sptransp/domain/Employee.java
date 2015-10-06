@@ -51,7 +51,7 @@ public class Employee extends User implements Serializable {
         e.version = 0;
         e.password = passwordEncoder.encode("changeme");
         e.uid = uid;
-        e.profile = Profile.ADMIN_READER;
+        e.profile = UserProfile.ADMIN_READER;
         e.fullName = fullName;
         e.department = department;
         e.seniority = seniority;

@@ -36,7 +36,7 @@ public class User {
 
     @Column(name = "USER_PROFILE")
     @Convert(converter = ProfileConverter.class)
-    protected Profile profile;
+    protected UserProfile profile;
 
     @Column(name = "CREATION_DATE")
     @Convert(converter = LocalDateTImeConverter.class)
@@ -102,15 +102,15 @@ public class User {
         this.password = password;
     }
 
-    public Profile getProfile() {
+    public UserProfile getProfile() {
         return profile;
     }
 
-    public void setProfile(Profile profile) {
+    public void setProfile(UserProfile profile) {
         this.profile = profile;
     }
 
-    public List<Role> getRoles() {
+    public List<UserRole> getRoles() {
         return profile.getRoles();
     }
 }

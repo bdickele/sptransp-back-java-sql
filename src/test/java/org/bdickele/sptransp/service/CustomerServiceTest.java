@@ -5,7 +5,7 @@ import com.ninja_squad.dbsetup.DbSetupTracker;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
 import org.bdickele.sptransp.domain.Customer;
-import org.bdickele.sptransp.domain.Profile;
+import org.bdickele.sptransp.domain.UserProfile;
 import org.bdickele.sptransp.repository.CustomerRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,6 +58,6 @@ public class CustomerServiceTest extends AbstractServiceTest {
 
         customer = repository.findByUid("CUST1");
         assertThat(customer.getId()).isEqualTo(id);
-        assertThat(customer.getProfile()).isEqualTo(Profile.CUSTOMER);
+        assertThat(customer.getProfile()).isEqualTo(UserProfile.CUSTOMER);
     }
 }
