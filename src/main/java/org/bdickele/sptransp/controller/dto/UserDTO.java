@@ -32,4 +32,8 @@ public abstract class UserDTO implements SpaceTranspDTO {
     public String getUid() {
         return uid;
     }
+
+    public String getProfileCode() {
+        return profileCode;
+    }
 }

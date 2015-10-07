@@ -4,6 +4,7 @@ import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
 import org.bdickele.sptransp.domain.Employee;
+import org.bdickele.sptransp.domain.UserProfile;
 import org.bdickele.sptransp.repository.EmployeeRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,9 +67,11 @@ public class EmployeeServiceTest extends AbstractServiceTest {
 
         int currentVersion = employee.getVersion();
 
-        Employee updatedEmployee = service.update(uid, "EMPLOYEE1_NAME 2", "SHUTTLE_COMPLIANCE", 80, "test2");
+        Employee updatedEmployee = service.update(uid, "EMPLOYEE1_NAME 2", "ADMIN_READER",
+                "SHUTTLE_COMPLIANCE", 80, "test2");
 
         assertThat(updatedEmployee.getFullName()).isEqualTo("EMPLOYEE1_NAME 2");
+        assertThat(updatedEmployee.getProfile()).isEqualTo(UserProfile.ADMIN_READER);
         assertThat(updatedEmployee.getDepartment().getCode()).isEqualTo("SHUTTLE_COMPLIANCE");
         assertThat(updatedEmployee.getSeniority().getValue()).isEqualTo(80);
         assertThat(updatedEmployee.getVersion()).isEqualTo(currentVersion + 1);

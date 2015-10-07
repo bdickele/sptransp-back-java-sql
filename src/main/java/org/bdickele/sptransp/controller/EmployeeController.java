@@ -36,8 +36,8 @@ public class EmployeeController {
             consumes="application/json")
     @ResponseStatus(HttpStatus.OK)
     public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO dto, Principal principal) {
-        Employee employee = service.update(dto.getUid(), dto.getFullName(), dto.getDepartmentCode(),
-                dto.getSeniority(), principal.getName());
+        Employee employee = service.update(dto.getUid(), dto.getFullName(), dto.getProfileCode(),
+                dto.getDepartmentCode(), dto.getSeniority(), principal.getName());
         return EmployeeDTO.build(employee);
     }
 }

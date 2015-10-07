@@ -95,8 +95,10 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         MvcResult mvcResult = mvc.perform(put("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content("{\"uid\": \"EMPLOYEE1\", \"fullName\": \"EMPLOYEE1_NAME 2\", " +
-                    "\"departmentCode\": \"SHUTTLE_COMPLIANCE\", \"seniority\": 80}")
+                .content(
+                        "{\"uid\": \"EMPLOYEE1\", \"fullName\": \"EMPLOYEE1_NAME 2\", " +
+                        "\"profileCode\": \"ADMIN_READER\", \"departmentCode\": \"SHUTTLE_COMPLIANCE\", " +
+                        "\"seniority\": 80}")
                 .principal(mockPrincipal))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -105,6 +107,7 @@ public class EmployeeControllerTest extends AbstractControllerTest {
 
         EmployeeDTO dto = reader.readValue(result);
         assertThat(dto.getFullName()).isEqualTo("EMPLOYEE1_NAME 2");
+        assertThat(dto.getProfileCode()).isEqualTo("ADMIN_READER");
         assertThat(dto.getDepartmentCode()).isEqualTo("SHUTTLE_COMPLIANCE");
         assertThat(dto.getSeniority()).isEqualTo(80);
     }
