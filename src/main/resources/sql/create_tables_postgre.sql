@@ -35,9 +35,9 @@ CREATE TABLE sptransp.ST_AGREEMENT_RULE
     VERSION        NUMERIC NOT NULL ,
     ID_DESTINATION NUMERIC NOT NULL ,
     ID_GOODS       NUMERIC NOT NULL ,
-    CREATION_DATE  Time Without Time Zone NOT NULL ,
+    CREATION_DATE  Timestamp NOT NULL ,
     CREATION_USER  Character Varying (50) NOT NULL ,
-    UPDATE_DATE    Time Without Time Zone NOT NULL ,
+    UPDATE_DATE    Timestamp NOT NULL ,
     UPDATE_USER    Character Varying (50) NOT NULL
   ) ;
 ALTER TABLE sptransp.ST_AGREEMENT_RULE ADD CONSTRAINT ST_AGREEMENT_RULE_PK PRIMARY KEY ( ID ) ;
@@ -49,7 +49,7 @@ CREATE TABLE sptransp.ST_AGREEMENT_RULE_AUD
     VERSION        NUMERIC NOT NULL ,
     ID_DESTINATION NUMERIC NOT NULL ,
     ID_GOODS       NUMERIC NOT NULL ,
-    VERSION_DATE   Time Without Time Zone NOT NULL ,
+    VERSION_DATE   Timestamp NOT NULL ,
     VERSION_USER   Character Varying (50) NOT NULL
   ) ;
 ALTER TABLE sptransp.ST_AGREEMENT_RULE_AUD ADD CONSTRAINT ST_AGREEMENT_RULE_AUD_PK PRIMARY KEY ( ID_RULE, VERSION ) ;
@@ -126,7 +126,7 @@ CREATE TABLE sptransp.ST_EMPLOYEE_AUD
     FULL_NAME     Character Varying (200) NOT NULL ,
     ID_DEPARTMENT NUMERIC NOT NULL ,
     SENIORITY     NUMERIC NOT NULL ,
-    VERSION_DATE  Time Without Time Zone NOT NULL ,
+    VERSION_DATE  Timestamp NOT NULL ,
     VERSION_USER  Character Varying (50) NOT NULL
   ) ;
 ALTER TABLE sptransp.ST_EMPLOYEE_AUD ADD CONSTRAINT ST_EMPLOYEE_AUD_PK PRIMARY KEY ( ID, VERSION ) ;
@@ -158,9 +158,9 @@ CREATE TABLE sptransp.ST_REQUEST
     AGREEMENT_STATUS         Character Varying (50) NOT NULL ,
     CANCELLATION_COMMENT     Character Varying (1024) ,
     NEXT_AGREEMENT_VISA_RANK NUMERIC NOT NULL ,
-    CREATION_DATE            Time Without Time Zone NOT NULL ,
+    CREATION_DATE            Timestamp NOT NULL ,
     CREATION_USER            Character Varying (50) NOT NULL ,
-    UPDATE_DATE              Time Without Time Zone NOT NULL ,
+    UPDATE_DATE              Timestamp NOT NULL ,
     UPDATE_USER              Character Varying (50) NOT NULL
   ) ;
 ALTER TABLE sptransp.ST_REQUEST ADD CONSTRAINT ST_REQUEST_PK PRIMARY KEY ( ID ) ;
@@ -177,7 +177,7 @@ CREATE TABLE sptransp.ST_REQUEST_AGR_VISA
     ID_DEPARTMENT NUMERIC NOT NULL ,
     SENIORITY     NUMERIC NOT NULL ,
     VISA_COMMENT  Character Varying (1024) NOT NULL ,
-    CREATION_DATE Time Without Time Zone NOT NULL
+    CREATION_DATE Timestamp NOT NULL
   ) ;
 ALTER TABLE sptransp.ST_REQUEST_AGR_VISA ADD CONSTRAINT ST_REQUEST_AGR_VISA_PK PRIMARY KEY ( ID ) ;
 
@@ -199,9 +199,9 @@ CREATE TABLE sptransp.ST_USER
     USER_PASSWORD Character Varying (1024) NOT NULL ,
     UID_USER      Character Varying (50) NOT NULL ,
     USER_PROFILE  Character Varying (200) NOT NULL ,
-    CREATION_DATE Time Without Time Zone NOT NULL ,
+    CREATION_DATE Timestamp NOT NULL ,
     CREATION_USER Character Varying (50) NOT NULL ,
-    UPDATE_DATE   Time Without Time Zone NOT NULL ,
+    UPDATE_DATE   Timestamp NOT NULL ,
     UPDATE_USER   Character Varying (50) NOT NULL
   ) ;
 COMMENT ON COLUMN sptransp.ST_USER.USER_TYPE

@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
  * Employee object returned by web services
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"uid", "fullName", "profile", "departmentCode", "seniority",
-        "creationDate", "creationUser", "updateDate", "updateUser"})
+@JsonPropertyOrder({"uid", "fullName", "profileCode", "profileLabel", "departmentCode", "departmentLabel",
+        "seniority", "creationDate", "creationUser", "updateDate", "updateUser"})
 public class EmployeeDTO extends UserDTO implements Serializable {
 
     private static final long serialVersionUID = -603242397122687641L;
@@ -26,6 +26,9 @@ public class EmployeeDTO extends UserDTO implements Serializable {
 
     @JsonProperty(value = "departmentCode")
     private String departmentCode;
+
+    @JsonProperty(value = "departmentLabel")
+    private String departmentLabel;
 
     @JsonProperty(value = "seniority")
     private Integer seniority;
@@ -39,9 +42,11 @@ public class EmployeeDTO extends UserDTO implements Serializable {
     public static EmployeeDTO build(Employee employee) {
         EmployeeDTO dto = new EmployeeDTO();
         dto.uid = employee.getUid();
-        dto.profile = employee.getProfile().getCode();
+        dto.profileCode = employee.getProfile().getCode();
+        dto.profileLabel = employee.getProfile().getLabel();
         dto.fullName = employee.getFullName();
         dto.departmentCode = employee.getDepartment().getCode();
+        dto.departmentLabel = employee.getDepartment().getName();
         dto.seniority = employee.getSeniority().getValue();
         dto.creationDate = dto.formatDate(employee.getCreationDate());
         dto.creationUser = employee.getCreationUser();

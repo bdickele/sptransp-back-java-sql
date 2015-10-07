@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 /**
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"uid", "fullName", "profile", "creationDate", "creationUser", "updateDate", "updateUser"})
+@JsonPropertyOrder({"uid", "fullName", "profileCode", "profileLabel",
+        "creationDate", "creationUser", "updateDate", "updateUser"})
 public class CustomerDTO extends UserDTO implements Serializable {
 
     private static final long serialVersionUID = -8182869212493007142L;
@@ -31,7 +32,8 @@ public class CustomerDTO extends UserDTO implements Serializable {
     public static CustomerDTO build(Customer customer) {
         CustomerDTO dto = new CustomerDTO();
         dto.uid = customer.getUid();
-        dto.profile = customer.getProfile().getCode();
+        dto.profileCode = customer.getProfile().getCode();
+        dto.profileLabel = customer.getProfile().getLabel();
         dto.fullName = customer.getFullName();
         dto.creationDate = dto.formatDate(customer.getCreationDate());
         dto.creationUser = customer.getCreationUser();

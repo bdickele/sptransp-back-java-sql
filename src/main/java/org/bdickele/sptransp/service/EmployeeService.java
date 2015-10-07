@@ -1,11 +1,14 @@
 package org.bdickele.sptransp.service;
 
+import org.bdickele.sptransp.configuration.DomainCacheConfig;
 import org.bdickele.sptransp.domain.Department;
 import org.bdickele.sptransp.domain.Employee;
 import org.bdickele.sptransp.domain.Seniority;
+import org.bdickele.sptransp.domain.UserProfile;
 import org.bdickele.sptransp.repository.DepartmentRepository;
 import org.bdickele.sptransp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,12 +30,15 @@ public class EmployeeService extends AbstractService {
 
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public Employee update(String uid, String fullName, String departmentCode, Integer seniority, String updateUser) {
+    @CacheEvict(DomainCacheConfig.EMPLOYEES)
+    public Employee update(String uid, String fullName, String profileCode, String departmentCode,
+                           Integer seniority, String updateUser) {
         // UID cannot be updated : we use it to retrieve current employee
         Employee employee = employeeRepository.findByUid(uid);
         Department department = departmentRepository.findByCode(departmentCode);
 
         employee.setFullName(fullName);
+        employee.setProfile(UserProfile.getByCode(profileCode));
         employee.setDepartment(department);
         employee.setSeniority(new Seniority(seniority));
         employee.setUpdateUser(updateUser);

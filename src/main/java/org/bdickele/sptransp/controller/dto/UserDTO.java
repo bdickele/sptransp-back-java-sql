@@ -10,8 +10,11 @@ public abstract class UserDTO implements SpaceTranspDTO {
     @JsonProperty(value = "uid")
     protected String uid;
 
-    @JsonProperty(value = "profile")
-    protected String profile;
+    @JsonProperty(value = "profileCode")
+    protected String profileCode;
+
+    @JsonProperty(value = "profileLabel")
+    protected String profileLabel;
 
     @JsonProperty(value = "creationDate")
     protected String creationDate;
@@ -28,21 +31,5 @@ public abstract class UserDTO implements SpaceTranspDTO {
 
     public String getUid() {
         return uid;
-    }
-
-    public String getCreationDate() {
-        return creationDate;
-    }
-
-    public String getCreationUser() {
-        return creationUser;
-    }
-
-    public String getUpdateDate() {
-        return updateDate;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
     }
 }
