@@ -9,11 +9,10 @@ import org.bdickele.sptransp.repository.DepartmentRepository;
 import org.bdickele.sptransp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 /**
  * Created by Bertrand DICKELE
@@ -23,11 +22,31 @@ import java.time.LocalDateTime;
 public class EmployeeService extends AbstractService {
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @CacheEvict(DomainCacheConfig.EMPLOYEES)
+    public Employee create(String fullName, String profileCode, String departmentCode,
+                           Integer seniority, String creationUser) {
+        String uid = userService.generateUid(fullName);
+        Department department = departmentRepository.findByCode(departmentCode);
+
+        Employee employee = Employee.build(null, uid, fullName, UserProfile.getByCode(profileCode),
+                department, new Seniority(seniority), creationUser, passwordEncoder);
+
+        em().persist(employee);
+        return employee;
+    }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @CacheEvict(DomainCacheConfig.EMPLOYEES)
@@ -37,12 +56,8 @@ public class EmployeeService extends AbstractService {
         Employee employee = employeeRepository.findByUid(uid);
         Department department = departmentRepository.findByCode(departmentCode);
 
-        employee.setFullName(fullName);
-        employee.setProfile(UserProfile.getByCode(profileCode));
-        employee.setDepartment(department);
-        employee.setSeniority(new Seniority(seniority));
-        employee.setUpdateUser(updateUser);
-        employee.setUpdateDate(LocalDateTime.now());
+        employee.update(fullName, UserProfile.getByCode(profileCode), department,
+                new Seniority(seniority), updateUser);
 
         return employee;
     }

@@ -16,4 +16,5 @@ public class AbstractService {
     public EntityManager em() {
         return entityManager;
     }
+
 }

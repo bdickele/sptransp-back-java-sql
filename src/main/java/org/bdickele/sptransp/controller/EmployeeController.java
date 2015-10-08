@@ -32,6 +32,16 @@ public class EmployeeController {
     }
 
     @RequestMapping(
+            method= RequestMethod.POST,
+            consumes="application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO dto, Principal principal) {
+        Employee employee = service.create(dto.getFullName(), dto.getProfileCode(),
+                dto.getDepartmentCode(), dto.getSeniority(), principal.getName());
+        return EmployeeDTO.build(employee);
+    }
+
+    @RequestMapping(
             method= RequestMethod.PUT,
             consumes="application/json")
     @ResponseStatus(HttpStatus.OK)

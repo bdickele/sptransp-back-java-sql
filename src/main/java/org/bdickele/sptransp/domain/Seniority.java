@@ -17,16 +17,28 @@ public class Seniority {
         this(0);
     }
 
-    public Seniority(int value) {
-        this.value = Integer.valueOf(value);
+    public Seniority(Integer value) {
+        this.value = value==null ? 0 : Integer.valueOf(value);
     }
 
-    /**
-     * @param other
-     * @return True if seniority is equal or greater than passed seniority
-     */
+    public boolean eq(Seniority other) {
+        return value.equals(other.value);
+    }
+
     public boolean ge(Seniority other) {
         return value.compareTo(other.value) >= 0;
+    }
+
+    public boolean gt(Seniority other) {
+        return value.compareTo(other.value) > 0;
+    }
+
+    public boolean le(Seniority other) {
+        return value.compareTo(other.value) <= 0;
+    }
+
+    public boolean lt(Seniority other) {
+        return value.compareTo(other.value) < 0;
     }
 
     public Integer getValue() {

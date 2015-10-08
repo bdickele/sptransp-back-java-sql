@@ -25,7 +25,15 @@ public enum SpTranspBizError implements SpTranspError {
 
     COULD_NOT_FIND_LAST_APPLIED_VISA(203, "Could not find last visa applied for the request"),
 
-    EMPLOYEE_HAS_ALREADY_APPLIED_A_VISA(204, "User %s has already granted/denied a visa for that request");
+    EMPLOYEE_HAS_ALREADY_APPLIED_A_VISA(204, "User %s has already granted/denied a visa for that request"),
+
+    // ================================================================
+    // EMPLOYEE
+    // ================================================================
+
+    EMPLOYEE_MISSING_VALUE(300, "Following value is missing for employee: %s"),
+
+    EMPLOYEE_INCORRECT_SENIORITY(301, "Incorrect value for seniority: it should be between %s and %s");
 
 
     private final int errorCode;
