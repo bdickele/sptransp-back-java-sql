@@ -2,6 +2,7 @@ package org.bdickele.sptransp.exception;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 
 import java.util.IllegalFormatException;
 
@@ -16,6 +17,8 @@ public interface SpTranspError {
     String getErrorCodePrefix();
 
     int getErrorCode();
+
+    HttpStatus getHttpStatus();
 
     String getRawMessage();
 

@@ -1,16 +1,22 @@
 package org.bdickele.sptransp.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * Created by bdickele
  */
 public enum SpTranspTechError implements SpTranspError {
 
-    OPERATION_USER_MISSING(50, "Creation or update user is missing");
+    OPERATION_USER_MISSING(50, "Creation or update user is missing"),
+
+    EMPLOYEE_NOT_FOUND(100, "Employee not found", HttpStatus.NOT_FOUND);
 
 
     private final int errorCode;
 
     private final String errorMessage;
+
+    private final HttpStatus httpStatus;
 
 
     /**
@@ -19,8 +25,13 @@ public enum SpTranspTechError implements SpTranspError {
      * @param errorMessage
      */
     private SpTranspTechError(int errorCode, String errorMessage) {
+        this(errorCode, errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    private SpTranspTechError(int errorCode, String errorMessage, HttpStatus httpStatus) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
+        this.httpStatus = httpStatus;
     }
 
     @Override
@@ -34,7 +45,14 @@ public enum SpTranspTechError implements SpTranspError {
     }
 
     @Override
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+
+    @Override
     public String getRawMessage() {
         return errorMessage;
     }
+
+
 }

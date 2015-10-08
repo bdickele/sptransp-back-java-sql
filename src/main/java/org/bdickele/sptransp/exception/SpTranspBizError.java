@@ -1,5 +1,7 @@
 package org.bdickele.sptransp.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * Created by bdickele
  */
@@ -40,6 +42,8 @@ public enum SpTranspBizError implements SpTranspError {
 
     private final String errorMessage;
 
+    private final HttpStatus httpStatus;
+
 
     /**
      * Constructor
@@ -47,8 +51,13 @@ public enum SpTranspBizError implements SpTranspError {
      * @param errorMessage
      */
     private SpTranspBizError(int errorCode, String errorMessage) {
+        this(errorCode, errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    private SpTranspBizError(int errorCode, String errorMessage, HttpStatus httpStatus) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
+        this.httpStatus = httpStatus;
     }
 
     @Override
@@ -59,6 +68,11 @@ public enum SpTranspBizError implements SpTranspError {
     @Override
     public int getErrorCode() {
         return errorCode;
+    }
+
+    @Override
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
     }
 
     @Override

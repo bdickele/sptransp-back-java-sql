@@ -2,10 +2,14 @@ package org.bdickele.sptransp.controller;
 
 import org.bdickele.sptransp.controller.dto.EmployeeDTO;
 import org.bdickele.sptransp.domain.Employee;
+import org.bdickele.sptransp.exception.SpTranspError;
+import org.bdickele.sptransp.exception.SpTranspException;
+import org.bdickele.sptransp.exception.SpTranspTechError;
 import org.bdickele.sptransp.repository.EmployeeRepository;
 import org.bdickele.sptransp.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -31,6 +35,16 @@ public class EmployeeController {
         return EmployeeDTO.build(repository.findAllByOrderByFullNameAsc());
     }
 
+    @RequestMapping(value="/{uid}", method= RequestMethod.GET,
+            produces="application/json")
+    public @ResponseBody EmployeeDTO employee(@PathVariable String uid) {
+        Employee employee = repository.findByUid(uid);
+        if (employee==null) {
+            throw SpTranspTechError.EMPLOYEE_NOT_FOUND.exception();
+        }
+        return EmployeeDTO.build(employee);
+    }
+
     @RequestMapping(
             method= RequestMethod.POST,
             consumes="application/json")
@@ -49,5 +63,11 @@ public class EmployeeController {
         Employee employee = service.update(dto.getUid(), dto.getFullName(), dto.getProfileCode(),
                 dto.getDepartmentCode(), dto.getSeniority(), principal.getName());
         return EmployeeDTO.build(employee);
+    }
+
+    @ExceptionHandler(SpTranspException.class)
+    public ResponseEntity<String> somethingWrong(SpTranspException e) {
+        SpTranspError error = e.getError();
+        return new ResponseEntity<String>(error.getHttpStatus());
     }
 }

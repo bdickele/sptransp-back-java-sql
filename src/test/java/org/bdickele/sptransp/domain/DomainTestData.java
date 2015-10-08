@@ -59,6 +59,7 @@ public final class DomainTestData {
 
     public static Employee buildEmployee(Long id, Department department, Seniority seniority) {
         String name = department.getName() + "-" + seniority.getValue();
-        return Employee.build(id, "UID_" + name, name, department, seniority, USER_UID, PASSWORD_ENCODER);
+        return Employee.build(id, "UID_" + name, name, UserProfile.ADMIN_ALL, department, seniority,
+                USER_UID, PASSWORD_ENCODER);
     }
 }
