@@ -37,10 +37,17 @@ public class UserServiceTest {
 
     @Test
     public void creation_of_uid_should_work() {
-        when(repository.findUidsStartingWith("johnny")).thenReturn(
-                Arrays.asList("johnny1", "johnny2", "johnny3", "johnnydoe4"));
+        when(repository.findUidsStartingWith(anyString())).thenReturn(
+                Arrays.asList("johnny1", "johnny2", "johnny3", "john4"));
         String result = service.generateUid("johnny");
         assertThat(result).isEqualTo("johnny4");
+
+        // Only the 6 first charaters count
+        result = service.generateUid("johnnydoe");
+        assertThat(result).isEqualTo("johnny4");
+
+        result = service.generateUid("john");
+        assertThat(result).isEqualTo("john5");
     }
 
     @Test
