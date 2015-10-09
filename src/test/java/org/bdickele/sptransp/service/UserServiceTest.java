@@ -2,14 +2,20 @@ package org.bdickele.sptransp.service;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.bdickele.sptransp.repository.UserRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Bertrand DICKELE
@@ -19,6 +25,23 @@ public class UserServiceTest {
 
     private static List<String> UIDS = Arrays.asList("john1", "john2", "john3", "johndoe4");
 
+    @Mock private UserRepository repository;
+
+    @InjectMocks private UserService service;
+
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void creation_of_uid_should_work() {
+        when(repository.findUidsStartingWith("johnny")).thenReturn(
+                Arrays.asList("johnny1", "johnny2", "johnny3", "johnnydoe4"));
+        String result = service.generateUid("johnny");
+        assertThat(result).isEqualTo("johnny4");
+    }
 
     @Test
     public void suffix_extracting_should_work() {

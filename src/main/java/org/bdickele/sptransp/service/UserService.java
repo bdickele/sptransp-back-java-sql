@@ -37,7 +37,7 @@ public class UserService extends AbstractService {
 
         Optional<Integer> maxIndex = getMaxIndexOfUidsWithSamePrefix(uidsWithSamePrefix, prefix);
 
-        return prefix + maxIndex.orElse(0) + 1;
+        return prefix + (maxIndex.orElse(0) + 1);
     }
 
     /**
