@@ -1,5 +1,6 @@
 package org.bdickele.sptransp.controller;
 
+import org.bdickele.sptransp.controller.dto.AbstractController;
 import org.bdickele.sptransp.controller.dto.DestinationDTO;
 import org.bdickele.sptransp.repository.DestinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/destinations")
-public class DestinationController {
+public class DestinationController extends AbstractController {
 
     @Autowired
     private DestinationRepository repository;

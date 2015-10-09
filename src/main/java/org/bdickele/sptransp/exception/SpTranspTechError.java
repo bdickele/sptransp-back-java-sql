@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
  */
 public enum SpTranspTechError implements SpTranspError {
 
-    OPERATION_USER_MISSING(50, "Creation or update user is missing"),
+    UNEXPECTED_ERROR(1, "Unexpected error: %s"),
 
-    EMPLOYEE_NOT_FOUND(100, "Employee not found", HttpStatus.NOT_FOUND);
+    OPERATION_USER_MISSING(50, "Creation or update user is missing");
 
 
     private final int errorCode;

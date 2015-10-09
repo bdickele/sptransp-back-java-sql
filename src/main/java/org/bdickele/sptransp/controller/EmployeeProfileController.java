@@ -1,5 +1,6 @@
 package org.bdickele.sptransp.controller;
 
+import org.bdickele.sptransp.controller.dto.AbstractController;
 import org.bdickele.sptransp.controller.dto.UserProfileDTO;
 import org.bdickele.sptransp.domain.UserProfile;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/employeeProfiles")
-public class EmployeeProfileController {
+public class EmployeeProfileController extends AbstractController {
 
     @RequestMapping(method= RequestMethod.GET,
             produces="application/json")

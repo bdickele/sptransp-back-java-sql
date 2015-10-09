@@ -10,6 +10,14 @@ public enum SpTranspBizError implements SpTranspError {
     UNEXPECTED_ERROR(1, "Unexpected error: %s"),
 
     // ================================================================
+    // AUTHENTICATION / AUTHORIZATION
+    // ================================================================
+
+    NOT_AUTHENTICATED(50, "User is not authenticated", HttpStatus.UNAUTHORIZED),
+
+    NOT_AUTHORIZED(51, "User is not authorized to perform that operation", HttpStatus.FORBIDDEN),
+
+    // ================================================================
     // AGREEMENT RULE
     // ================================================================
 
@@ -33,9 +41,11 @@ public enum SpTranspBizError implements SpTranspError {
     // EMPLOYEE
     // ================================================================
 
-    EMPLOYEE_MISSING_VALUE(300, "Following value is missing for employee: %s"),
+    EMPLOYEE_NOT_FOUND(300, "Employee not found", HttpStatus.NOT_FOUND),
 
-    EMPLOYEE_INCORRECT_SENIORITY(301, "Incorrect value for seniority: it should be between %s and %s");
+    EMPLOYEE_MISSING_VALUE(301, "Following value is missing for employee: %s"),
+
+    EMPLOYEE_INCORRECT_SENIORITY(302, "Incorrect value for seniority: it should be between %s and %s");
 
 
     private final int errorCode;
