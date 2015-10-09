@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.security.RolesAllowed;
+
 /**
  * Created by Bertrand DICKELE
  */
@@ -23,6 +25,7 @@ public class CustomerService extends AbstractService {
 
 
     @Transactional(propagation = Propagation.REQUIRED)
+    @RolesAllowed("ROLE_CUSTOMER")
     public Long create(String uid, String fullName, String creationUserUid) {
         //TODO Generation UID et suppression de l'uid des parametres de la methode
         Customer customer = Customer.build(null, uid, fullName, creationUserUid, passwordEncoder);

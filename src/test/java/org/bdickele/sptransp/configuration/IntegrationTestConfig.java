@@ -3,6 +3,7 @@ package org.bdickele.sptransp.configuration;
 import org.bdickele.sptransp.security.SpTranspUserDetailsService;
 import org.bdickele.sptransp.service.CustomerService;
 import org.bdickele.sptransp.service.EmployeeService;
+import org.bdickele.sptransp.service.UserService;
 import org.postgresql.jdbc2.optional.SimpleDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -44,6 +45,11 @@ public class IntegrationTestConfig {
     @Bean
     public EmployeeService employeeService() {
         return new EmployeeService();
+    }
+
+    @Bean
+    public UserService userService() {
+        return new UserService();
     }
 
     @Bean
