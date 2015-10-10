@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @EnableCaching
 public class DomainCacheConfig {
 
-    public static final String CUSTOMERS = "customers";
-    public static final String DEPARTMENTS = "departments";
-    public static final String DESTINATIONS = "destinations";
-    public static final String EMPLOYEES = "employees";
-    public static final String GOODS = "goods";
+    public static final String CUSTOMER = "customer";
+    public static final String DEPARTMENT = "department";
+    public static final String DESTINATION = "destination";
+    public static final String EMPLOYEE = "employee";
+    public static final String GOOD = "good";
 
     @Bean
     public CacheManager cacheManager() {

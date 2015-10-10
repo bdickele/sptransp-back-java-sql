@@ -45,7 +45,7 @@ public class EmployeeController extends AbstractController {
     @RequestMapping(
             method= RequestMethod.POST,
             consumes="application/json")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public EmployeeDTO createEmployee(@RequestBody EmployeeDTO dto, Principal principal) {
         Employee employee = service.create(dto.getFullName(), dto.getProfileCode(),
                 dto.getDepartmentCode(), dto.getSeniority(), TEMP_USER_UID);
@@ -53,11 +53,12 @@ public class EmployeeController extends AbstractController {
     }
 
     @RequestMapping(
+            value="/{uid}",
             method= RequestMethod.PUT,
             consumes="application/json")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO dto, Principal principal) {
-        Employee employee = service.update(dto.getUid(), dto.getFullName(), dto.getProfileCode(),
+    public EmployeeDTO updateEmployee(@PathVariable String uid, @RequestBody EmployeeDTO dto) {
+        Employee employee = service.update(uid, dto.getFullName(), dto.getProfileCode(),
                 dto.getDepartmentCode(), dto.getSeniority(), TEMP_USER_UID);
         return EmployeeDTO.build(employee);
     }

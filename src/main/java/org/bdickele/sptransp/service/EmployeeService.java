@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.security.RolesAllowed;
-
 /**
  * Created by Bertrand DICKELE
  */
@@ -37,8 +35,7 @@ public class EmployeeService extends AbstractService {
 
 
     @Transactional(propagation = Propagation.REQUIRED)
-    @CacheEvict(DomainCacheConfig.EMPLOYEES)
-    @RolesAllowed("ROLE_EMPLOYEE_WRITER")
+    @CacheEvict(value=DomainCacheConfig.EMPLOYEE, key="#uid")
     public Employee create(String fullName, String profileCode, String departmentCode,
                            Integer seniority, String creationUser) {
         String uid = userService.generateUid(fullName);
@@ -52,8 +49,7 @@ public class EmployeeService extends AbstractService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    @CacheEvict(DomainCacheConfig.EMPLOYEES)
-    @RolesAllowed("ROLE_EMPLOYEE_WRITER")
+    @CacheEvict(value=DomainCacheConfig.EMPLOYEE, key="#uid")
     public Employee update(String uid, String fullName, String profileCode, String departmentCode,
                            Integer seniority, String updateUser) {
         // UID cannot be updated : we use it to retrieve current employee
