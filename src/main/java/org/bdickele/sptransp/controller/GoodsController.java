@@ -1,6 +1,5 @@
 package org.bdickele.sptransp.controller;
 
-import org.bdickele.sptransp.controller.dto.AbstractController;
 import org.bdickele.sptransp.controller.dto.GoodsDTO;
 import org.bdickele.sptransp.repository.GoodsRepository;
 import org.springframework.beans.factory.annotation.Autowired;

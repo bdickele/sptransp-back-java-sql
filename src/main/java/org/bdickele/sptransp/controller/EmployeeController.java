@@ -1,6 +1,5 @@
 package org.bdickele.sptransp.controller;
 
-import org.bdickele.sptransp.controller.dto.AbstractController;
 import org.bdickele.sptransp.controller.dto.EmployeeDTO;
 import org.bdickele.sptransp.domain.Employee;
 import org.bdickele.sptransp.exception.SpTranspBizError;
@@ -49,7 +48,7 @@ public class EmployeeController extends AbstractController {
     @ResponseStatus(HttpStatus.OK)
     public EmployeeDTO createEmployee(@RequestBody EmployeeDTO dto, Principal principal) {
         Employee employee = service.create(dto.getFullName(), dto.getProfileCode(),
-                dto.getDepartmentCode(), dto.getSeniority(), principal.getName());
+                dto.getDepartmentCode(), dto.getSeniority(), TEMP_USER_UID);
         return EmployeeDTO.build(employee);
     }
 
@@ -59,7 +58,7 @@ public class EmployeeController extends AbstractController {
     @ResponseStatus(HttpStatus.OK)
     public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO dto, Principal principal) {
         Employee employee = service.update(dto.getUid(), dto.getFullName(), dto.getProfileCode(),
-                dto.getDepartmentCode(), dto.getSeniority(), principal.getName());
+                dto.getDepartmentCode(), dto.getSeniority(), TEMP_USER_UID);
         return EmployeeDTO.build(employee);
     }
 }

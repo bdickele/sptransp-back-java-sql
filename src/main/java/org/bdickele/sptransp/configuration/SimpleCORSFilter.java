@@ -1,5 +1,7 @@
 package org.bdickele.sptransp.configuration;
 
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -12,6 +14,7 @@ import java.io.IOException;
  * Created by Bertrand DICKELE
  */
 @Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class SimpleCORSFilter implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -19,7 +22,7 @@ public class SimpleCORSFilter implements Filter {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         chain.doFilter(req, res);
     }
 
