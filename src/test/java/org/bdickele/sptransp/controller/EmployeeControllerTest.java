@@ -66,7 +66,7 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         List<EmployeeDTO> dtoList = mappingIterator.readAll();
 
         // I check only one user (and not the modified one)
-        assertThat(dtoList.size()).isGreaterThanOrEqualTo(30);
+        assertThat(dtoList.size()).isGreaterThanOrEqualTo(5);
         assertThat(dtoList).extracting("uid", "fullName", "departmentCode", "seniority").contains(
                 tuple("kvcquz31", "Kathleen Carpenter", "JOURNEY_SUPERVISION", 20),
                 tuple("whlofu42", "Helen Cox", "LAW_COMPLIANCE", 20));
@@ -92,7 +92,7 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         assertThat(employee.getDepartment().getCode()).isEqualTo("LAW_COMPLIANCE");
         assertThat(employee.getSeniority().getValue()).isEqualTo(60);
 
-        MvcResult mvcResult = mvc.perform(put("/employees")
+        MvcResult mvcResult = mvc.perform(put("/employees/EMPLOYEE1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(

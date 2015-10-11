@@ -1,8 +1,11 @@
 package org.bdickele.sptransp.domain;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.bdickele.sptransp.exception.SpTranspBizError;
+import org.bdickele.sptransp.exception.SpTranspTechError;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
@@ -56,7 +59,36 @@ public class Customer extends User implements Serializable {
         c.creationUser = creationUserUid;
         c.updateUser = creationUserUid;
 
+        c.checkValues();
+
         return c;
+    }
+
+    public void update(String fullName, String updateUser) {
+        this.fullName = fullName;
+        this.updateUser = updateUser;
+        this.updateDate = LocalDateTime.now();
+
+        checkValues();
+    }
+
+    public void checkValues() {
+        checkUid(uid);
+        checkFullName(fullName);
+        checkOperationUser(creationUser);
+        checkOperationUser(updateUser);
+    }
+
+    public static void checkUid(String uid) {
+        if (StringUtils.isEmpty(uid)) throw SpTranspBizError.CUSTOMER_MISSING_VALUE.exception("uid");
+    }
+
+    public static void checkFullName(String fullName) {
+        if (StringUtils.isEmpty(fullName)) throw SpTranspBizError.CUSTOMER_MISSING_VALUE.exception("name");
+    }
+
+    public static void checkOperationUser(String user) {
+        if (StringUtils.isEmpty(user)) throw SpTranspTechError.OPERATION_USER_MISSING.exception();
     }
 
     public String getFullName() {

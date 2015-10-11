@@ -25,7 +25,7 @@ public class EmployeeRepositoryTest extends AbstractRepositoryTest {
     @Test
     public void findAll_should_work() {
         List<Employee> employees = repository.findAllByOrderByFullNameAsc();
-        assertThat(employees.size()).isGreaterThanOrEqualTo(20);
+        assertThat(employees.size()).isGreaterThanOrEqualTo(5);
         assertThat(employees)
                 .extracting("uid", "fullName", "department.code", "seniority.value").contains(
                 tuple("kvcquz31", "Kathleen Carpenter", "JOURNEY_SUPERVISION", 20),

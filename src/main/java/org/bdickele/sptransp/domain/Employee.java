@@ -93,6 +93,7 @@ public class Employee extends User implements Serializable {
         checkDepartment(department);
         checkSeniority(seniority);
         checkOperationUser(creationUser);
+        checkOperationUser(updateUser);
     }
 
     public static void checkUid(String uid) {

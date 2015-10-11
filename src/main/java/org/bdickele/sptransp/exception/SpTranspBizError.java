@@ -45,7 +45,15 @@ public enum SpTranspBizError implements SpTranspError {
 
     EMPLOYEE_MISSING_VALUE(301, "Following value is missing for employee: %s"),
 
-    EMPLOYEE_INCORRECT_SENIORITY(302, "Incorrect value for seniority: it should be between %s and %s");
+    EMPLOYEE_INCORRECT_SENIORITY(302, "Incorrect value for seniority: it should be between %s and %s"),
+
+    // ================================================================
+    // CUSTOMER
+    // ================================================================
+
+    CUSTOMER_NOT_FOUND(400, "Customer not found", HttpStatus.NOT_FOUND),
+
+    CUSTOMER_MISSING_VALUE(401, "Following value is missing for customer: %s");
 
 
     private final int errorCode;

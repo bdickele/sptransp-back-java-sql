@@ -23,8 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CustomerServiceTest extends AbstractServiceTest {
 
     public static final Operation TEST_CUSTOMER_DELETE = sequenceOf(
-            sql("delete from ST_CUSTOMER where full_name = 'CUST1_NAME' "),
-            sql("delete from ST_USER where uid_user = 'CUST1' "));
+            sql("delete from ST_CUSTOMER where full_name = 'TESTCU_NAME' "),
+            sql("delete from ST_USER where uid_user like 'testcu%' "));
 
     // The tracker is static because JUnit uses a separate Test instance for every test method.
     private static DbSetupTracker dbSetupTracker = new DbSetupTracker();
@@ -53,11 +53,14 @@ public class CustomerServiceTest extends AbstractServiceTest {
         assertThat(customer).isNull();
 
         // The test writes to the database, so dbSetupTracker.skipNextLaunch(); must NOT be called
-        Long id = service.create("CUST1", "CUST1_NAME", "testuser");
-        assertThat(id).isNotNull();
+        customer = service.create("TESTCU_NAME", "testuser");
+        Long createdId = customer.getId();
+        String uid = customer.getUid();
 
-        customer = repository.findByUid("CUST1");
-        assertThat(customer.getId()).isEqualTo(id);
+        assertThat(createdId).isNotNull();
+
+        customer = repository.findByUid(uid);
+        assertThat(customer.getId()).isEqualTo(createdId);
         assertThat(customer.getProfile()).isEqualTo(UserProfile.CUSTOMER);
     }
 }
