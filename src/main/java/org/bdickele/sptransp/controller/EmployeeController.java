@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -46,7 +45,7 @@ public class EmployeeController extends AbstractController {
             method= RequestMethod.POST,
             consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO dto, Principal principal) {
+    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO dto) {
         Employee employee = service.create(dto.getFullName(), dto.getProfileCode(),
                 dto.getDepartmentCode(), dto.getSeniority(), TEMP_USER_UID);
         return EmployeeDTO.build(employee);

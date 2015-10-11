@@ -28,8 +28,9 @@ public class UserService extends AbstractService {
      * @return New UID
      */
     public String generateUid(String fullName) {
-        int length = fullName.length();
-        String prefix = fullName.substring(0, length < UID_PREFIX_LENGTH ? length : UID_PREFIX_LENGTH);
+        String fullNameUsed = fullName.replaceAll(" ", "").toLowerCase();
+        int length = fullNameUsed.length();
+        String prefix = fullNameUsed.substring(0, length < UID_PREFIX_LENGTH ? length : UID_PREFIX_LENGTH);
 
         // If prefix is "john" that repository method may return "john1", "john2" and "johndoe3"
         // That way we can perform a first filter

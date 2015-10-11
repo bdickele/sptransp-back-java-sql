@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 @RunWith(JUnitParamsRunner.class)
 public class UserServiceTest {
 
-    private static List<String> UIDS = Arrays.asList("john1", "john2", "john3", "johndoe4");
+    private static List<String> UIDS = Arrays.asList("johndo1", "johndo2", "johndo3", "john4");
 
     @Mock private UserRepository repository;
 
@@ -37,16 +37,15 @@ public class UserServiceTest {
 
     @Test
     public void creation_of_uid_should_work() {
-        when(repository.findUidsStartingWith(anyString())).thenReturn(
-                Arrays.asList("johnny1", "johnny2", "johnny3", "john4"));
-        String result = service.generateUid("johnny");
-        assertThat(result).isEqualTo("johnny4");
+        when(repository.findUidsStartingWith(anyString())).thenReturn(UIDS);
+        String result = service.generateUid("John DOE");
+        assertThat(result).isEqualTo("johndo4");
 
         // Only the 6 first charaters count
-        result = service.generateUid("johnnydoe");
-        assertThat(result).isEqualTo("johnny4");
+        result = service.generateUid("John DOEEEEE");
+        assertThat(result).isEqualTo("johndo4");
 
-        result = service.generateUid("john");
+        result = service.generateUid("John");
         assertThat(result).isEqualTo("john5");
     }
 
@@ -62,8 +61,8 @@ public class UserServiceTest {
 
     public Object[][] indexExtractionProvider() {
         return new Object[][] {
-                {UIDS, "john", Optional.of(3)},
-                {UIDS, "johndoe", Optional.of(4)},
+                {UIDS, "john", Optional.of(4)},
+                {UIDS, "johndo", Optional.of(3)},
                 {UIDS, "johndoee", Optional.empty()},
                 {UIDS, "joh", Optional.empty()}
         };

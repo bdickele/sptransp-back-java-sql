@@ -24,7 +24,7 @@ import static org.bdickele.sptransp.exception.SpTranspBizError.*;
  */
 @Entity
 @Table(name = "ST_REQUEST")
-@SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
+@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
 public class Request implements Serializable {
 
     private static final long serialVersionUID = 5545538909897599789L;

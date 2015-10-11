@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "ST_REQUEST_AGR_VISA")
-@SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
+@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
 public class RequestAgreementVisa implements Serializable {
 
     private static final long serialVersionUID = -8897770685598265624L;

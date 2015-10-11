@@ -35,7 +35,6 @@ public class EmployeeService extends AbstractService {
 
 
     @Transactional(propagation = Propagation.REQUIRED)
-    @CacheEvict(value=DomainCacheConfig.EMPLOYEE, key="#uid")
     public Employee create(String fullName, String profileCode, String departmentCode,
                            Integer seniority, String creationUser) {
         String uid = userService.generateUid(fullName);

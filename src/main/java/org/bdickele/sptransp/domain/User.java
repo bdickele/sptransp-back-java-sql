@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "ST_USER")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "USER_TYPE", discriminatorType = DiscriminatorType.STRING)
-@SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
+@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
 public class User {
 
     public static final String USER_TYPE_EMPLOYEE = "E";
