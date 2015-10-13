@@ -1,10 +1,14 @@
 package org.bdickele.sptransp.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Created by Bertrand DICKELE
  */
+@EqualsAndHashCode(of = "uid", doNotUseGetters = true)
+@Getter
 public abstract class UserDTO implements SpaceTranspDTO {
 
     @JsonProperty(value = "uid")
@@ -28,12 +32,4 @@ public abstract class UserDTO implements SpaceTranspDTO {
     @JsonProperty(value = "updateUser")
     protected String updateUser;
 
-
-    public String getUid() {
-        return uid;
-    }
-
-    public String getProfileCode() {
-        return profileCode;
-    }
 }

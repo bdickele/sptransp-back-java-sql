@@ -2,8 +2,8 @@ package org.bdickele.sptransp.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bdickele.sptransp.domain.Employee;
 
@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
  */
 @JsonPropertyOrder({"uid", "fullName", "profileCode", "profileLabel", "departmentCode", "departmentLabel",
         "seniority", "creationDate", "creationUser", "updateDate", "updateUser"})
+@EqualsAndHashCode(callSuper = true, of = {}, doNotUseGetters = true)
+@Getter
 public class EmployeeDTO extends UserDTO implements Serializable {
 
     private static final long serialVersionUID = -603242397122687641L;
@@ -59,42 +61,6 @@ public class EmployeeDTO extends UserDTO implements Serializable {
         return employees.stream()
                 .map(EmployeeDTO::build)
                 .collect(Collectors.toList());
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public Integer getSeniority() {
-        return seniority;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        EmployeeDTO other = (EmployeeDTO) obj;
-        return new EqualsBuilder()
-                .append(this.uid, other.uid)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(7, 11)
-                .append(uid)
-                .toHashCode();
     }
 
     @Override
