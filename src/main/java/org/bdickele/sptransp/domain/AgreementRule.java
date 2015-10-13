@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "ST_AGREEMENT_RULE")
 @SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
 @EqualsAndHashCode(of = "id", doNotUseGetters = true)
-@ToString(of = {"id", "destinationId", "goodsId"}, doNotUseGetters = true)
+@ToString(of = {"id", "destination", "goods"}, doNotUseGetters = true)
 @Getter
 public class AgreementRule implements Serializable {
 
@@ -33,10 +33,13 @@ public class AgreementRule implements Serializable {
     private Integer version;
 
     @Column(name = "ID_DESTINATION")
-    private Long destinationId;
+    private Destination destination;
 
     @Column(name = "ID_GOODS")
-    private Long goodsId;
+    private Goods goods;
+
+    @Column(name = "REQ_ALLOWED")
+    private Boolean allowed;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_RULE")
@@ -59,17 +62,18 @@ public class AgreementRule implements Serializable {
     /**
      * Build method for a new AgreementRule
      * @param id
-     * @param destinationId
-     * @param goodsId
+     * @param destination
+     * @param goods
      * @param creationUserUid
      * @return
      */
-    public static AgreementRule build(Long id, Long destinationId, Long goodsId, String creationUserUid) {
+    public static AgreementRule build(Long id, Destination destination, Goods goods, String creationUserUid) {
         AgreementRule r = new AgreementRule();
         r.id = id;
         r.version = 0;
-        r.destinationId = destinationId;
-        r.goodsId = goodsId;
+        r.destination = destination;
+        r.goods = goods;
+        r.allowed = true;
 
         r.visas = new ArrayList<>();
 

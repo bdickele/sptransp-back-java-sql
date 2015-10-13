@@ -1,6 +1,5 @@
 package org.bdickele.sptransp.domain;
 
-import org.junit.Test;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -55,7 +54,7 @@ public final class DomainTestData {
 
 
     public static AgreementRule buildRule(Long id, Destination destination, Goods goods) {
-        return AgreementRule.build(id, destination.getId(), goods.getId(), USER_UID);
+        return AgreementRule.build(id, destination, goods, USER_UID);
     }
 
     public static Employee buildEmployee(Long id, Department department, Seniority seniority) {

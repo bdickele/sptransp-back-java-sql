@@ -56,8 +56,8 @@ public class AgreementRuleAud implements Serializable {
     public static AgreementRuleAud build(AgreementRule rule) {
         AgreementRuleAud audit = new AgreementRuleAud();
         audit.pk = AgreementRuleAudPK.build(rule.getId(), rule.getVersion() + 1);
-        audit.destinationId = rule.getDestinationId();
-        audit.goodsId = rule.getGoodsId();
+        audit.destinationId = rule.getDestination().getId();
+        audit.goodsId = rule.getGoods().getId();
         audit.versionDate = rule.getUpdateDate();
         audit.versionUser = rule.getUpdateUser();
 

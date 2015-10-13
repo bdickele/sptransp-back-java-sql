@@ -23,8 +23,8 @@ public final class RuleLogic {
     public static Optional<AgreementRule> findRuleForDestinationAndGood(
             List<AgreementRule> availableRules, Long destinationId, Long goodId) {
         return availableRules.stream()
-                .filter(r -> r.getDestinationId().equals(destinationId)
-                        && r.getGoodsId().equals(goodId))
+                .filter(r -> r.getDestination().getId().equals(destinationId)
+                        && r.getGoods().getId().equals(goodId))
                 .findFirst();
     }
 }

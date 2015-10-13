@@ -12,5 +12,4 @@ GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE sptransp.st_employee_aud TO public
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE sptransp.st_goods TO public;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE sptransp.st_request TO public;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE sptransp.st_request_agr_visa TO public;
-GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE sptransp.st_request_not_allowed TO public;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE sptransp.st_user TO public;
