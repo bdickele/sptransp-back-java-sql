@@ -1,8 +1,8 @@
 package org.bdickele.sptransp.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bdickele.sptransp.domain.converter.SeniorityConverter;
 import org.bdickele.sptransp.exception.SpTranspBizError;
@@ -19,6 +19,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "ST_EMPLOYEE")
 @DiscriminatorValue(User.USER_TYPE_EMPLOYEE)
+@EqualsAndHashCode(callSuper=true, of={}, doNotUseGetters = true)
+@Getter
 public class Employee extends User implements Serializable {
 
     private static final long serialVersionUID = -7870220121179537659L;
@@ -124,62 +126,14 @@ public class Employee extends User implements Serializable {
         if (StringUtils.isEmpty(user)) throw SpTranspTechError.OPERATION_USER_MISSING.exception();
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public Seniority getSeniority() {
-        return seniority;
-    }
-
-    public void setSeniority(Seniority seniority) {
-        this.seniority = seniority;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        Employee other = (Employee) obj;
-        return new EqualsBuilder()
-                .append(this.id, other.id)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(7, 11)
-                .append(id)
-                .toHashCode();
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("uid", uid)
                 .append("fullName", fullName)
-                .append("department", department.getName())
-                .append("seniority", seniority.getValue())
+                .append("department", department)
+                .append("seniority", seniority)
                 .toString();
     }
 }

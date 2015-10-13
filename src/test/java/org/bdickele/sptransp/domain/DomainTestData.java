@@ -1,5 +1,6 @@
 package org.bdickele.sptransp.domain;
 
+import org.junit.Test;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

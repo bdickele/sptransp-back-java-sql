@@ -1,8 +1,8 @@
 package org.bdickele.sptransp.domain;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.bdickele.sptransp.domain.audit.AgreementRuleAud;
 import org.bdickele.sptransp.domain.audit.AgreementRuleVisaAud;
 import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
@@ -25,6 +25,9 @@ import static org.bdickele.sptransp.exception.SpTranspBizError.*;
 @Entity
 @Table(name = "ST_REQUEST")
 @SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
+@EqualsAndHashCode(of = "id", doNotUseGetters = true)
+@ToString(of = {"id", "reference", "customer", "departure", "arrival", "goods", "overallStatus", "agreementStatus"}, doNotUseGetters = true)
+@Getter
 public class Request implements Serializable {
 
     private static final long serialVersionUID = 5545538909897599789L;
@@ -60,10 +63,9 @@ public class Request implements Serializable {
     private RequestOverallStatus overallStatus;
 
     @OneToOne
-    @JoinColumns({
+    @JoinColumns(value = {
             @JoinColumn(name = "ID_RULE", referencedColumnName = "ID_RULE"),
-            @JoinColumn(name = "RULE_VERSION", referencedColumnName = "VERSION")
-    })
+            @JoinColumn(name = "RULE_VERSION", referencedColumnName = "VERSION")})
     private AgreementRuleAud ruleAud;
 
     @Column(name = "AGREEMENT_STATUS")
@@ -93,6 +95,7 @@ public class Request implements Serializable {
     private LocalDateTime updateDate;
 
     @Column(name = "UPDATE_USER")
+    @Getter
     private String updateUser;
 
 
@@ -227,115 +230,5 @@ public class Request implements Serializable {
         return ruleAud.getVisas().stream()
                 .filter(v -> v.getRank().equals(nextAgreementVisaRank))
                 .findFirst();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public String getReference() {
-        return reference;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public Goods getGoods() {
-        return goods;
-    }
-
-    public Destination getDeparture() {
-        return departure;
-    }
-
-    public Destination getArrival() {
-        return arrival;
-    }
-
-    public RequestOverallStatus getOverallStatus() {
-        return overallStatus;
-    }
-
-    public AgreementRuleAud getRuleAud() {
-        return ruleAud;
-    }
-
-    public RequestAgreementStatus getAgreementStatus() {
-        return agreementStatus;
-    }
-
-    public String getCancellationComment() {
-        return cancellationComment;
-    }
-
-    public void setCancellationComment(String cancellationComment) {
-        this.cancellationComment = cancellationComment;
-    }
-
-    public List<RequestAgreementVisa> getAgreementVisas() {
-        return agreementVisas;
-    }
-
-    public int getNextAgreementVisaRank() {
-        return nextAgreementVisaRank;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public String getCreationUser() {
-        return creationUser;
-    }
-
-    public LocalDateTime getUpdateDate() {
-        return updateDate;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        Request other = (Request) obj;
-        return new EqualsBuilder()
-                .append(this.id, other.id)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(7, 11)
-                .append(id)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("reference", reference)
-                .append("customer", customer.getFullName())
-                .append("departure", departure.getName())
-                .append("arrival", arrival.getName())
-                .append("good", goods.getName())
-                .append("overallStatus", overallStatus)
-                .append("agreementStatus", agreementStatus)
-                .toString();
     }
 }

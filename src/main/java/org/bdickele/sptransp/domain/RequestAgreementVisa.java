@@ -1,8 +1,8 @@
 package org.bdickele.sptransp.domain;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
 import org.bdickele.sptransp.domain.converter.RequestAgreementStatusConverter;
 import org.bdickele.sptransp.domain.converter.SeniorityConverter;
@@ -18,6 +18,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "ST_REQUEST_AGR_VISA")
 @SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
+@EqualsAndHashCode(of = "id", doNotUseGetters = true)
+@ToString(of = {"id", "employeeId", "status", "rank", "department", "seniority"}, doNotUseGetters = true)
+@Getter
 public class RequestAgreementVisa implements Serializable {
 
     private static final long serialVersionUID = -8897770685598265624L;
@@ -79,73 +82,5 @@ public class RequestAgreementVisa implements Serializable {
         v.seniority = seniority;
         v.creationDate = creationDate;
         return v;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-
-    public RequestAgreementVisaStatus getStatus() {
-        return status;
-    }
-
-    public Integer getRank() {
-        return rank;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public Seniority getSeniority() {
-        return seniority;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        RequestAgreementVisa other = (RequestAgreementVisa) obj;
-        return new EqualsBuilder()
-                .append(this.id, other.id)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(7, 11)
-                .append(id)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("employee", employeeId)
-                .append("status", status)
-                .append("rank", rank)
-                .append("department", department.getName())
-                .append("seniority", seniority.getValue())
-                .toString();
     }
 }

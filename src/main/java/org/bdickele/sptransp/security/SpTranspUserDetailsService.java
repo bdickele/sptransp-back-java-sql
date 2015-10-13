@@ -29,7 +29,7 @@ public class SpTranspUserDetailsService implements UserDetailsService {
 
         if (user==null) throw new UsernameNotFoundException("User with UID " + userName + " was not found");
 
-        List<GrantedAuthority> authorities = user.getRoles().stream()
+        List<GrantedAuthority> authorities = user.getProfile().getRoles().stream()
                 .map(r -> new SimpleGrantedAuthority(r.getCode()))
                 .collect(Collectors.toList());
 

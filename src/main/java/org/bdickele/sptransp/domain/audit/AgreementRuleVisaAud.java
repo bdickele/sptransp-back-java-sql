@@ -1,8 +1,8 @@
 package org.bdickele.sptransp.domain.audit;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.bdickele.sptransp.domain.AgreementRule;
 import org.bdickele.sptransp.domain.AgreementRuleVisa;
 import org.bdickele.sptransp.domain.Department;
@@ -17,6 +17,9 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "ST_AGR_RULE_VISA_AUD")
+@EqualsAndHashCode(of = {"pk"}, doNotUseGetters = true)
+@ToString(of = {"pk", "department", "seniority"}, doNotUseGetters = true)
+@Getter
 public class AgreementRuleVisaAud implements Serializable {
 
     private static final long serialVersionUID = 5923236734333092025L;
@@ -45,58 +48,11 @@ public class AgreementRuleVisaAud implements Serializable {
         return audit;
     }
 
-    public boolean canBeAppliedBy(Department department, Seniority seniority) {
-        return this.department.getId().equals(department.getId()) && seniority.ge(this.seniority);
-    }
-
-    public AgreementRuleVisaAudPK getPk() {
-        return pk;
-    }
-
     public Integer getRank() {
         return pk.getRank();
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
-    public Seniority getSeniority() {
-        return seniority;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        AgreementRuleVisaAud other = (AgreementRuleVisaAud) obj;
-        return new EqualsBuilder()
-                .append(this.pk, other.pk)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(7, 11)
-                .append(pk)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("idRule", pk.getIdRule())
-                .append("version", pk.getVersion())
-                .append("rank", pk.getRank())
-                .append("department", department.getName())
-                .append("seniority", seniority.getValue())
-                .toString();
+    public boolean canBeAppliedBy(Department department, Seniority seniority) {
+        return this.department.getId().equals(department.getId()) && seniority.ge(this.seniority);
     }
 }

@@ -1,8 +1,8 @@
 package org.bdickele.sptransp.domain;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +17,9 @@ import java.util.List;
 @Cacheable
 @Table(name = "ST_AGREEMENT_RULE")
 @SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
+@EqualsAndHashCode(of = "id", doNotUseGetters = true)
+@ToString(of = {"id", "destinationId", "goodsId"}, doNotUseGetters = true)
+@Getter
 public class AgreementRule implements Serializable {
 
     private static final long serialVersionUID = -5098286655027875691L;
@@ -90,106 +93,5 @@ public class AgreementRule implements Serializable {
     public AgreementRule addVisa(Long id, Department department, Seniority seniority) {
         visas.add(AgreementRuleVisa.build(id, visas.size(), department, seniority));
         return this;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public Long getDestinationId() {
-        return destinationId;
-    }
-
-    public void setDestinationId(Long destinationId) {
-        this.destinationId = destinationId;
-    }
-
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public String getCreationUser() {
-        return creationUser;
-    }
-
-    public void setCreationUser(String creationUser) {
-        this.creationUser = creationUser;
-    }
-
-    public LocalDateTime getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(LocalDateTime updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public List<AgreementRuleVisa> getVisas() {
-        return visas;
-    }
-
-    public void setVisas(List<AgreementRuleVisa> visas) {
-        this.visas = visas;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        AgreementRule other = (AgreementRule) obj;
-        return new EqualsBuilder()
-                .append(this.id, other.id)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(7, 11)
-                .append(id)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("destinationId", destinationId)
-                .append("good", goodsId)
-                .toString();
     }
 }

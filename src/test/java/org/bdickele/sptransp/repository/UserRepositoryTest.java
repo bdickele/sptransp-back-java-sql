@@ -19,7 +19,7 @@ public class UserRepositoryTest extends AbstractRepositoryTest {
     @Test
     public void find_by_uid_prefix_should_work() {
         List<String> uids = repository.findUidsStartingWith("x");
-        assertThat(uids).hasSize(2);
+        assertThat(uids.size()).isGreaterThanOrEqualTo(2);
         assertThat(uids).contains("xhtqyi65", "xzjwsm38");
     }
 }

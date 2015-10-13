@@ -1,7 +1,8 @@
 package org.bdickele.sptransp.domain.audit;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bdickele.sptransp.domain.Employee;
 
@@ -17,6 +18,9 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "ST_EMPLOYEE_AUD")
+@EqualsAndHashCode(of = {"pk"}, doNotUseGetters = true)
+@ToString(of = {"pk", "uid", "fullName", "department", "seniority"}, doNotUseGetters = true)
+@Getter
 public class EmployeeAud implements Serializable {
 
     private static final long serialVersionUID = 4822318330160163008L;
@@ -58,68 +62,5 @@ public class EmployeeAud implements Serializable {
         audit.versionDate = employee.getUpdateDate();
         audit.versionUser = employee.getUpdateUser();
         return audit;
-    }
-
-    public EmployeeAudPK getPk() {
-        return pk;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public Long getDepartment() {
-        return department;
-    }
-
-    public Integer getSeniority() {
-        return seniority;
-    }
-
-    public LocalDateTime getVersionDate() {
-        return versionDate;
-    }
-
-    public String getVersionUser() {
-        return versionUser;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        EmployeeAud other = (EmployeeAud) obj;
-        return new EqualsBuilder()
-                .append(this.pk, other.pk)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(7, 11)
-                .append(pk)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id/version", pk.getId() + "/" + pk.getVersion())
-                .append("uid", uid)
-                .append("fullName", fullName)
-                .append("department", department)
-                .append("seniority", seniority)
-                .toString();
     }
 }

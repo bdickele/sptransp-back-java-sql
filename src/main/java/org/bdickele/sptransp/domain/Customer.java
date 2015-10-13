@@ -1,8 +1,8 @@
 package org.bdickele.sptransp.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bdickele.sptransp.exception.SpTranspBizError;
 import org.bdickele.sptransp.exception.SpTranspTechError;
@@ -21,6 +21,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "ST_CUSTOMER")
 @DiscriminatorValue(User.USER_TYPE_CUSTOMER)
+@EqualsAndHashCode(callSuper=true, of={}, doNotUseGetters = true)
+@Getter
 public class Customer extends User implements Serializable {
 
     private static final long serialVersionUID = 4802565099997858014L;
@@ -89,34 +91,6 @@ public class Customer extends User implements Serializable {
 
     public static void checkOperationUser(String user) {
         if (StringUtils.isEmpty(user)) throw SpTranspTechError.OPERATION_USER_MISSING.exception();
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        Customer other = (Customer) obj;
-        return new EqualsBuilder()
-                .append(this.id, other.id)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(7, 11)
-                .append(id)
-                .toHashCode();
     }
 
     @Override

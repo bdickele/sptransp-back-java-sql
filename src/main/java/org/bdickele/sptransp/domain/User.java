@@ -1,11 +1,12 @@
 package org.bdickele.sptransp.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
 import org.bdickele.sptransp.domain.converter.ProfileConverter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * Created by Bertrand DICKELE
@@ -15,6 +16,8 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "USER_TYPE", discriminatorType = DiscriminatorType.STRING)
 @SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
+@EqualsAndHashCode(of = "id", doNotUseGetters = true)
+@Getter
 public class User {
 
     public static final String USER_TYPE_EMPLOYEE = "E";
@@ -51,66 +54,4 @@ public class User {
 
     @Column(name = "UPDATE_USER")
     protected String updateUser;
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public String getCreationUser() {
-        return creationUser;
-    }
-
-    public LocalDateTime getUpdateDate() {
-        return updateDate;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateDate(LocalDateTime updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public UserProfile getProfile() {
-        return profile;
-    }
-
-    public void setProfile(UserProfile profile) {
-        this.profile = profile;
-    }
-
-    public List<UserRole> getRoles() {
-        return profile.getRoles();
-    }
 }
