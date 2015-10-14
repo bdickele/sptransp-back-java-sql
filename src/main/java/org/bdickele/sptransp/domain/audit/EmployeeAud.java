@@ -3,13 +3,10 @@ package org.bdickele.sptransp.domain.audit;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bdickele.sptransp.domain.Employee;
+import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -31,6 +28,9 @@ public class EmployeeAud implements Serializable {
     @Column(name = "UID_EMPLOYEE")
     private String uid;
 
+    @Column(name = "PROFILE")
+    private String profile;
+
     @Column(name = "FULL_NAME")
     private String fullName;
 
@@ -41,6 +41,7 @@ public class EmployeeAud implements Serializable {
     private Integer seniority;
 
     @Column(name = "VERSION_DATE")
+    @Convert(converter = LocalDateTImeConverter.class)
     private LocalDateTime versionDate;
 
     @Column(name = "VERSION_USER")
@@ -50,13 +51,15 @@ public class EmployeeAud implements Serializable {
     /**
      * Builds a new version of Employee for audit, based on an existing Employee (increments version by 1)
      * @param employee Base data
+     * @param version
      * @return New instance of EmployeeAud
      */
-    public static EmployeeAud build(Employee employee) {
+    public static EmployeeAud build(Employee employee, Integer version) {
         EmployeeAud audit = new EmployeeAud();
-        audit.pk = EmployeeAudPK.build(employee.getId(), employee.getVersion() + 1);
+        audit.pk = EmployeeAudPK.build(employee.getId(), version);
         audit.uid = employee.getUid();
         audit.fullName = employee.getFullName();
+        audit.profile = employee.getProfile().getCode();
         audit.department = employee.getDepartment().getId();
         audit.seniority = employee.getSeniority().getValue();
         audit.versionDate = employee.getUpdateDate();

@@ -56,7 +56,7 @@ public class Employee extends User implements Serializable {
                                  PasswordEncoder passwordEncoder) {
         Employee e = new Employee();
         e.id = id;
-        e.version = 0;
+        e.version = 1;
         e.password = passwordEncoder.encode("changeme");
         e.uid = uid;
         e.profile = profile;

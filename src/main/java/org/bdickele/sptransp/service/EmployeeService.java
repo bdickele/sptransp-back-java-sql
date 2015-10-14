@@ -5,6 +5,7 @@ import org.bdickele.sptransp.domain.Department;
 import org.bdickele.sptransp.domain.Employee;
 import org.bdickele.sptransp.domain.Seniority;
 import org.bdickele.sptransp.domain.UserProfile;
+import org.bdickele.sptransp.domain.audit.EmployeeAud;
 import org.bdickele.sptransp.repository.DepartmentRepository;
 import org.bdickele.sptransp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,11 @@ public class EmployeeService extends AbstractService {
                 department, new Seniority(seniority), creationUser, passwordEncoder);
 
         em().persist(employee);
+
+        // Creation of the audit version after calling persist so that we have an ID
+        EmployeeAud employeeAud = EmployeeAud.build(employee, employee.getVersion());
+        em().persist(employeeAud);
+
         return employee;
     }
 
@@ -58,6 +64,8 @@ public class EmployeeService extends AbstractService {
         employee.update(fullName, UserProfile.getByCode(profileCode), department,
                 new Seniority(seniority), updateUser);
 
+        EmployeeAud employeeAud = EmployeeAud.build(employee, employee.getVersion() + 1);
+        em().persist(employeeAud);
         return employee;
     }
 }
