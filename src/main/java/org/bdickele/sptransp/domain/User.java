@@ -2,7 +2,7 @@ package org.bdickele.sptransp.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
+import org.bdickele.sptransp.domain.converter.LocalDateTimeConverter;
 import org.bdickele.sptransp.domain.converter.ProfileConverter;
 
 import javax.persistence.*;
@@ -42,14 +42,14 @@ public class User {
     protected UserProfile profile;
 
     @Column(name = "CREATION_DATE")
-    @Convert(converter = LocalDateTImeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     protected LocalDateTime creationDate;
 
     @Column(name = "CREATION_USER")
     protected String creationUser;
 
     @Column(name = "UPDATE_DATE")
-    @Convert(converter = LocalDateTImeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     protected LocalDateTime updateDate;
 
     @Column(name = "UPDATE_USER")

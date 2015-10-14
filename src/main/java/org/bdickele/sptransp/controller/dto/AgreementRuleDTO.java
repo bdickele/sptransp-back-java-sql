@@ -15,11 +15,13 @@ import java.util.stream.Collectors;
 /**
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"destinationCode", "goodsCode", "allowed", "agreementsVisas"})
+@JsonPropertyOrder({"destinationCode", "goodsCode", "allowed"})
 @EqualsAndHashCode(of = {"destinationCode", "goodsCode"}, doNotUseGetters = true)
 @ToString(of = {"destinationCode", "goodsCode", "allowed", "agreementVisas"})
 @Getter
 public class AgreementRuleDTO implements Serializable {
+
+    private static final long serialVersionUID = -4265473341596792743L;
 
     @JsonProperty(value = "destinationCode")
     private String destinationCode;
@@ -32,6 +34,11 @@ public class AgreementRuleDTO implements Serializable {
 
     @JsonProperty(value = "agreementVisas")
     private List<AgreementRuleVisaDTO> agreementVisas;
+
+
+    public static List<AgreementRuleDTO> build(List<AgreementRule> rules) {
+        return rules.stream().map(AgreementRuleDTO::build).collect(Collectors.toList());
+    }
 
     public static AgreementRuleDTO build(AgreementRule rule) {
         AgreementRuleDTO dto = new AgreementRuleDTO();

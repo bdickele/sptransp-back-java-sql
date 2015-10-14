@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.bdickele.sptransp.domain.Employee;
-import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
+import org.bdickele.sptransp.domain.converter.LocalDateTimeConverter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -41,7 +41,7 @@ public class EmployeeAud implements Serializable {
     private Integer seniority;
 
     @Column(name = "VERSION_DATE")
-    @Convert(converter = LocalDateTImeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime versionDate;
 
     @Column(name = "VERSION_USER")

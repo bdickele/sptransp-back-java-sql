@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "ST_AGR_RULE_VISA")
-@SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
+@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
 @EqualsAndHashCode(of = "id", doNotUseGetters = true)
 @ToString(of = {"id", "rank", "department", "seniority"}, doNotUseGetters = true)
 @Getter

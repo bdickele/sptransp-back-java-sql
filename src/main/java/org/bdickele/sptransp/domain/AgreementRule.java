@@ -3,6 +3,7 @@ package org.bdickele.sptransp.domain;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.bdickele.sptransp.domain.converter.LocalDateTimeConverter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,9 +15,8 @@ import java.util.List;
  * Created by Bertrand DICKELE
  */
 @Entity
-@Cacheable
 @Table(name = "ST_AGREEMENT_RULE")
-@SequenceGenerator(name="SEQ_MAIN", sequenceName="SEQ_MAIN")
+@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
 @EqualsAndHashCode(of = "id", doNotUseGetters = true)
 @ToString(of = {"id", "destination", "goods"}, doNotUseGetters = true)
 @Getter
@@ -32,10 +32,12 @@ public class AgreementRule implements Serializable {
     @Column(name = "VERSION")
     private Integer version;
 
-    @Column(name = "ID_DESTINATION")
+    @ManyToOne
+    @JoinColumn(name = "ID_DESTINATION")
     private Destination destination;
 
-    @Column(name = "ID_GOODS")
+    @ManyToOne
+    @JoinColumn(name = "ID_GOODS")
     private Goods goods;
 
     @Column(name = "REQ_ALLOWED")
@@ -47,12 +49,14 @@ public class AgreementRule implements Serializable {
     private List<AgreementRuleVisa> visas;
 
     @Column(name = "CREATION_DATE")
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime creationDate;
 
     @Column(name = "CREATION_USER")
     private String creationUser;
 
     @Column(name = "UPDATE_DATE")
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime updateDate;
 
     @Column(name = "UPDATE_USER")

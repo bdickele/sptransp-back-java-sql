@@ -3,7 +3,7 @@ package org.bdickele.sptransp.domain;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.bdickele.sptransp.domain.converter.LocalDateTImeConverter;
+import org.bdickele.sptransp.domain.converter.LocalDateTimeConverter;
 import org.bdickele.sptransp.domain.converter.RequestAgreementStatusConverter;
 import org.bdickele.sptransp.domain.converter.SeniorityConverter;
 
@@ -53,7 +53,7 @@ public class RequestAgreementVisa implements Serializable {
     private Seniority seniority;
 
     @Column(name = "CREATION_DATE")
-    @Convert(converter = LocalDateTImeConverter.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime creationDate;
 
 

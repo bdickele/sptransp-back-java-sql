@@ -4,11 +4,15 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.io.Serializable;
+
 /**
  * Class that wraps the notion of Seniority
  * Created by Bertrand DICKELE
  */
-public class Seniority {
+public class Seniority implements Serializable {
+
+    private static final long serialVersionUID = -5289664116290695740L;
 
     private final Integer value;
 
