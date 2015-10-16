@@ -15,7 +15,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/agreementRules")
-public class AgreementRulesController extends AbstractController {
+public class AgreementRuleController extends AbstractController {
 
     @Autowired
     private AgreementRuleRepository repository;
