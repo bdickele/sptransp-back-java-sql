@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"destinationCode", "goodsCode", "allowed"})
+@JsonPropertyOrder({"destinationCode", "destinationName", "goodsCode", "goodsName", "allowed"})
 @EqualsAndHashCode(of = {"destinationCode", "goodsCode"}, doNotUseGetters = true)
 @ToString(of = {"destinationCode", "goodsCode", "allowed", "agreementVisas"})
 @Getter
@@ -26,8 +26,14 @@ public class AgreementRuleDTO implements Serializable {
     @JsonProperty(value = "destinationCode")
     private String destinationCode;
 
+    @JsonProperty(value = "destinationName")
+    private String destinationName;
+
     @JsonProperty(value = "goodsCode")
     private String goodsCode;
+
+    @JsonProperty(value = "goodsName")
+    private String goodsName;
 
     @JsonProperty(value = "allowed")
     private boolean allowed;
@@ -43,7 +49,9 @@ public class AgreementRuleDTO implements Serializable {
     public static AgreementRuleDTO build(AgreementRule rule) {
         AgreementRuleDTO dto = new AgreementRuleDTO();
         dto.destinationCode = rule.getDestination().getCode();
+        dto.destinationName = rule.getDestination().getName();
         dto.goodsCode = rule.getGoods().getCode();
+        dto.goodsName = rule.getGoods().getName();
         dto.allowed = rule.getAllowed();
         dto.agreementVisas = new ArrayList<>();
         if (dto.allowed && rule.getVisas()!= null) {

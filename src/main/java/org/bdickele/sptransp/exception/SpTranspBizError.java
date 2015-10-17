@@ -53,9 +53,21 @@ public enum SpTranspBizError implements SpTranspError {
     // CUSTOMER
     // ================================================================
 
-    CUSTOMER_NOT_FOUND(400, "Customer not found", HttpStatus.NOT_FOUND),
+    CUSTOMER_NOT_FOUND(400, "Customer not found for code [%s]", HttpStatus.NOT_FOUND),
 
-    CUSTOMER_MISSING_VALUE(401, "Following value is missing for customer: %s");
+    CUSTOMER_MISSING_VALUE(401, "Following value is missing for customer: %s"),
+
+    // ================================================================
+    // GOODS
+    // ================================================================
+
+    GOODS_NOT_FOUND(500, "Goods not found for code [%s]", HttpStatus.NOT_FOUND),
+
+    // ================================================================
+    // DESTINATION
+    // ================================================================
+
+    DESTINATION_NOT_FOUND(500, "Destination not found for code [%s]", HttpStatus.NOT_FOUND);
 
 
     private final int errorCode;

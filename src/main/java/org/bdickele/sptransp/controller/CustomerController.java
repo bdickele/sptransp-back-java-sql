@@ -36,7 +36,7 @@ public class CustomerController extends AbstractController {
     public CustomerDTO customer(@PathVariable String uid) {
         Customer customer = repository.findByUid(uid);
         if (customer==null) {
-            throw SpTranspBizError.CUSTOMER_NOT_FOUND.exception();
+            throw SpTranspBizError.CUSTOMER_NOT_FOUND.exception(uid);
         }
         return CustomerDTO.build(customer);
     }
