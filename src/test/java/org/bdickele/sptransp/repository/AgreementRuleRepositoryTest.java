@@ -25,4 +25,14 @@ public class AgreementRuleRepositoryTest extends AbstractRepositoryTest {
                 tuple("EARTH", "FOOD"),
                 tuple("MOON", "OIL"));
     }
+
+    @Test
+    public void find_by_destination_code_and_goods_code_should_work() {
+        AgreementRule rule = repository.findByDestinationCodeAndGoodsCode("foo", "bar");
+        assertThat(rule).isNull();
+
+        rule = repository.findByDestinationCodeAndGoodsCode("EARTH", "FOOD");
+        assertThat(rule).isNotNull();
+        assertThat(rule.getDestination().getCode()).isEqualTo("EARTH");
+    }
 }

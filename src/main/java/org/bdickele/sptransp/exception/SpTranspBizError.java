@@ -21,7 +21,9 @@ public enum SpTranspBizError implements SpTranspError {
     // AGREEMENT RULE
     // ================================================================
 
-    AGREEMENT_RULE_ALREADY_EXISTS(100, "Agreement rule already exists for destination [%s] and good [%s]"),
+    AGR_RULE_ALREADY_EXISTS(100, "Agreement rule already exists for destination [%s] and good [%s]"),
+
+    AGR_RULE_DOESNT_EXIST(101, "Agreement rule for these destination [%s] and goods [%s] codes doesn't exist", HttpStatus.NOT_FOUND),
 
     // ================================================================
     // REQUEST
