@@ -19,7 +19,7 @@ public class AgreementRuleAudTest {
                 .addVisa(10L, DEPARTMENT_LAW_COMPLIANCE, SENIORITY_10)
                 .addVisa(11L, DEPARTMENT_GOODS_INSPECTION, SENIORITY_50)
                 .addVisa(12L, DEPARTMENT_SHUTTLE_COMPLIANCE, SENIORITY_80)
-                .addVisa(13L, DEPARTMENT_JOURNEY_SUPERVISOR, SENIORITY_50);
+                .addVisa(13L, DEPARTMENT_JOURNEY_SUPERVISION, SENIORITY_50);
 
         AgreementRuleAud ruleAud = AgreementRuleAud.build(rule);
 
@@ -50,7 +50,7 @@ public class AgreementRuleAudTest {
         assertThat(visa3.getSeniority()).isEqualTo(SENIORITY_80);
 
         assertThat(visa4.getPk()).isEqualTo(AgreementRuleVisaAudPK.build(1L, 1, 3));
-        assertThat(visa4.getDepartment()).isEqualTo(DEPARTMENT_JOURNEY_SUPERVISOR);
+        assertThat(visa4.getDepartment()).isEqualTo(DEPARTMENT_JOURNEY_SUPERVISION);
         assertThat(visa4.getSeniority()).isEqualTo(SENIORITY_50);
     }
 }

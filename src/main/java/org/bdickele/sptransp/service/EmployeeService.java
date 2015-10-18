@@ -42,7 +42,7 @@ public class EmployeeService extends AbstractService {
         Department department = departmentRepository.findByCode(departmentCode);
 
         Employee employee = Employee.build(null, uid, fullName, UserProfile.getByCode(profileCode),
-                department, new Seniority(seniority), creationUser, passwordEncoder);
+                department, Seniority.of(seniority), creationUser, passwordEncoder);
 
         em().persist(employee);
 
@@ -62,7 +62,7 @@ public class EmployeeService extends AbstractService {
         Department department = departmentRepository.findByCode(departmentCode);
 
         employee.update(fullName, UserProfile.getByCode(profileCode), department,
-                new Seniority(seniority), updateUser);
+                Seniority.of(seniority), updateUser);
 
         EmployeeAud employeeAud = EmployeeAud.build(employee, employee.getVersion() + 1);
         em().persist(employeeAud);

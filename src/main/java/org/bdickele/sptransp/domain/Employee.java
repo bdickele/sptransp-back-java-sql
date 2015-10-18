@@ -25,8 +25,8 @@ public class Employee extends User implements Serializable {
 
     private static final long serialVersionUID = -7870220121179537659L;
 
-    public static final Seniority SENIORITY_MIN = new Seniority(0);
-    public static final Seniority SENIORITY_MAX = new Seniority(100);
+    public static final Seniority SENIORITY_MIN = Seniority.of(0);
+    public static final Seniority SENIORITY_MAX = Seniority.of(100);
 
     @Column(name = "FULL_NAME")
     private String fullName;
@@ -89,32 +89,32 @@ public class Employee extends User implements Serializable {
     }
 
     public void checkValues() {
-        checkUid(uid);
-        checkFullName(fullName);
-        checkProfile(profile);
-        checkDepartment(department);
-        checkSeniority(seniority);
-        checkOperationUser(creationUser);
-        checkOperationUser(updateUser);
+        checkUid();
+        checkFullName();
+        checkProfile();
+        checkDepartment();
+        checkSeniority();
+        checkCreationInfo();
+        checkUpdateInfo();
     }
 
-    public static void checkUid(String uid) {
+    public void checkUid() {
         if (StringUtils.isEmpty(uid)) throw SpTranspBizError.EMPLOYEE_MISSING_VALUE.exception("uid");
     }
 
-    public static void checkFullName(String fullName) {
+    public void checkFullName() {
         if (StringUtils.isEmpty(fullName)) throw SpTranspBizError.EMPLOYEE_MISSING_VALUE.exception("name");
     }
 
-    public static void checkProfile(UserProfile profile) {
+    public void checkProfile() {
         if (profile==null) throw SpTranspBizError.EMPLOYEE_MISSING_VALUE.exception("profile");
     }
 
-    public static void checkDepartment(Department department) {
+    public void checkDepartment() {
         if (department==null) throw SpTranspBizError.EMPLOYEE_MISSING_VALUE.exception("department");
     }
 
-    public static void checkSeniority(Seniority seniority) {
+    public void checkSeniority() {
         if (seniority==null) throw SpTranspBizError.EMPLOYEE_MISSING_VALUE.exception("seniority");
 
         if (seniority.lt(SENIORITY_MIN) || seniority.gt(SENIORITY_MAX))
@@ -122,8 +122,14 @@ public class Employee extends User implements Serializable {
                     SENIORITY_MIN.getValue(), SENIORITY_MAX.getValue());
     }
 
-    public static void checkOperationUser(String user) {
-        if (StringUtils.isEmpty(user)) throw SpTranspTechError.OPERATION_USER_MISSING.exception();
+    public void checkCreationInfo() {
+        if (StringUtils.isEmpty(creationUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("creation user");
+        if (creationDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("creation date");
+    }
+
+    public void checkUpdateInfo() {
+        if (StringUtils.isEmpty(updateUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("update user");
+        if (updateDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("update date");
     }
 
     @Override

@@ -15,11 +15,12 @@ import java.util.stream.Collectors;
 /**
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"destinationCode", "destinationName", "goodsCode", "goodsName", "allowed"})
+@JsonPropertyOrder({"destinationCode", "destinationName", "goodsCode", "goodsName", "allowed",
+    "creationDate", "creationUser", "updateDate", "updateUser", "agreementVisas"})
 @EqualsAndHashCode(of = {"destinationCode", "goodsCode"}, doNotUseGetters = true)
 @ToString(of = {"destinationCode", "goodsCode", "allowed", "agreementVisas"})
 @Getter
-public class AgreementRuleDTO implements Serializable {
+public class AgreementRuleDTO implements SpaceTranspDTO, Serializable {
 
     private static final long serialVersionUID = -4265473341596792743L;
 
@@ -41,6 +42,18 @@ public class AgreementRuleDTO implements Serializable {
     @JsonProperty(value = "agreementVisas")
     private List<AgreementRuleVisaDTO> agreementVisas;
 
+    @JsonProperty(value = "creationDate")
+    protected String creationDate;
+
+    @JsonProperty(value = "creationUser")
+    protected String creationUser;
+
+    @JsonProperty(value = "updateDate")
+    protected String updateDate;
+
+    @JsonProperty(value = "updateUser")
+    protected String updateUser;
+
 
     public static List<AgreementRuleDTO> build(List<AgreementRule> rules) {
         return rules.stream().map(AgreementRuleDTO::build).collect(Collectors.toList());
@@ -53,8 +66,12 @@ public class AgreementRuleDTO implements Serializable {
         dto.goodsCode = rule.getGoods().getCode();
         dto.goodsName = rule.getGoods().getName();
         dto.allowed = rule.getAllowed();
+        dto.creationDate = dto.formatDate(rule.getCreationDate());
+        dto.creationUser = rule.getCreationUser();
+        dto.updateDate = dto.formatDate(rule.getUpdateDate());
+        dto.updateUser = rule.getUpdateUser();
         dto.agreementVisas = new ArrayList<>();
-        if (dto.allowed && rule.getVisas()!= null) {
+        if (rule.getVisas()!= null) {
             dto.agreementVisas = rule.getVisas().stream().map(v -> AgreementRuleVisaDTO.build(v)).collect(Collectors.toList());
         }
         return dto;

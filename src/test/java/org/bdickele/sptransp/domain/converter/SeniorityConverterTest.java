@@ -20,7 +20,7 @@ public class SeniorityConverterTest {
 
     @Test
     public void should_convert_from_seniority_to_integer() {
-        Integer value = converter.convertToDatabaseColumn(new Seniority(50));
+        Integer value = converter.convertToDatabaseColumn(Seniority.of(50));
         assertThat(value).isEqualTo(50);
     }
 }

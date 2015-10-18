@@ -24,7 +24,7 @@ public class RequestTest {
             .addVisa(10L, DEPARTMENT_LAW_COMPLIANCE, SENIORITY_10)
             .addVisa(11L, DEPARTMENT_GOODS_INSPECTION, SENIORITY_50)
             .addVisa(12L, DEPARTMENT_SHUTTLE_COMPLIANCE, SENIORITY_80)
-            .addVisa(13L, DEPARTMENT_JOURNEY_SUPERVISOR, SENIORITY_50);
+            .addVisa(13L, DEPARTMENT_JOURNEY_SUPERVISION, SENIORITY_50);
 
     private static final AgreementRuleAud RULE_AUD = AgreementRuleAud.build(RULE);
 

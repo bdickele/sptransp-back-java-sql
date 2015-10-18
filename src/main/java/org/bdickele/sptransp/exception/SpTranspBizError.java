@@ -25,6 +25,8 @@ public enum SpTranspBizError implements SpTranspError {
 
     AGR_RULE_DOESNT_EXIST(101, "Agreement rule for these destination [%s] and goods [%s] codes doesn't exist", HttpStatus.NOT_FOUND),
 
+    AGR_RULE_MISSING_VALUE(102, "Following value is missing for agreement rule: %s"),
+
     // ================================================================
     // REQUEST
     // ================================================================
@@ -67,7 +69,7 @@ public enum SpTranspBizError implements SpTranspError {
     // DESTINATION
     // ================================================================
 
-    DESTINATION_NOT_FOUND(500, "Destination not found for code [%s]", HttpStatus.NOT_FOUND);
+    DESTINATION_NOT_FOUND(600, "Destination not found for code [%s]", HttpStatus.NOT_FOUND);
 
 
     private final int errorCode;

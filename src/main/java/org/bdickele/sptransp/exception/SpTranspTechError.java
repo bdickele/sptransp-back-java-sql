@@ -9,7 +9,7 @@ public enum SpTranspTechError implements SpTranspError {
 
     UNEXPECTED_ERROR(1, "Unexpected error: %s"),
 
-    OPERATION_USER_MISSING(50, "Creation or update user is missing");
+    MISSING_INFORMATION(50, "Missing technical information: %s");
 
 
     private final int errorCode;

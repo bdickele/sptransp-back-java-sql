@@ -2,6 +2,7 @@ package org.bdickele.sptransp.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.bdickele.sptransp.domain.converter.SeniorityConverter;
 
@@ -27,7 +28,7 @@ public class AgreementRuleVisa implements Serializable {
     private Long id;
 
     @Column(name = "RANK")
-    private Integer rank;
+    @Setter private Integer rank;
 
     @ManyToOne
     @JoinColumn(name = "ID_DEPARTMENT")
@@ -36,6 +37,10 @@ public class AgreementRuleVisa implements Serializable {
     @Column(name = "SENIORITY")
     @Convert(converter = SeniorityConverter.class)
     private Seniority seniority;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_RULE")
+    @Setter private AgreementRule rule;
 
 
     /**
@@ -46,12 +51,14 @@ public class AgreementRuleVisa implements Serializable {
      * @param seniority
      * @return
      */
-    public static AgreementRuleVisa build(Long id, Integer rank, Department department, Seniority seniority) {
+    public static AgreementRuleVisa build(AgreementRule rule, Long id, Integer rank,
+                                          Department department, Seniority seniority) {
         AgreementRuleVisa v = new AgreementRuleVisa();
         v.id = id;
         v.rank = rank;
         v.department = department;
         v.seniority = seniority;
+        v.rule = rule;
         return v;
     }
 }

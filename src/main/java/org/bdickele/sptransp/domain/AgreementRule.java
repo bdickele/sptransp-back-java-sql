@@ -3,7 +3,11 @@ package org.bdickele.sptransp.domain;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bdickele.sptransp.domain.converter.LocalDateTimeConverter;
+import org.bdickele.sptransp.exception.SpTranspBizError;
+import org.bdickele.sptransp.exception.SpTranspTechError;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -43,8 +47,7 @@ public class AgreementRule implements Serializable {
     @Column(name = "REQ_ALLOWED")
     private Boolean allowed;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID_RULE")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "rule")
     @OrderBy("RANK ASC")
     private List<AgreementRuleVisa> visas;
 
@@ -88,7 +91,30 @@ public class AgreementRule implements Serializable {
         r.creationUser = creationUserUid;
         r.updateUser = creationUserUid;
 
+        r.checkValues();
+
         return r;
+    }
+
+    /**
+     *
+     * @param allowed
+     * @param newVisas New list of visas (will replace the current list of visas) in the right order. Their rank
+     *              will be recomputed
+     * @param updateUser
+     */
+    public void update(boolean allowed, List<Pair<Department, Seniority>> newVisas, String updateUser) {
+        this.allowed = allowed;
+        this.updateUser = updateUser;
+        this.updateDate = LocalDateTime.now();
+
+        // It's crucial to call the "clear" method and not just calling visas = new ArrayList<>()
+        this.visas.clear();
+        newVisas.forEach(p -> addVisa(null, p.getLeft(), p.getRight()));
+
+        checkValues();
+        // This rule is not checked in "build" method
+        checkAtLeastOneVisa();
     }
 
     /**
@@ -99,7 +125,38 @@ public class AgreementRule implements Serializable {
      * @return
      */
     public AgreementRule addVisa(Long id, Department department, Seniority seniority) {
-        visas.add(AgreementRuleVisa.build(id, visas.size(), department, seniority));
+        visas.add(AgreementRuleVisa.build(this, id, visas.size(), department, seniority));
         return this;
+    }
+
+    public void checkValues() {
+        checkDestination();
+        checkGoods();
+        checkCreationInfo();
+        checkUpdateInfo();
+    }
+
+    public void checkDestination() {
+        if (destination==null) throw SpTranspBizError.AGR_RULE_MISSING_VALUE.exception("destination");
+    }
+
+    public void checkGoods() {
+        if (goods==null) throw SpTranspBizError.AGR_RULE_MISSING_VALUE.exception("goods");
+    }
+
+    public void checkCreationInfo() {
+        if (StringUtils.isEmpty(creationUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("creation user");
+        if (creationDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("creation date");
+    }
+
+    public void checkUpdateInfo() {
+        if (StringUtils.isEmpty(updateUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("update user");
+        if (updateDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("update date");
+    }
+
+    public void checkAtLeastOneVisa() {
+        if (allowed && (visas==null || visas.isEmpty())) {
+            throw SpTranspTechError.MISSING_INFORMATION.exception("required visas");
+        }
     }
 }

@@ -75,22 +75,28 @@ public class Customer extends User implements Serializable {
     }
 
     public void checkValues() {
-        checkUid(uid);
-        checkFullName(fullName);
-        checkOperationUser(creationUser);
-        checkOperationUser(updateUser);
+        checkUid();
+        checkFullName();
+        checkCreationInfo();
+        checkUpdateInfo();
     }
 
-    public static void checkUid(String uid) {
+    public void checkUid() {
         if (StringUtils.isEmpty(uid)) throw SpTranspBizError.CUSTOMER_MISSING_VALUE.exception("uid");
     }
 
-    public static void checkFullName(String fullName) {
+    public void checkFullName() {
         if (StringUtils.isEmpty(fullName)) throw SpTranspBizError.CUSTOMER_MISSING_VALUE.exception("name");
     }
 
-    public static void checkOperationUser(String user) {
-        if (StringUtils.isEmpty(user)) throw SpTranspTechError.OPERATION_USER_MISSING.exception();
+    public void checkCreationInfo() {
+        if (StringUtils.isEmpty(creationUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("creation user");
+        if (creationDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("creation date");
+    }
+
+    public void checkUpdateInfo() {
+        if (StringUtils.isEmpty(updateUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("update user");
+        if (updateDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("update date");
     }
 
     @Override

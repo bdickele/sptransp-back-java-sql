@@ -18,6 +18,6 @@ public class SeniorityConverter implements AttributeConverter<Seniority, Integer
 
     @Override
     public Seniority convertToEntityAttribute(Integer integer) {
-        return new Seniority(integer);
+        return Seniority.of(integer);
     }
 }

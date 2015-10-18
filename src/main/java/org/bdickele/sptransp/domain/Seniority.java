@@ -17,12 +17,12 @@ public class Seniority implements Serializable {
     private final Integer value;
 
 
-    public Seniority() {
-        this(0);
+    private Seniority(Integer value) {
+        this.value = value==null ? 0 : Integer.valueOf(value);
     }
 
-    public Seniority(Integer value) {
-        this.value = value==null ? 0 : Integer.valueOf(value);
+    public static Seniority of(Integer value) {
+        return new Seniority(value);
     }
 
     public boolean eq(Seniority other) {

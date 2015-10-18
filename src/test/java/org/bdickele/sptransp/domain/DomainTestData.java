@@ -25,14 +25,14 @@ public final class DomainTestData {
     public static final Destination DESTINATION_MARS = Destination.build(ID++, "MARS", "Mars");
     public static final Destination DESTINATION_TITAN = Destination.build(ID++, "TITAN", "Titan");
 
-    public static final Department DEPARTMENT_LAW_COMPLIANCE = Department.buidl(ID++, "LC", "Law compliance");
-    public static final Department DEPARTMENT_SHUTTLE_COMPLIANCE = Department.buidl(ID++, "SC", "Shuttle compliance");
-    public static final Department DEPARTMENT_GOODS_INSPECTION = Department.buidl(ID++, "GI", "Good inspection");
-    public static final Department DEPARTMENT_JOURNEY_SUPERVISOR = Department.buidl(ID++, "JS", "Journey supervisor");
+    public static final Department DEPARTMENT_LAW_COMPLIANCE = Department.buidl(ID++, "LAW_COMPLIANCE", "Law compliance");
+    public static final Department DEPARTMENT_SHUTTLE_COMPLIANCE = Department.buidl(ID++, "SHUTTLE_COMPLIANCE", "Shuttle compliance");
+    public static final Department DEPARTMENT_GOODS_INSPECTION = Department.buidl(ID++, "GOODS_INSPECTION", "Good inspection");
+    public static final Department DEPARTMENT_JOURNEY_SUPERVISION = Department.buidl(ID++, "JOURNEY_SUPERVISION", "Journey supervisor");
 
-    public static final Seniority SENIORITY_10 = new Seniority(10);
-    public static final Seniority SENIORITY_50 = new Seniority(50);
-    public static final Seniority SENIORITY_80 = new Seniority(80);
+    public static final Seniority SENIORITY_10 = Seniority.of(10);
+    public static final Seniority SENIORITY_50 = Seniority.of(50);
+    public static final Seniority SENIORITY_80 = Seniority.of(80);
 
     public static final Employee EMP_LAW_10 = buildEmployee(ID++, DEPARTMENT_LAW_COMPLIANCE, SENIORITY_10);
     public static final Employee EMP_LAW_50 = buildEmployee(ID++, DEPARTMENT_LAW_COMPLIANCE, SENIORITY_50);
@@ -46,9 +46,9 @@ public final class DomainTestData {
     public static final Employee EMP_SHU_50 = buildEmployee(ID++, DEPARTMENT_SHUTTLE_COMPLIANCE, SENIORITY_50);
     public static final Employee EMP_SHU_80 = buildEmployee(ID++, DEPARTMENT_SHUTTLE_COMPLIANCE, SENIORITY_80);
 
-    public static final Employee EMP_JOU_10 = buildEmployee(ID++, DEPARTMENT_JOURNEY_SUPERVISOR, SENIORITY_10);
-    public static final Employee EMP_JOU_50 = buildEmployee(ID++, DEPARTMENT_JOURNEY_SUPERVISOR, SENIORITY_50);
-    public static final Employee EMP_JOU_80 = buildEmployee(ID++, DEPARTMENT_JOURNEY_SUPERVISOR, SENIORITY_80);
+    public static final Employee EMP_JOU_10 = buildEmployee(ID++, DEPARTMENT_JOURNEY_SUPERVISION, SENIORITY_10);
+    public static final Employee EMP_JOU_50 = buildEmployee(ID++, DEPARTMENT_JOURNEY_SUPERVISION, SENIORITY_50);
+    public static final Employee EMP_JOU_80 = buildEmployee(ID++, DEPARTMENT_JOURNEY_SUPERVISION, SENIORITY_80);
 
     public static final Customer CUSTOMER_FOO = Customer.build(ID++, "CUSTOMER_UID", "The Customer", USER_UID, PASSWORD_ENCODER);
 
