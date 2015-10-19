@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 /**
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"destinationCode", "destinationName", "goodsCode", "goodsName", "allowed",
+@JsonPropertyOrder({"destinationCode", "destinationName", "goodsCode", "goodsName", "reqAllowed",
     "creationDate", "creationUser", "updateDate", "updateUser", "agreementVisas"})
 @EqualsAndHashCode(of = {"destinationCode", "goodsCode"}, doNotUseGetters = true)
-@ToString(of = {"destinationCode", "goodsCode", "allowed", "agreementVisas"})
+@ToString(of = {"destinationCode", "goodsCode", "reqAllowed", "agreementVisas"})
 @Getter
 public class AgreementRuleDTO implements SpaceTranspDTO, Serializable {
 
@@ -36,8 +36,8 @@ public class AgreementRuleDTO implements SpaceTranspDTO, Serializable {
     @JsonProperty(value = "goodsName")
     private String goodsName;
 
-    @JsonProperty(value = "allowed")
-    private boolean allowed;
+    @JsonProperty(value = "reqAllowed")
+    private boolean reqAllowed;
 
     @JsonProperty(value = "agreementVisas")
     private List<AgreementRuleVisaDTO> agreementVisas;
@@ -65,7 +65,7 @@ public class AgreementRuleDTO implements SpaceTranspDTO, Serializable {
         dto.destinationName = rule.getDestination().getName();
         dto.goodsCode = rule.getGoods().getCode();
         dto.goodsName = rule.getGoods().getName();
-        dto.allowed = rule.getAllowed();
+        dto.reqAllowed = rule.getAllowed();
         dto.creationDate = dto.formatDate(rule.getCreationDate());
         dto.creationUser = rule.getCreationUser();
         dto.updateDate = dto.formatDate(rule.getUpdateDate());

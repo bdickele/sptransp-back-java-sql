@@ -14,21 +14,23 @@ public final class DomainTestData {
 
     public static final PasswordEncoder PASSWORD_ENCODER = NoOpPasswordEncoder.getInstance();
 
-    public static final Goods GOODS_OIL = Goods.build(ID++, "OIL", "Oil");
-    public static final Goods GOODS_FOOD = Goods.build(ID++, "FOOD", "Food");
-    public static final Goods GOODS_MACHINE = Goods.build(ID++, "MACHINE_TOOL", "Machine tool");
-    public static final Goods GOODS_WEAPON = Goods.build(ID++, "WEAPON", "Weapon");
-    public static final Goods GOODS_MEDICINE = Goods.build(ID++, "MEDICINE", "Medicine");
 
-    public static final Destination DESTINATION_EARTH = Destination.build(ID++, "EARTH", "Earth");
-    public static final Destination DESTINATION_MOON = Destination.build(ID++, "MOON", "Moon");
-    public static final Destination DESTINATION_MARS = Destination.build(ID++, "MARS", "Mars");
-    public static final Destination DESTINATION_TITAN = Destination.build(ID++, "TITAN", "Titan");
+    public static final Goods GOODS_OIL = Goods.build(1L, "OIL", "Oil");
+    public static final Goods GOODS_FOOD = Goods.build(2L, "FOOD", "Food");
+    public static final Goods GOODS_MACHINE = Goods.build(3L, "MACHINE_TOOL", "Machine tool");
+    public static final Goods GOODS_MEDICINE = Goods.build(4L, "MEDICINE", "Medicine");
+    public static final Goods GOODS_WEAPON = Goods.build(5L, "WEAPON", "Weapon");
 
-    public static final Department DEPARTMENT_LAW_COMPLIANCE = Department.buidl(ID++, "LAW_COMPLIANCE", "Law compliance");
-    public static final Department DEPARTMENT_SHUTTLE_COMPLIANCE = Department.buidl(ID++, "SHUTTLE_COMPLIANCE", "Shuttle compliance");
-    public static final Department DEPARTMENT_GOODS_INSPECTION = Department.buidl(ID++, "GOODS_INSPECTION", "Good inspection");
-    public static final Department DEPARTMENT_JOURNEY_SUPERVISION = Department.buidl(ID++, "JOURNEY_SUPERVISION", "Journey supervisor");
+    public static final Destination DESTINATION_EARTH = Destination.build(1L, "EARTH", "Earth");
+    public static final Destination DESTINATION_MOON = Destination.build(2L, "MOON", "Moon");
+    public static final Destination DESTINATION_MARS = Destination.build(3L, "MARS", "Mars");
+    public static final Destination DESTINATION_TITAN = Destination.build(4L, "TITAN", "Titan");
+
+    public static final Department DEPARTMENT_LAW_COMPLIANCE = Department.buidl(1L, "LAW_COMPLIANCE", "Law compliance");
+    public static final Department DEPARTMENT_SHUTTLE_COMPLIANCE = Department.buidl(2L, "SHUTTLE_COMPLIANCE", "Shuttle compliance");
+    public static final Department DEPARTMENT_GOODS_INSPECTION = Department.buidl(3L, "GOODS_INSPECTION", "Good inspection");
+    public static final Department DEPARTMENT_JOURNEY_SUPERVISION = Department.buidl(4L, "JOURNEY_SUPERVISION", "Journey supervisor");
+    public static final Department DEPARTMENT_HR = Department.buidl(5L, "HR", "Human resources");
 
     public static final Seniority SENIORITY_10 = Seniority.of(10);
     public static final Seniority SENIORITY_50 = Seniority.of(50);

@@ -73,7 +73,7 @@ public class AgreementRuleController extends AbstractController {
                 .map(v -> Pair.of(mapDepartment.get(v.getDepartmentCode()), Seniority.of(v.getSeniority())))
                 .collect(Collectors.toList());
 
-        AgreementRule rule = service.update(dto.getDestinationCode(), dto.getGoodsCode(), dto.isAllowed(),
+        AgreementRule rule = service.update(dto.getDestinationCode(), dto.getGoodsCode(), dto.isReqAllowed(),
                 visas, TEMP_USER_UID);
         return AgreementRuleDTO.build(rule);
     }
