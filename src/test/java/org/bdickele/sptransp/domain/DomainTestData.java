@@ -56,7 +56,7 @@ public final class DomainTestData {
 
 
     public static AgreementRule buildRule(Long id, Destination destination, Goods goods) {
-        return AgreementRule.build(id, destination, goods, USER_UID);
+        return AgreementRule.build(id, destination, goods, true, USER_UID);
     }
 
     public static Employee buildEmployee(Long id, Department department, Seniority seniority) {

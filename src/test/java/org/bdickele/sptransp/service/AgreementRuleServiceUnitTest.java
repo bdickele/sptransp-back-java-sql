@@ -39,7 +39,7 @@ public class AgreementRuleServiceUnitTest {
     @Test
     public void update_of_rule_should_work() {
         // Given
-        AgreementRule rule = AgreementRule.build(-1L, DESTINATION_EARTH, GOODS_FOOD, USER_UID)
+        AgreementRule rule = AgreementRule.build(-1L, DESTINATION_EARTH, GOODS_FOOD, true, USER_UID)
                 .addVisa(-10L, DEPARTMENT_SHUTTLE_COMPLIANCE, SENIORITY_50);
 
         // When

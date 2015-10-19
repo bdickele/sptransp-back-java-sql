@@ -71,16 +71,18 @@ public class AgreementRule implements Serializable {
      * @param id
      * @param destination
      * @param goods
+     * @param allowed
      * @param creationUserUid
      * @return
      */
-    public static AgreementRule build(Long id, Destination destination, Goods goods, String creationUserUid) {
+    public static AgreementRule build(Long id, Destination destination, Goods goods,
+                                      boolean allowed, String creationUserUid) {
         AgreementRule r = new AgreementRule();
         r.id = id;
         r.version = 0;
         r.destination = destination;
         r.goods = goods;
-        r.allowed = true;
+        r.allowed = allowed;
 
         r.visas = new ArrayList<>();
 

@@ -1,10 +1,10 @@
 package org.bdickele.sptransp.service;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.bdickele.sptransp.domain.AgreementRule;
-import org.bdickele.sptransp.domain.Department;
-import org.bdickele.sptransp.domain.Seniority;
+import org.bdickele.sptransp.domain.*;
 import org.bdickele.sptransp.repository.AgreementRuleRepository;
+import org.bdickele.sptransp.repository.DestinationRepository;
+import org.bdickele.sptransp.repository.GoodsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,6 +22,25 @@ public class AgreementRuleService extends AbstractService {
     @Autowired
     private AgreementRuleRepository repository;
 
+    @Autowired
+    private DestinationRepository destinationRepository;
+
+    @Autowired
+    private GoodsRepository goodsRepository;
+
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public AgreementRule create(String destinationCode, String goodsCode, boolean allowed,
+                                List<Pair<Department, Seniority>> departmentAndSeniorities, String creationUser) {
+        Destination destination = destinationRepository.findByCode(destinationCode);
+        Goods goods = goodsRepository.findByCode(goodsCode);
+
+        AgreementRule rule = AgreementRule.build(null, destination, goods, allowed, creationUser);
+        departmentAndSeniorities.forEach(pair -> rule.addVisa(null, pair.getLeft(), pair.getRight()));
+
+        em().persist(rule);
+        return rule;
+    }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public AgreementRule update(String destinationCode, String goodsCode, boolean allowed,

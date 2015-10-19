@@ -2,6 +2,7 @@ package org.bdickele.sptransp.controller;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.bdickele.sptransp.controller.dto.AgreementRuleDTO;
+import org.bdickele.sptransp.controller.dto.AgreementRuleVisaDTO;
 import org.bdickele.sptransp.domain.AgreementRule;
 import org.bdickele.sptransp.domain.Department;
 import org.bdickele.sptransp.domain.Seniority;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -62,6 +64,25 @@ public class AgreementRuleController extends AbstractController {
             consumes="application/json")
     @ResponseStatus(HttpStatus.OK)
     public AgreementRuleDTO update(@RequestBody AgreementRuleDTO dto) {
+        AgreementRule rule = service.update(dto.getDestinationCode(), dto.getGoodsCode(), dto.isReqAllowed(),
+                createVisasForService(dto), TEMP_USER_UID);
+        return AgreementRuleDTO.build(rule);
+    }
+
+    @RequestMapping(
+            method= RequestMethod.POST,
+            consumes="application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public AgreementRuleDTO create(@RequestBody AgreementRuleDTO dto) {
+        AgreementRule rule = service.create(dto.getDestinationCode(), dto.getGoodsCode(), dto.isReqAllowed(),
+                createVisasForService(dto), TEMP_USER_UID);
+        return AgreementRuleDTO.build(rule);
+    }
+
+    private List<Pair<Department, Seniority>> createVisasForService(AgreementRuleDTO dto) {
+        List<AgreementRuleVisaDTO> visaDTOs = dto.getAgreementVisas();
+
+        if (visaDTOs==null || visaDTOs.isEmpty()) return new ArrayList<>();
 
         // AgreementRuleDTO provides only department code
         List<Department> departments = departmentRepository.findAll();
@@ -69,12 +90,9 @@ public class AgreementRuleController extends AbstractController {
         Map<String, Department> mapDepartment = departments.stream()
                 .collect(Collectors.toMap(Department::getCode, d -> d));
 
-        List<Pair<Department, Seniority>> visas = dto.getAgreementVisas().stream()
+        List<Pair<Department, Seniority>> visas = visaDTOs.stream()
                 .map(v -> Pair.of(mapDepartment.get(v.getDepartmentCode()), Seniority.of(v.getSeniority())))
                 .collect(Collectors.toList());
-
-        AgreementRule rule = service.update(dto.getDestinationCode(), dto.getGoodsCode(), dto.isReqAllowed(),
-                visas, TEMP_USER_UID);
-        return AgreementRuleDTO.build(rule);
+        return visas;
     }
 }
