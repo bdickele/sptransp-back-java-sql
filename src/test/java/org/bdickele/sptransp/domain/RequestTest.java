@@ -26,7 +26,7 @@ public class RequestTest {
             .addVisa(12L, DEPARTMENT_SHUTTLE_COMPLIANCE, SENIORITY_80)
             .addVisa(13L, DEPARTMENT_JOURNEY_SUPERVISION, SENIORITY_50);
 
-    private static final AgreementRuleAud RULE_AUD = AgreementRuleAud.build(RULE);
+    private static final AgreementRuleAud RULE_AUD = AgreementRuleAud.build(RULE, 1);
 
     private static final LocalDateTime NOW = LocalDateTime.now();
 
@@ -40,49 +40,49 @@ public class RequestTest {
 
     @Test
     public void request_should_be_validated() {
-        request.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C", NOW);
+        request.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C");
         assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.PENDING);
 
-        request.applyAgreementVisa(EMP_GOO_50, RequestAgreementVisaStatus.GRANTED, "C", NOW);
+        request.applyAgreementVisa(EMP_GOO_50, RequestAgreementVisaStatus.GRANTED, "C");
         assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.PENDING);
 
-        request.applyAgreementVisa(EMP_SHU_80, RequestAgreementVisaStatus.GRANTED, "C", NOW);
+        request.applyAgreementVisa(EMP_SHU_80, RequestAgreementVisaStatus.GRANTED, "C");
         assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.PENDING);
 
-        request.applyAgreementVisa(EMP_JOU_50, RequestAgreementVisaStatus.GRANTED, "C", NOW);
+        request.applyAgreementVisa(EMP_JOU_50, RequestAgreementVisaStatus.GRANTED, "C");
         assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.GRANTED);
     }
 
     @Test
     public void request_should_be_refused() {
-        request.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C", NOW);
+        request.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C");
         assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.PENDING);
 
-        request.applyAgreementVisa(EMP_GOO_50, RequestAgreementVisaStatus.GRANTED, "C", NOW);
+        request.applyAgreementVisa(EMP_GOO_50, RequestAgreementVisaStatus.GRANTED, "C");
         assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.PENDING);
 
-        request.applyAgreementVisa(EMP_SHU_80, RequestAgreementVisaStatus.GRANTED, "C", NOW);
+        request.applyAgreementVisa(EMP_SHU_80, RequestAgreementVisaStatus.GRANTED, "C");
         assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.PENDING);
 
-        request.applyAgreementVisa(EMP_JOU_50, RequestAgreementVisaStatus.DENIED, "C", NOW);
+        request.applyAgreementVisa(EMP_JOU_50, RequestAgreementVisaStatus.DENIED, "C");
         assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.REFUSED);
     }
 
     @Test
     public void applying_visa_should_fail_because_request_is_validated() {
         test_expected_exception(REQUEST_DOES_NOT_EXPECT_ANY_AGREEMENT_VISA,
-                req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.DENIED, "C", NOW)
-                        .applyAgreementVisa(EMP_GOO_50, RequestAgreementVisaStatus.GRANTED, "C", NOW)
-                        .applyAgreementVisa(EMP_SHU_80, RequestAgreementVisaStatus.GRANTED, "C", NOW)
-                        .applyAgreementVisa(EMP_JOU_50, RequestAgreementVisaStatus.GRANTED, "C", NOW)
-                        .applyAgreementVisa(EMP_JOU_50, RequestAgreementVisaStatus.GRANTED, "C", NOW));
+                req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.DENIED, "C")
+                        .applyAgreementVisa(EMP_GOO_50, RequestAgreementVisaStatus.GRANTED, "C")
+                        .applyAgreementVisa(EMP_SHU_80, RequestAgreementVisaStatus.GRANTED, "C")
+                        .applyAgreementVisa(EMP_JOU_50, RequestAgreementVisaStatus.GRANTED, "C")
+                        .applyAgreementVisa(EMP_JOU_50, RequestAgreementVisaStatus.GRANTED, "C"));
     }
 
     @Test
     public void applying_visa_should_fail_because_request_is_refused() {
         test_expected_exception(REQUEST_DOES_NOT_EXPECT_ANY_AGREEMENT_VISA,
-                req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.DENIED, "C", NOW)
-                        .applyAgreementVisa(EMP_GOO_50, RequestAgreementVisaStatus.GRANTED, "C", NOW));
+                req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.DENIED, "C")
+                        .applyAgreementVisa(EMP_GOO_50, RequestAgreementVisaStatus.GRANTED, "C"));
     }
 
     @Test
@@ -92,32 +92,32 @@ public class RequestTest {
         ReflectionTestUtils.setField(emp_good_50, "id", EMP_LAW_10.getId());
 
         test_expected_exception(EMPLOYEE_HAS_ALREADY_APPLIED_A_VISA,
-                req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C", NOW)
-                        .applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C", NOW));
+                req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C")
+                        .applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C"));
     }
 
     @Test
     public void applying_visa_should_fail_because_next_expected_visa_is_not_found() {
         // I override the request with a request without any expected agreement visa
         AgreementRule emptyRule = buildRule(1L, DESTINATION_MOON, GOODS_FOOD);
-        AgreementRuleAud emptyRuleAud = AgreementRuleAud.build(emptyRule);
+        AgreementRuleAud emptyRuleAud = AgreementRuleAud.build(emptyRule, 1);
         request = Request.build(101L, "UID_REQUEST", CUSTOMER_FOO, GOODS_FOOD, DESTINATION_EARTH, DESTINATION_MOON, emptyRuleAud);
 
         test_expected_exception(COULD_NOT_FIND_NEXT_EXPECTED_AGREEMENT_VISA,
-                req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C", NOW));
+                req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C"));
     }
 
     @Test
     public void applying_visa_should_fail_because_user_is_not_from_the_good_department() {
         test_expected_exception(VISA_TO_APPLY_DOESNT_MATCH_NEXT_EXPECTED_ONE,
-                req -> req.applyAgreementVisa(EMP_JOU_50, RequestAgreementVisaStatus.GRANTED, "C", NOW));
+                req -> req.applyAgreementVisa(EMP_JOU_50, RequestAgreementVisaStatus.GRANTED, "C"));
     }
 
     @Test
     public void applying_visa_should_fail_because_user_seniority_is_not_sufficient() {
         test_expected_exception(VISA_TO_APPLY_DOESNT_MATCH_NEXT_EXPECTED_ONE,
-                req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C", NOW)
-                            .applyAgreementVisa(EMP_GOO_10, RequestAgreementVisaStatus.GRANTED, "C", NOW));
+                req -> req.applyAgreementVisa(EMP_LAW_10, RequestAgreementVisaStatus.GRANTED, "C")
+                            .applyAgreementVisa(EMP_GOO_10, RequestAgreementVisaStatus.GRANTED, "C"));
     }
 
     private void test_expected_exception(SpTranspBizError expectedError, Consumer<Request> whatToDo) {

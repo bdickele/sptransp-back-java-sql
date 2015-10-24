@@ -24,7 +24,7 @@ public class DepartmentRepositoryTest extends AbstractRepositoryTest {
         assertThat(departments).hasSize(5);
 
         assertThat(departments).extracting("id", "code", "name").containsExactly(
-                tuple(3L, "GOOD_INSPECTION", "Good inspection"),
+                tuple(3L, "GOODS_INSPECTION", "Goods inspection"),
                 tuple(5L, "HR", "Human resources"),
                 tuple(4L, "JOURNEY_SUPERVISION", "Journey supervision"),
                 tuple(1L, "LAW_COMPLIANCE", "Law compliance"),

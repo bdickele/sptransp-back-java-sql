@@ -41,11 +41,13 @@ public enum SpTranspBizError implements SpTranspError {
 
     EMPLOYEE_HAS_ALREADY_APPLIED_A_VISA(204, "User %s has already granted/denied a visa for that request"),
 
+    REQUEST_NOT_FOUND_FOR_REFERENCE(205, "Request not found for reference %s"),
+
     // ================================================================
     // EMPLOYEE
     // ================================================================
 
-    EMPLOYEE_NOT_FOUND(300, "Employee not found", HttpStatus.NOT_FOUND),
+    EMPLOYEE_NOT_FOUND(300, "Employee not found for UID %s", HttpStatus.NOT_FOUND),
 
     EMPLOYEE_MISSING_VALUE(301, "Following value is missing for employee: %s"),
 
@@ -69,7 +71,17 @@ public enum SpTranspBizError implements SpTranspError {
     // DESTINATION
     // ================================================================
 
-    DESTINATION_NOT_FOUND(600, "Destination not found for code [%s]", HttpStatus.NOT_FOUND);
+    DESTINATION_NOT_FOUND(600, "Destination not found for code [%s]", HttpStatus.NOT_FOUND),
+
+    // ================================================================
+    // REQUEST
+    // ================================================================
+
+    REQUEST_MISSING_VALUE(700, "Following value is missing for request: %s"),
+
+    DESTINATION_AND_ARRIVAL_ARE_THE_SAME(701, "Departure and arrival are the same"),
+
+    REQUEST_NOT_ALLOWED(702, "We are not allowed to send %s to destination %s");
 
 
     private final int errorCode;

@@ -36,7 +36,7 @@ public class EmployeeController extends AbstractController {
     public EmployeeDTO employee(@PathVariable String uid) {
         Employee employee = repository.findByUid(uid);
         if (employee==null) {
-            throw SpTranspBizError.EMPLOYEE_NOT_FOUND.exception();
+            throw SpTranspBizError.EMPLOYEE_NOT_FOUND.exception(uid);
         }
         return EmployeeDTO.build(employee);
     }

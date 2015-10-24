@@ -66,6 +66,7 @@ public class EmployeeService extends AbstractService {
 
         EmployeeAud employeeAud = EmployeeAud.build(employee, employee.getVersion() + 1);
         em().persist(employeeAud);
+
         return employee;
     }
 }

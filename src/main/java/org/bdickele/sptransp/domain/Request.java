@@ -3,11 +3,13 @@ package org.bdickele.sptransp.domain;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 import org.bdickele.sptransp.domain.audit.AgreementRuleAud;
 import org.bdickele.sptransp.domain.audit.AgreementRuleVisaAud;
 import org.bdickele.sptransp.domain.converter.LocalDateTimeConverter;
 import org.bdickele.sptransp.domain.converter.RequestAgreementStatusConverter;
 import org.bdickele.sptransp.domain.converter.RequestOverallStatusConverter;
+import org.bdickele.sptransp.exception.SpTranspTechError;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -104,6 +106,7 @@ public class Request implements Serializable {
      * @param reference
      * @param customer
      * @param goods
+     * @param departure
      * @param arrival
      * @param ruleVersion
      * @return
@@ -112,7 +115,7 @@ public class Request implements Serializable {
                                 Destination departure, Destination arrival, AgreementRuleAud ruleVersion) {
         Request r = new Request();
         r.id = id;
-        r.version = 0;
+        r.version = 1;
         r.reference = reference;
         r.customer = customer;
         r.goods = goods;
@@ -131,18 +134,70 @@ public class Request implements Serializable {
         r.creationUser = customer.getUid();
         r.updateUser = customer.getUid();
 
+        r.checkValues();
+
         return r;
+    }
+
+    public void checkValues() {
+        checkReference();
+        checkCustomer();
+        checkGoods();
+        checkDeparture();
+        checkArrival();
+        checkDepartureAndArrival();
+        checkRuleAud();
+        checkCreationInfo();
+        checkUpdateInfo();
+    }
+
+    public void checkReference() {
+        if (StringUtils.isEmpty(reference)) throw REQUEST_MISSING_VALUE.exception("reference");
+    }
+
+    public void checkCustomer() {
+        if (customer==null) throw REQUEST_MISSING_VALUE.exception("customer");
+    }
+
+    public void checkGoods() {
+        if (goods==null) throw REQUEST_MISSING_VALUE.exception("goods");
+    }
+
+    public void checkDeparture() {
+        if (departure==null) throw REQUEST_MISSING_VALUE.exception("departure");
+    }
+
+    public void checkArrival() {
+        if (arrival==null) throw REQUEST_MISSING_VALUE.exception("arrival");
+    }
+
+    public void checkDepartureAndArrival() {
+        if (departure.getCode().equals(arrival.getCode())) throw DESTINATION_AND_ARRIVAL_ARE_THE_SAME.exception();
+    }
+
+    public void checkRuleAud() {
+        if (ruleAud==null) throw REQUEST_MISSING_VALUE.exception("rule");
+        if (!ruleAud.getAllowed()) throw REQUEST_NOT_ALLOWED.exception(goods.getName(), arrival.getName());
+    }
+
+    public void checkCreationInfo() {
+        if (StringUtils.isEmpty(creationUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("creation user");
+        if (creationDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("creation date");
+    }
+
+    public void checkUpdateInfo() {
+        if (StringUtils.isEmpty(updateUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("update user");
+        if (updateDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("update date");
     }
 
     /**
      * Method to call when we want to apply (grant or deny) an agreement visa
      * @param employee
-     * @param status
+     * @param visaStatus
      * @param comment
-     * @param creationDate We can pass creation date so that it can be synchronized with update date of request
      * @return
      */
-    public Request applyAgreementVisa(Employee employee, RequestAgreementVisaStatus status, String comment, LocalDateTime creationDate) {
+    public Request applyAgreementVisa(Employee employee, RequestAgreementVisaStatus visaStatus, String comment) {
         if (!waitsForAnAgreementVisa()) {
             throw REQUEST_DOES_NOT_EXPECT_ANY_AGREEMENT_VISA.exception();
         }
@@ -163,17 +218,22 @@ public class Request implements Serializable {
                     nextExpectedVisa.getDepartment(), nextExpectedVisa.getSeniority().getValue());
         }
 
-        RequestAgreementVisa appliedVisa = RequestAgreementVisa.build(null, employee.getId(), status,
-                nextAgreementVisaRank, comment, department, seniority, creationDate);
+        LocalDateTime now = LocalDateTime.now();
+
+        RequestAgreementVisa appliedVisa = RequestAgreementVisa.build(null, employee.getId(), visaStatus,
+                nextAgreementVisaRank, comment, department, seniority, now);
 
         addAgreementVisa(appliedVisa);
+
+        updateUser = employee.getUid();
+        updateDate = now;
 
         return this;
     }
 
     /**
      * We know what is the next visa to apply. Let's add it to the list of applied visas and check what is the new
-     * status of the request
+     * visaStatus of the request
      * @param appliedVisa Visa to add
      */
     private void addAgreementVisa(RequestAgreementVisa appliedVisa) {
@@ -201,7 +261,7 @@ public class Request implements Serializable {
             }
         } else {
             // Not supposed to happen except business rule gets changed
-            throw UNEXPECTED_ERROR.exception("Unknown status of agreement visa: " + lastAppliedVisaStatus);
+            throw UNEXPECTED_ERROR.exception("Unknown visaStatus of agreement visa: " + lastAppliedVisaStatus);
         }
     }
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
 import lombok.ToString;
 import org.bdickele.sptransp.domain.AgreementRuleVisa;
+import org.bdickele.sptransp.domain.audit.AgreementRuleVisaAud;
 
 import java.io.Serializable;
 
@@ -29,6 +30,14 @@ public class AgreementRuleVisaDTO implements Serializable {
 
 
     public static AgreementRuleVisaDTO build(AgreementRuleVisa visa) {
+        AgreementRuleVisaDTO dto = new AgreementRuleVisaDTO();
+        dto.departmentCode = visa.getDepartment().getCode();
+        dto.departmentName = visa.getDepartment().getName();
+        dto.seniority = visa.getSeniority().getValue();
+        return dto;
+    }
+
+    public static AgreementRuleVisaDTO build(AgreementRuleVisaAud visa) {
         AgreementRuleVisaDTO dto = new AgreementRuleVisaDTO();
         dto.departmentCode = visa.getDepartment().getCode();
         dto.departmentName = visa.getDepartment().getName();

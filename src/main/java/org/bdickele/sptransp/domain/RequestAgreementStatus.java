@@ -6,18 +6,22 @@ package org.bdickele.sptransp.domain;
  */
 public enum RequestAgreementStatus {
 
-    CANCELLED("C"),
+    CANCELLED("C", "Cancelled"),
 
-    PENDING("P"),
+    PENDING("P", "Pending"),
 
-    GRANTED("G"),
+    GRANTED("G", "Granted"),
 
-    REFUSED("R");
+    REFUSED("R", "Refused");
 
     public final String databaseCode;
 
-    private RequestAgreementStatus(String s) {
-        this.databaseCode = s;
+    public final String label;
+
+
+    RequestAgreementStatus(String code, String label) {
+        this.databaseCode = code;
+        this.label = label;
     }
 
     public static RequestAgreementStatus getByCode(String code) {

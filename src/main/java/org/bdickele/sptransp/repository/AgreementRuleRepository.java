@@ -1,6 +1,7 @@
 package org.bdickele.sptransp.repository;
 
 import org.bdickele.sptransp.domain.AgreementRule;
+import org.bdickele.sptransp.domain.audit.AgreementRuleAud;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

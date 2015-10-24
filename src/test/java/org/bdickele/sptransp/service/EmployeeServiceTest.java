@@ -23,6 +23,7 @@ public class EmployeeServiceTest extends AbstractServiceTest {
     public static final Date NOW = new Date();
 
     public static final Operation TEST_EMPLOYEE_DELETE = sequenceOf(
+            sql("delete from ST_EMPLOYEE_AUD where full_name like 'EMPLOYEE1_NAME%' "),
             sql("delete from ST_EMPLOYEE where full_name like 'EMPLOYEE1_NAME%' "),
             sql("delete from ST_USER where uid_user = 'EMPLOYEE1' "));
 

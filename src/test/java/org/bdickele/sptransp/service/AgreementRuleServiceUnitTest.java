@@ -11,14 +11,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.StrictAssertions.tuple;
 import static org.bdickele.sptransp.domain.DomainTestData.*;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by Bertrand DICKELE
@@ -29,11 +30,13 @@ public class AgreementRuleServiceUnitTest {
 
     @Mock private AgreementRuleRepository repository;
 
+    @Mock private EntityManager entityManager;
 
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        //doNothing().when(entityManager.persist(any()));
     }
 
     @Test

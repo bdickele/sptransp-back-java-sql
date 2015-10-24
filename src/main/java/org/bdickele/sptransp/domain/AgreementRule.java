@@ -79,7 +79,7 @@ public class AgreementRule implements Serializable {
                                       boolean allowed, String creationUserUid) {
         AgreementRule r = new AgreementRule();
         r.id = id;
-        r.version = 0;
+        r.version = 1;
         r.destination = destination;
         r.goods = goods;
         r.allowed = allowed;

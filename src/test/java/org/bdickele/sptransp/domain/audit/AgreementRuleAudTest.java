@@ -21,7 +21,7 @@ public class AgreementRuleAudTest {
                 .addVisa(12L, DEPARTMENT_SHUTTLE_COMPLIANCE, SENIORITY_80)
                 .addVisa(13L, DEPARTMENT_JOURNEY_SUPERVISION, SENIORITY_50);
 
-        AgreementRuleAud ruleAud = AgreementRuleAud.build(rule);
+        AgreementRuleAud ruleAud = AgreementRuleAud.build(rule, 1);
 
         assertThat(ruleAud.getPk()).isEqualTo(AgreementRuleAudPK.build(1L, 1));
         assertThat(ruleAud.getDestinationId()).isEqualTo(DESTINATION_MOON.getId());

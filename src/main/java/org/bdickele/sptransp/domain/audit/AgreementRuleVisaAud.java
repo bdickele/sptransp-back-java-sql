@@ -3,7 +3,6 @@ package org.bdickele.sptransp.domain.audit;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.bdickele.sptransp.domain.AgreementRule;
 import org.bdickele.sptransp.domain.AgreementRuleVisa;
 import org.bdickele.sptransp.domain.Department;
 import org.bdickele.sptransp.domain.Seniority;
@@ -40,9 +39,9 @@ public class AgreementRuleVisaAud implements Serializable {
      * Builds a new version of an Agreement Rule for audit, based on an existing rule (increments version by 1)
      * @return New instance of AgreementRuleVisaAud
      */
-    public static AgreementRuleVisaAud build(AgreementRule rule, AgreementRuleVisa visa) {
+    public static AgreementRuleVisaAud build(AgreementRuleAud rule, AgreementRuleVisa visa) {
         AgreementRuleVisaAud audit = new AgreementRuleVisaAud();
-        audit.pk = AgreementRuleVisaAudPK.build(rule.getId(), rule.getVersion()+1, visa.getRank());
+        audit.pk = AgreementRuleVisaAudPK.build(rule.getPk().getId(), rule.getPk().getVersion(), visa.getRank());
         audit.department = visa.getDepartment();
         audit.seniority = visa.getSeniority();
         return audit;

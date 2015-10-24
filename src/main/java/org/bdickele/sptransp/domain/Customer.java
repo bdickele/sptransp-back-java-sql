@@ -48,7 +48,7 @@ public class Customer extends User implements Serializable {
     public static Customer build(Long id, String uid, String fullName, String creationUserUid, PasswordEncoder passwordEncoder) {
         Customer c = new Customer();
         c.id = id;
-        c.version = 0;
+        c.version = 1;
         c.password = passwordEncoder.encode("changeme");
         c.uid = uid;
         c.profile = UserProfile.CUSTOMER;

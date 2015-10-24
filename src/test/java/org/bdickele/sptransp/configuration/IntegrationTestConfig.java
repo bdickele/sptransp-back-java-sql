@@ -1,10 +1,7 @@
 package org.bdickele.sptransp.configuration;
 
 import org.bdickele.sptransp.security.SpTranspUserDetailsService;
-import org.bdickele.sptransp.service.AgreementRuleService;
-import org.bdickele.sptransp.service.CustomerService;
-import org.bdickele.sptransp.service.EmployeeService;
-import org.bdickele.sptransp.service.UserService;
+import org.bdickele.sptransp.service.*;
 import org.postgresql.jdbc2.optional.SimpleDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -39,6 +36,11 @@ public class IntegrationTestConfig {
     Environment env;
 
     @Bean
+    public AgreementRuleService agreementRuleService() {
+        return new AgreementRuleService();
+    }
+
+    @Bean
     public CustomerService customerService() {
         return new CustomerService();
     }
@@ -49,13 +51,13 @@ public class IntegrationTestConfig {
     }
 
     @Bean
-    public UserService userService() {
-        return new UserService();
+    public RequestService requestService() {
+        return new RequestService();
     }
 
     @Bean
-    public AgreementRuleService agreementRuleService() {
-        return new AgreementRuleService();
+    public UserService userService() {
+        return new UserService();
     }
 
     @Bean
