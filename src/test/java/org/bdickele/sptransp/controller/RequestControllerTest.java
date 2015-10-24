@@ -37,7 +37,7 @@ public class RequestControllerTest extends AbstractControllerTest {
     @Test
     public void insertion_should_work() throws Exception {
         // Current number of pending requests
-        List<Request> customerRequests = requestRepository.findByCustomerUidAndAgreementStatusIn("timulf70", RequestAgreementStatus.PENDING);
+        List<Request> customerRequests = requestRepository.findByCustomerUidAndAgreementStatusInOrderByCreationDate("timulf70", RequestAgreementStatus.PENDING);
         int numberBefore = customerRequests.size();
 
         MvcResult mvcResult = mvc.perform(post("/requests")
@@ -54,7 +54,7 @@ public class RequestControllerTest extends AbstractControllerTest {
 
         assertThat(createdDTO.getReference()).isNotNull();
 
-        customerRequests = requestRepository.findByCustomerUidAndAgreementStatusIn("timulf70", RequestAgreementStatus.PENDING);
+        customerRequests = requestRepository.findByCustomerUidAndAgreementStatusInOrderByCreationDate("timulf70", RequestAgreementStatus.PENDING);
         int numberAfter = customerRequests.size();
 
         assertThat(numberAfter).isEqualTo(numberBefore+1);

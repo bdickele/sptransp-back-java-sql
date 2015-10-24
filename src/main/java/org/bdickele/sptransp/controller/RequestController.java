@@ -72,12 +72,12 @@ public class RequestController extends AbstractController {
     }
 
     private List<RequestDTO> getRequestsPerStatus(RequestAgreementStatus... agreementStatus) {
-        List<Request> requests  = repository.findByAgreementStatusIn(agreementStatus);
+        List<Request> requests  = repository.findByAgreementStatusInOrderByCreationDate(agreementStatus);
         return RequestDTO.build(requests);
     }
 
     private List<RequestDTO> getRequestsPerCustomerAndStatus(String customerUid, RequestAgreementStatus... agreementStatus) {
-        List<Request> requests  = repository.findByCustomerUidAndAgreementStatusIn(customerUid, agreementStatus);
+        List<Request> requests  = repository.findByCustomerUidAndAgreementStatusInOrderByCreationDate(customerUid, agreementStatus);
         return RequestDTO.build(requests);
     }
 

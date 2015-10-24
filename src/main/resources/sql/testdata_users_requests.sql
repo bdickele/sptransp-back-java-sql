@@ -42,11 +42,11 @@ insert into ST_USER (id, version, user_type, user_password, uid_user, user_profi
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (30, 1, 'E', 'changeme', 'ulesgh33', 'HR_WRITER', '2015-06-12 07:15:58', 'script', '2015-06-12 07:15:58', 'script');
 */
 insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (999, 'Bertrand DICKELE', 5, 50);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (1, 'Kathleen Carpenter', 4, 20);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (2, 'Helen Cox', 1, 20);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (1, 'Kathleen Carpenter', 4, 80);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (2, 'Helen Cox', 1, 60);
 insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (3, 'Paula Spencer', 2, 50);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (4, 'Juan Hughes', 2, 10);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (5, 'Ashley Wheeler', 3, 10);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (4, 'Juan Hughes', 2, 60);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (5, 'Ashley Wheeler', 3, 60);
 /*
 insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (6, 'Ruby Rogers', 2, 50);
 insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (7, 'Joyce Cruz', 3, 30);

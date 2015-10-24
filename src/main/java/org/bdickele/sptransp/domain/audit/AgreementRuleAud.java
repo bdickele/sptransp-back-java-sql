@@ -4,6 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.bdickele.sptransp.domain.AgreementRule;
+import org.bdickele.sptransp.domain.Destination;
+import org.bdickele.sptransp.domain.Goods;
 import org.bdickele.sptransp.domain.converter.LocalDateTimeConverter;
 
 import javax.persistence.*;
@@ -27,11 +29,13 @@ public class AgreementRuleAud implements Serializable {
     @EmbeddedId
     private AgreementRuleAudPK pk;
 
-    @Column(name = "ID_DESTINATION")
-    private Long destinationId;
+    @ManyToOne
+    @JoinColumn(name = "ID_DESTINATION")
+    private Destination destination;
 
-    @Column(name = "ID_GOODS")
-    private Long goodsId;
+    @ManyToOne
+    @JoinColumn(name = "ID_GOODS")
+    private Goods goods;
 
     @Column(name = "REQ_ALLOWED")
     private Boolean allowed;
@@ -62,8 +66,8 @@ public class AgreementRuleAud implements Serializable {
     public static AgreementRuleAud build(AgreementRule rule, Integer version) {
         AgreementRuleAud audit = new AgreementRuleAud();
         audit.pk = AgreementRuleAudPK.build(rule.getId(), version);
-        audit.destinationId = rule.getDestination().getId();
-        audit.goodsId = rule.getGoods().getId();
+        audit.destination = rule.getDestination();
+        audit.goods = rule.getGoods();
         audit.allowed = rule.getAllowed();
         audit.versionDate = rule.getUpdateDate();
         audit.versionUser = rule.getUpdateUser();

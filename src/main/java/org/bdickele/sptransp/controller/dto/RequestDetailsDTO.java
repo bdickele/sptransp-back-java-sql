@@ -18,7 +18,11 @@ public class RequestDetailsDTO extends RequestDTO implements SpaceTranspDTO, Ser
 
     private static final long serialVersionUID = -8472656644963494464L;
 
+    protected Integer nextAgreementVisaRank;
+
     private List<RequestAgreementVisaDTO> appliedAgreementVisas;
+
+    private List<AgreementRuleVisaDTO> requiredAgreementVisas;
 
 
     public static RequestDetailsDTO build(Request request) {
@@ -34,8 +38,12 @@ public class RequestDetailsDTO extends RequestDTO implements SpaceTranspDTO, Ser
         dto.departureName = request.getDeparture().getName();
         dto.arrivalCode = request.getArrival().getCode();
         dto.arrivalName = request.getArrival().getName();
-        dto.agreementStatusCode = request.getAgreementStatus().databaseCode;
-        dto.agreementStatusName = request.getAgreementStatus().label;
+        dto.overallStatusCode = request.getOverallStatus().code;
+        dto.overallStatusLabel = request.getOverallStatus().label;
+        dto.agreementStatusCode = request.getAgreementStatus().code;
+        dto.agreementStatusLabel = request.getAgreementStatus().label;
+
+        dto.nextAgreementVisaRank = request.getNextAgreementVisaRank();
 
         Optional<AgreementRuleVisaAud> nextExpectedVisa = request.getNextExpectedAgreementVisa();
         dto.nextExpectedAgreementVisa = nextExpectedVisa.isPresent() ?
@@ -45,6 +53,10 @@ public class RequestDetailsDTO extends RequestDTO implements SpaceTranspDTO, Ser
                 request.getAgreementVisas().stream()
                         .map(RequestAgreementVisaDTO::build)
                         .collect(Collectors.toList());
+
+        dto.requiredAgreementVisas = request.getRuleAud().getVisas().stream()
+                .map(AgreementRuleVisaDTO::build)
+                .collect(Collectors.toList());
 
         return dto;
     }

@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.bdickele.sptransp.domain.AgreementRule;
+import org.bdickele.sptransp.domain.audit.AgreementRuleAud;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -70,6 +71,20 @@ public class AgreementRuleDTO implements SpaceTranspDTO, Serializable {
         dto.creationUser = rule.getCreationUser();
         dto.updateDate = dto.formatDate(rule.getUpdateDate());
         dto.updateUser = rule.getUpdateUser();
+        dto.agreementVisas = new ArrayList<>();
+        if (rule.getVisas()!= null) {
+            dto.agreementVisas = rule.getVisas().stream().map(v -> AgreementRuleVisaDTO.build(v)).collect(Collectors.toList());
+        }
+        return dto;
+    }
+
+    public static AgreementRuleDTO build(AgreementRuleAud rule) {
+        AgreementRuleDTO dto = new AgreementRuleDTO();
+        dto.destinationCode = rule.getDestination().getCode();
+        dto.destinationName = rule.getDestination().getName();
+        dto.goodsCode = rule.getGoods().getCode();
+        dto.goodsName = rule.getGoods().getName();
+        dto.reqAllowed = rule.getAllowed();
         dto.agreementVisas = new ArrayList<>();
         if (rule.getVisas()!= null) {
             dto.agreementVisas = rule.getVisas().stream().map(v -> AgreementRuleVisaDTO.build(v)).collect(Collectors.toList());

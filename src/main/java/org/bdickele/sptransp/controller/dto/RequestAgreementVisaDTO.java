@@ -19,9 +19,13 @@ public class RequestAgreementVisaDTO implements SpaceTranspDTO, Serializable {
 
     private String employeeUid;
 
+    private String employeeName;
+
     private String statusCode;
 
     private String departmentCode;
+
+    private String departmentName;
 
     private Integer seniority;
 
@@ -32,9 +36,11 @@ public class RequestAgreementVisaDTO implements SpaceTranspDTO, Serializable {
 
     public static RequestAgreementVisaDTO build(RequestAgreementVisa visa) {
         RequestAgreementVisaDTO dto = new RequestAgreementVisaDTO();
-        dto.employeeUid = visa.getDepartment().getName();
+        dto.employeeUid = visa.getEmployee().getUid();
+        dto.employeeName = visa.getEmployee().getFullName();
         dto.statusCode = visa.getStatus().code;
         dto.departmentCode = visa.getDepartment().getCode();
+        dto.departmentName = visa.getDepartment().getName();
         dto.seniority = visa.getSeniority().getValue();
         dto.comment = visa.getComment();
         dto.date = dto.formatDate(visa.getCreationDate());

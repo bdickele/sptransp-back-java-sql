@@ -13,7 +13,7 @@ public class RequestAgreementStatusConverter implements AttributeConverter<Reque
 
     @Override
     public String convertToDatabaseColumn(RequestAgreementStatus status) {
-        return status.databaseCode;
+        return status.code;
     }
 
     @Override

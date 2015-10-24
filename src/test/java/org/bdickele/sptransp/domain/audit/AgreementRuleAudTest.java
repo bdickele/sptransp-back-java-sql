@@ -24,8 +24,8 @@ public class AgreementRuleAudTest {
         AgreementRuleAud ruleAud = AgreementRuleAud.build(rule, 1);
 
         assertThat(ruleAud.getPk()).isEqualTo(AgreementRuleAudPK.build(1L, 1));
-        assertThat(ruleAud.getDestinationId()).isEqualTo(DESTINATION_MOON.getId());
-        assertThat(ruleAud.getGoodsId()).isEqualTo(GOODS_FOOD.getId());
+        assertThat(ruleAud.getDestination()).isEqualTo(DESTINATION_MOON);
+        assertThat(ruleAud.getGoods()).isEqualTo(GOODS_FOOD);
         assertThat(ruleAud.getVersionDate()).isEqualTo(rule.getUpdateDate());
 
         List<AgreementRuleVisaAud> visas = ruleAud.getVisas();

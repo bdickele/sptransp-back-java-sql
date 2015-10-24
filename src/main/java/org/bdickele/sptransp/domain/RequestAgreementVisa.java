@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.bdickele.sptransp.domain.converter.LocalDateTimeConverter;
-import org.bdickele.sptransp.domain.converter.RequestAgreementStatusConverter;
+import org.bdickele.sptransp.domain.converter.RequestAgreementVisaStatusConverter;
 import org.bdickele.sptransp.domain.converter.SeniorityConverter;
 
 import javax.persistence.*;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Table(name = "ST_REQUEST_AGR_VISA")
 @SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
 @EqualsAndHashCode(of = "id", doNotUseGetters = true)
-@ToString(of = {"id", "employeeId", "status", "rank", "department", "seniority"}, doNotUseGetters = true)
+@ToString(of = {"id", "employee", "status", "rank", "department", "seniority"}, doNotUseGetters = true)
 @Getter
 public class RequestAgreementVisa implements Serializable {
 
@@ -29,13 +29,12 @@ public class RequestAgreementVisa implements Serializable {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MAIN")
     private Long id;
 
-    // For now I don't map the full Employee, even is lazy mode
-    // I'm not sure I need the full employee here (let's see)
-    @Column(name = "ID_EMPLOYEE")
-    private Long employeeId;
+    @ManyToOne
+    @JoinColumn(name = "ID_EMPLOYEE")
+    private Employee employee;
 
     @Column(name = "STATUS")
-    @Convert(converter = RequestAgreementStatusConverter.class)
+    @Convert(converter = RequestAgreementVisaStatusConverter.class)
     private RequestAgreementVisaStatus status;
 
     @Column(name = "VISA_RANK")
@@ -64,7 +63,7 @@ public class RequestAgreementVisa implements Serializable {
     /**
      * Build method for a new RequestAgreementVisa
      * @param id
-     * @param idEmployee
+     * @param employee
      * @param status
      * @param rank
      * @param comment
@@ -73,13 +72,13 @@ public class RequestAgreementVisa implements Serializable {
      * @param creationDate We can pass creation date so that it can be synchronized with update date of request
      * @return New instance of RequestAgreementVisa
      */
-    public static RequestAgreementVisa build(Request request, Long id, Long idEmployee, RequestAgreementVisaStatus status,
+    public static RequestAgreementVisa build(Request request, Long id, Employee employee, RequestAgreementVisaStatus status,
                                              Integer rank, String comment, Department department,
                                              Seniority seniority, LocalDateTime creationDate) {
         RequestAgreementVisa v = new RequestAgreementVisa();
         v.request = request;
         v.id = id;
-        v.employeeId = idEmployee;
+        v.employee = employee;
         v.status = status;
         v.rank = rank;
         v.comment = comment;

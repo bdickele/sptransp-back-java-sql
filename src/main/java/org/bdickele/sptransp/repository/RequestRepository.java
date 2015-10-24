@@ -17,7 +17,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
      */
     Request findByReference(String reference);
 
-    List<Request> findByAgreementStatusIn(RequestAgreementStatus... agreementStatus);
+    List<Request> findByAgreementStatusInOrderByCreationDate(RequestAgreementStatus... agreementStatus);
 
-    List<Request> findByCustomerUidAndAgreementStatusIn(String customerUid, RequestAgreementStatus... agreementStatus);
+    List<Request> findByCustomerUidAndAgreementStatusInOrderByCreationDate(String customerUid, RequestAgreementStatus... agreementStatus);
 }

@@ -1,6 +1,5 @@
 package org.bdickele.sptransp.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,9 +14,6 @@ import java.util.stream.Collectors;
 /**
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"reference", "creationDate", "updateDate", "customerUid", "customerName", "goodsCode", "goodsName",
-        "departureCode", "departureName", "arrivalCode", "arrivalName", "agreementStatusCode", "agreementStatusName",
-        "nextExpectedAgreementVisa"})
 @EqualsAndHashCode(of = "reference", doNotUseGetters = true)
 @ToString(of = {"reference", "customerUid", "departureCode", "arrivalCode", "goodsCode", "creationDate"}, doNotUseGetters = true)
 @Getter
@@ -47,9 +43,13 @@ public class RequestDTO implements SpaceTranspDTO, Serializable {
 
     protected String arrivalName;
 
+    protected String overallStatusCode;
+
+    protected String overallStatusLabel;
+
     protected String agreementStatusCode;
 
-    protected String agreementStatusName;
+    protected String agreementStatusLabel;
 
     protected AgreementRuleVisaDTO nextExpectedAgreementVisa;
 
@@ -67,8 +67,10 @@ public class RequestDTO implements SpaceTranspDTO, Serializable {
         dto.departureName = request.getDeparture().getName();
         dto.arrivalCode = request.getArrival().getCode();
         dto.arrivalName = request.getArrival().getName();
-        dto.agreementStatusCode = request.getAgreementStatus().databaseCode;
-        dto.agreementStatusName = request.getAgreementStatus().label;
+        dto.overallStatusCode = request.getOverallStatus().code;
+        dto.overallStatusLabel = request.getOverallStatus().label;
+        dto.agreementStatusCode = request.getAgreementStatus().code;
+        dto.agreementStatusLabel = request.getAgreementStatus().label;
 
         Optional<AgreementRuleVisaAud> nextExpectedVisa = request.getNextExpectedAgreementVisa();
         dto.nextExpectedAgreementVisa = nextExpectedVisa.isPresent() ?

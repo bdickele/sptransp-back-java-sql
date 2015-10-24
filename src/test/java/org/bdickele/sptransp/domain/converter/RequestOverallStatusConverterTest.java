@@ -14,7 +14,7 @@ public class RequestOverallStatusConverterTest {
 
     @Test
     public void should_convert_from_code_to_enum() {
-        assertThat(converter.convertToEntityAttribute("P")).isEqualTo(RequestOverallStatus.PENDING);
+        assertThat(converter.convertToEntityAttribute("WV")).isEqualTo(RequestOverallStatus.WAITING_FOR_VALIDATION);
     }
 
     @Test

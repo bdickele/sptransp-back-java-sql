@@ -6,33 +6,36 @@ package org.bdickele.sptransp.domain;
 public enum RequestOverallStatus {
 
     // Initial state of request: agreement visas are requested
-    PENDING("P"),
+    WAITING_FOR_VALIDATION("WV", "Waiting for validation"),
 
     // Cancelled
-    CANCELLED("C"),
+    CANCELLED("C", "Cancelled"),
 
     // Someone denied his visa
-    REFUSED("R"),
+    REFUSED("R", "Refused"),
 
     // All agreement visas have been granted
-    VALIDATED("V"),
+    VALIDATED("V", "Validated"),
 
     // In transit
-    IN_TRANSIT("T"),
+    IN_TRANSIT("T", "In transit"),
 
     // Goods delivered
-    DELIVERED("D");
+    DELIVERED("D", "Delivered");
 
 
-    public final String databaseCode;
+    public final String code;
 
-    private RequestOverallStatus(String s) {
-        this.databaseCode = s;
+    public final String label;
+
+    private RequestOverallStatus(String code, String label) {
+        this.code = code;
+        this.label = label;
     }
 
     public static RequestOverallStatus getByCode(String code) {
         for (RequestOverallStatus status : RequestOverallStatus.values()) {
-            if (status.databaseCode.equals(code)) return status;
+            if (status.code.equals(code)) return status;
         }
 
         return null;

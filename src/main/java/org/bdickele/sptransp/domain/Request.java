@@ -122,7 +122,7 @@ public class Request implements Serializable {
         r.departure = departure;
         r.arrival = arrival;
         r.ruleAud = ruleVersion;
-        r.overallStatus = RequestOverallStatus.PENDING;
+        r.overallStatus = RequestOverallStatus.WAITING_FOR_VALIDATION;
         r.agreementStatus = RequestAgreementStatus.PENDING;
         r.nextAgreementVisaRank = 0;
         r.agreementVisas = new ArrayList<>();
@@ -220,7 +220,7 @@ public class Request implements Serializable {
 
         LocalDateTime now = LocalDateTime.now();
 
-        RequestAgreementVisa appliedVisa = RequestAgreementVisa.build(this, null, employee.getId(), visaStatus,
+        RequestAgreementVisa appliedVisa = RequestAgreementVisa.build(this, null, employee, visaStatus,
                 nextAgreementVisaRank, comment, department, seniority, now);
 
         addAgreementVisa(appliedVisa);
@@ -278,7 +278,7 @@ public class Request implements Serializable {
      */
     public boolean userHasAlreadyAppliedAVisa(Long employeeId) {
         return agreementVisas.stream()
-                .filter(v -> v.getEmployeeId().equals(employeeId))
+                .filter(v -> v.getEmployee().getId().equals(employeeId))
                 .findFirst()
                 .isPresent();
     }

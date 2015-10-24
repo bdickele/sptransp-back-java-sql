@@ -16,7 +16,7 @@ public class RequestOverallStatusTest {
         Set<String> codes = new HashSet<>();
 
         for (RequestOverallStatus status: RequestOverallStatus.values()) {
-            String code = status.databaseCode;
+            String code = status.code;
             if (codes.contains(code)) {
                 Assert.fail("Database codes of RequestOverallStatus are not unique, fix it ASAP");
             }

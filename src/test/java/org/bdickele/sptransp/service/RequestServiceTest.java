@@ -25,13 +25,13 @@ public class RequestServiceTest extends AbstractServiceTest {
     @Test
     public void creation_of_a_request_should_work() {
         // Current number of pending requests
-        List<Request> customerRequests = requestRepository.findByCustomerUidAndAgreementStatusIn("timulf70", RequestAgreementStatus.PENDING);
+        List<Request> customerRequests = requestRepository.findByCustomerUidAndAgreementStatusInOrderByCreationDate("timulf70", RequestAgreementStatus.PENDING);
         int numberBefore = customerRequests.size();
 
         Request request = service.create("FOOD", "MOON", "EARTH", "timulf70");
         assertThat(request.getReference()).isNotNull();
 
-        customerRequests = requestRepository.findByCustomerUidAndAgreementStatusIn("timulf70", RequestAgreementStatus.PENDING);
+        customerRequests = requestRepository.findByCustomerUidAndAgreementStatusInOrderByCreationDate("timulf70", RequestAgreementStatus.PENDING);
         int numberAfter = customerRequests.size();
 
         assertThat(numberAfter).isEqualTo(numberBefore+1);

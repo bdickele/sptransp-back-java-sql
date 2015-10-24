@@ -14,19 +14,19 @@ public enum RequestAgreementStatus {
 
     REFUSED("R", "Refused");
 
-    public final String databaseCode;
+    public final String code;
 
     public final String label;
 
 
     RequestAgreementStatus(String code, String label) {
-        this.databaseCode = code;
+        this.code = code;
         this.label = label;
     }
 
     public static RequestAgreementStatus getByCode(String code) {
         for (RequestAgreementStatus status : RequestAgreementStatus.values()) {
-            if (status.databaseCode.equals(code)) return status;
+            if (status.code.equals(code)) return status;
         }
 
         return null;

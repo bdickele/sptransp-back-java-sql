@@ -13,7 +13,7 @@ public class RequestOverallStatusConverter implements AttributeConverter<Request
 
     @Override
     public String convertToDatabaseColumn(RequestOverallStatus status) {
-        return status.databaseCode;
+        return status.code;
     }
 
     @Override
