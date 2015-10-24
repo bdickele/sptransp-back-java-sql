@@ -41,7 +41,7 @@ public class AgreementRuleAud implements Serializable {
         @JoinColumn(name="ID_RULE", referencedColumnName="ID_RULE"),
         @JoinColumn(name="RULE_VERSION", referencedColumnName="VERSION")
     })
-    @OrderBy("RANK ASC")
+    @OrderBy("VISA_RANK ASC")
     private List<AgreementRuleVisaAud> visas;
 
     @Column(name = "VERSION_DATE")

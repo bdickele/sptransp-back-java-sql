@@ -25,7 +25,7 @@ public class AgreementRuleVisaAudPK implements Serializable {
     @Column(name = "RULE_VERSION")
     private Integer version;
 
-    @Column(name = "RANK")
+    @Column(name = "VISA_RANK")
     private Integer rank;
 
 

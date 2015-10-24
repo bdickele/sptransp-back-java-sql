@@ -6,19 +6,23 @@ package org.bdickele.sptransp.domain;
  */
 public enum RequestAgreementVisaStatus {
 
-    GRANTED("G"),
+    GRANTED("G", "Granted"),
 
-    DENIED("D");
+    DENIED("D", "Denied");
 
-    public final String databaseCode;
+    public final String code;
 
-    private RequestAgreementVisaStatus(String s) {
-        this.databaseCode = s;
+    public final String label;
+
+
+    RequestAgreementVisaStatus(String code, String label) {
+        this.code = code;
+        this.label = label;
     }
 
     public static RequestAgreementVisaStatus getByCode(String code) {
         for (RequestAgreementVisaStatus status : RequestAgreementVisaStatus.values()) {
-            if (status.databaseCode.equals(code)) return status;
+            if (status.code.equals(code)) return status;
         }
 
         return null;

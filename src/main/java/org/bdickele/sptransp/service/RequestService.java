@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -38,10 +37,6 @@ public class RequestService extends AbstractService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-
-    public List<Request> findRequestsBeingValidated() {
-        return requestRepository.findByAgreementStatus(RequestAgreementStatus.PENDING);
-    }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public Request create(String goodsCode, String departureCode, String arrivalCode, String customerUid) {

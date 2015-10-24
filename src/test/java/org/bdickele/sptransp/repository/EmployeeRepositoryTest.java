@@ -4,7 +4,6 @@ import org.bdickele.sptransp.domain.Employee;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,9 +16,6 @@ public class EmployeeRepositoryTest extends AbstractRepositoryTest {
 
     @Autowired
     private EmployeeRepository repository;
-
-    @Autowired
-    private DataSource dataSource;
 
 
     @Test

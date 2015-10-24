@@ -27,7 +27,7 @@ public class AgreementRuleVisa implements Serializable {
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="SEQ_MAIN")
     private Long id;
 
-    @Column(name = "RANK")
+    @Column(name = "VISA_RANK")
     @Setter private Integer rank;
 
     @ManyToOne
@@ -40,7 +40,7 @@ public class AgreementRuleVisa implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "ID_RULE")
-    @Setter private AgreementRule rule;
+    private AgreementRule rule;
 
 
     /**

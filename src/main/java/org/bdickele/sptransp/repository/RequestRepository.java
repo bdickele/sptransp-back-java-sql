@@ -1,6 +1,5 @@
 package org.bdickele.sptransp.repository;
 
-import org.bdickele.sptransp.domain.Customer;
 import org.bdickele.sptransp.domain.Request;
 import org.bdickele.sptransp.domain.RequestAgreementStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,8 +17,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
      */
     Request findByReference(String reference);
 
+    List<Request> findByAgreementStatusIn(RequestAgreementStatus... agreementStatus);
 
-    List<Request> findByAgreementStatus(RequestAgreementStatus agreementStatus);
-
-    List<Request> findByCustomerAndAgreementStatus(Customer customer, RequestAgreementStatus agreementStatus);
+    List<Request> findByCustomerUidAndAgreementStatusIn(String customerUid, RequestAgreementStatus... agreementStatus);
 }

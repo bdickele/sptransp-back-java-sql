@@ -2,10 +2,8 @@ package org.bdickele.sptransp.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bdickele.sptransp.controller.dto.RequestDTO;
-import org.bdickele.sptransp.domain.Customer;
 import org.bdickele.sptransp.domain.Request;
 import org.bdickele.sptransp.domain.RequestAgreementStatus;
-import org.bdickele.sptransp.repository.CustomerRepository;
 import org.bdickele.sptransp.repository.RequestRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,9 +26,6 @@ public class RequestControllerTest extends AbstractControllerTest {
     @Autowired
     private RequestRepository requestRepository;
 
-    @Autowired
-    private CustomerRepository customerRepository;
-
 
     @Before
     public void setUp() {
@@ -42,8 +37,7 @@ public class RequestControllerTest extends AbstractControllerTest {
     @Test
     public void insertion_should_work() throws Exception {
         // Current number of pending requests
-        Customer customer = customerRepository.findByUid("timulf70");
-        List<Request> customerRequests = requestRepository.findByCustomerAndAgreementStatus(customer, RequestAgreementStatus.PENDING);
+        List<Request> customerRequests = requestRepository.findByCustomerUidAndAgreementStatusIn("timulf70", RequestAgreementStatus.PENDING);
         int numberBefore = customerRequests.size();
 
         MvcResult mvcResult = mvc.perform(post("/requests")
@@ -60,7 +54,7 @@ public class RequestControllerTest extends AbstractControllerTest {
 
         assertThat(createdDTO.getReference()).isNotNull();
 
-        customerRequests = requestRepository.findByCustomerAndAgreementStatus(customer, RequestAgreementStatus.PENDING);
+        customerRequests = requestRepository.findByCustomerUidAndAgreementStatusIn("timulf70", RequestAgreementStatus.PENDING);
         int numberAfter = customerRequests.size();
 
         assertThat(numberAfter).isEqualTo(numberBefore+1);

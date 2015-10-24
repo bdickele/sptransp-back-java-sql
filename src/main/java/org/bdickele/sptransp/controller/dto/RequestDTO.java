@@ -25,33 +25,33 @@ public class RequestDTO implements SpaceTranspDTO, Serializable {
 
     private static final long serialVersionUID = -3314219597285942969L;
 
-    private String reference;
+    protected String reference;
 
-    private String creationDate;
+    protected String creationDate;
 
-    private String updateDate;
+    protected String updateDate;
 
-    private String customerUid;
+    protected String customerUid;
 
-    private String customerName;
+    protected String customerName;
 
-    private String goodsCode;
+    protected String goodsCode;
 
-    private String goodsName;
+    protected String goodsName;
 
-    private String departureCode;
+    protected String departureCode;
 
-    private String departureName;
+    protected String departureName;
 
-    private String arrivalCode;
+    protected String arrivalCode;
 
-    private String arrivalName;
+    protected String arrivalName;
 
-    private String agreementStatusCode;
+    protected String agreementStatusCode;
 
-    private String agreementStatusName;
+    protected String agreementStatusName;
 
-    private AgreementRuleVisaDTO nextExpectedAgreementVisa;
+    protected AgreementRuleVisaDTO nextExpectedAgreementVisa;
 
 
     public static RequestDTO build(Request request) {

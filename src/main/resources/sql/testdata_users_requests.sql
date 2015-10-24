@@ -119,3 +119,10 @@ insert into ST_CUSTOMER (id, full_name) values (47, 'Zoonoodle');
 insert into ST_CUSTOMER (id, full_name) values (48, 'Jamia');
 insert into ST_CUSTOMER (id, full_name) values (49, 'Skiptube');
 insert into ST_CUSTOMER (id, full_name) values (50, 'Plajo');
+
+-- #################################################################
+-- REQUEST
+-- #################################################################
+INSERT INTO ST_REQUEST(ID, VERSION, REFERENCE, ID_CUSTOMER, ID_GOODS, ID_DEPARTURE, ID_ARRIVAL, OVERALL_STATUS,
+  ID_RULE, RULE_VERSION, AGREEMENT_STATUS, NEXT_AGREEMENT_VISA_RANK, CREATION_DATE, CREATION_USER, UPDATE_DATE, UPDATE_USER)
+VALUES(1, 1, 'REFERE0001', 31, 2, 2, 1, 'P', 1, 1, 'P', 0, CURRENT_TIMESTAMP, 'admin', CURRENT_TIMESTAMP, 'admin');

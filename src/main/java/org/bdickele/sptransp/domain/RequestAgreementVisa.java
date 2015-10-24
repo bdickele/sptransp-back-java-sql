@@ -38,7 +38,7 @@ public class RequestAgreementVisa implements Serializable {
     @Convert(converter = RequestAgreementStatusConverter.class)
     private RequestAgreementVisaStatus status;
 
-    @Column(name = "RANK")
+    @Column(name = "VISA_RANK")
     private Integer rank;
 
     @Column(name = "VISA_COMMENT")
@@ -56,6 +56,10 @@ public class RequestAgreementVisa implements Serializable {
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime creationDate;
 
+    @ManyToOne
+    @JoinColumn(name = "ID_REQUEST")
+    private Request request;
+
 
     /**
      * Build method for a new RequestAgreementVisa
@@ -69,10 +73,11 @@ public class RequestAgreementVisa implements Serializable {
      * @param creationDate We can pass creation date so that it can be synchronized with update date of request
      * @return New instance of RequestAgreementVisa
      */
-    public static RequestAgreementVisa build(Long id, Long idEmployee, RequestAgreementVisaStatus status,
+    public static RequestAgreementVisa build(Request request, Long id, Long idEmployee, RequestAgreementVisaStatus status,
                                              Integer rank, String comment, Department department,
                                              Seniority seniority, LocalDateTime creationDate) {
         RequestAgreementVisa v = new RequestAgreementVisa();
+        v.request = request;
         v.id = id;
         v.employeeId = idEmployee;
         v.status = status;

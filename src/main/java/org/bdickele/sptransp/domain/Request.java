@@ -81,9 +81,9 @@ public class Request implements Serializable {
     @Column(name = "NEXT_AGREEMENT_VISA_RANK")
     private int nextAgreementVisaRank;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID_REQUEST")
-    private List<RequestAgreementVisa> agreementVisas;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "request")
+    @OrderBy("CREATION_DATE ASC ")
+    private List<RequestAgreementVisa> agreementVisas = new ArrayList<>();
 
     @Column(name = "CREATION_DATE")
     @Convert(converter = LocalDateTimeConverter.class)
@@ -220,7 +220,7 @@ public class Request implements Serializable {
 
         LocalDateTime now = LocalDateTime.now();
 
-        RequestAgreementVisa appliedVisa = RequestAgreementVisa.build(null, employee.getId(), visaStatus,
+        RequestAgreementVisa appliedVisa = RequestAgreementVisa.build(this, null, employee.getId(), visaStatus,
                 nextAgreementVisaRank, comment, department, seniority, now);
 
         addAgreementVisa(appliedVisa);
@@ -237,7 +237,7 @@ public class Request implements Serializable {
      * @param appliedVisa Visa to add
      */
     private void addAgreementVisa(RequestAgreementVisa appliedVisa) {
-        agreementVisas.add(appliedVisa);
+        getAgreementVisas().add(appliedVisa);
 
         RequestAgreementVisaStatus lastAppliedVisaStatus = appliedVisa.getStatus();
 

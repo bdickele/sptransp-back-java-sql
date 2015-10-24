@@ -48,7 +48,7 @@ public class AgreementRule implements Serializable {
     private Boolean allowed;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "rule")
-    @OrderBy("RANK ASC")
+    @OrderBy("VISA_RANK ASC")
     private List<AgreementRuleVisa> visas;
 
     @Column(name = "CREATION_DATE")
