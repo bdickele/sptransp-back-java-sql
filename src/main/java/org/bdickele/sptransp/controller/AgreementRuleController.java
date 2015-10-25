@@ -90,9 +90,8 @@ public class AgreementRuleController extends AbstractController {
         Map<String, Department> mapDepartment = departments.stream()
                 .collect(Collectors.toMap(Department::getCode, d -> d));
 
-        List<Pair<Department, Seniority>> visas = visaDTOs.stream()
+        return visaDTOs.stream()
                 .map(v -> Pair.of(mapDepartment.get(v.getDepartmentCode()), Seniority.of(v.getSeniority())))
                 .collect(Collectors.toList());
-        return visas;
     }
 }

@@ -10,14 +10,22 @@ public enum RequestAgreementVisaStatus {
 
     DENIED("D", "Denied");
 
-    public final String code;
+    private final String code;
 
-    public final String label;
+    private final String label;
 
 
     RequestAgreementVisaStatus(String code, String label) {
         this.code = code;
         this.label = label;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public static RequestAgreementVisaStatus getByCode(String code) {

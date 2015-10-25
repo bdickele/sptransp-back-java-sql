@@ -24,13 +24,21 @@ public enum RequestOverallStatus {
     DELIVERED("D", "Delivered");
 
 
-    public final String code;
+    private final String code;
 
-    public final String label;
+    private final String label;
 
-    private RequestOverallStatus(String code, String label) {
+    RequestOverallStatus(String code, String label) {
         this.code = code;
         this.label = label;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public static RequestOverallStatus getByCode(String code) {

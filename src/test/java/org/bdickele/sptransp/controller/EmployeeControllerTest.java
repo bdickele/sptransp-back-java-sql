@@ -68,8 +68,8 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         // I check only one user (and not the modified one)
         assertThat(dtoList.size()).isGreaterThanOrEqualTo(5);
         assertThat(dtoList).extracting("uid", "fullName", "departmentCode", "seniority").contains(
-                tuple("kvcquz31", "Kathleen Carpenter", "JOURNEY_SUPERVISION", 20),
-                tuple("whlofu42", "Helen Cox", "LAW_COMPLIANCE", 20));
+                tuple("kvcquz31", "Kathleen Carpenter", "JOURNEY_SUPERVISION", 80),
+                tuple("whlofu42", "Helen Cox", "LAW_COMPLIANCE", 60));
     }
 
     @Test

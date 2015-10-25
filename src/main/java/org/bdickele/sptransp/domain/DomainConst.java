@@ -6,4 +6,9 @@ package org.bdickele.sptransp.domain;
 public final class DomainConst {
 
     public static final String SEQUENCE_NAME = "sptransp.seq_main";
+
+
+    private DomainConst() {
+        //
+    }
 }

@@ -13,7 +13,7 @@ public class RequestAgreementVisaStatusConverter implements AttributeConverter<R
 
     @Override
     public String convertToDatabaseColumn(RequestAgreementVisaStatus visaStatus) {
-        return visaStatus.code;
+        return visaStatus.getCode();
     }
 
     @Override

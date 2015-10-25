@@ -38,10 +38,10 @@ public class RequestDetailsDTO extends RequestDTO implements SpaceTranspDTO, Ser
         dto.departureName = request.getDeparture().getName();
         dto.arrivalCode = request.getArrival().getCode();
         dto.arrivalName = request.getArrival().getName();
-        dto.overallStatusCode = request.getOverallStatus().code;
-        dto.overallStatusLabel = request.getOverallStatus().label;
-        dto.agreementStatusCode = request.getAgreementStatus().code;
-        dto.agreementStatusLabel = request.getAgreementStatus().label;
+        dto.overallStatusCode = request.getOverallStatus().getCode();
+        dto.overallStatusLabel = request.getOverallStatus().getLabel();
+        dto.agreementStatusCode = request.getAgreementStatus().getCode();
+        dto.agreementStatusLabel = request.getAgreementStatus().getLabel();
 
         dto.nextAgreementVisaRank = request.getNextAgreementVisaRank();
 

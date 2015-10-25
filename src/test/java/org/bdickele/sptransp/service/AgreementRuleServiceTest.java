@@ -47,11 +47,11 @@ public class AgreementRuleServiceTest extends AbstractServiceTest {
                     .values(500, 1, 500, 1, false, NOW, "test", NOW, "test")
                     .build(),
             insertInto("ST_AGR_RULE_VISA")
-                    .columns("id", "id_rule", "rank", "id_department", "seniority")
+                    .columns("id", "id_rule", "visa_rank", "id_department", "seniority")
                     .values(501, 500, 0, 1, 60)
                     .build(),
             insertInto("ST_AGR_RULE_VISA")
-                    .columns("id", "id_rule", "rank", "id_department", "seniority")
+                    .columns("id", "id_rule", "visa_rank", "id_department", "seniority")
                     .values(502, 500, 0, 2, 40)
                     .build());
 

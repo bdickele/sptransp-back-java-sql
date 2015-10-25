@@ -39,7 +39,7 @@ public enum UserProfile {
 
     private final boolean employeeProfile;
 
-    private List<UserRole> roles;
+    private final List<UserRole> roles;
 
     private static List<UserProfile> EMPLOYEE_PROFILES = null;
 

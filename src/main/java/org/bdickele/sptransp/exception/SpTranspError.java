@@ -12,7 +12,7 @@ import java.util.IllegalFormatException;
  */
 public interface SpTranspError {
 
-    static final Logger LOGGER = Logger.getLogger(SpTranspError.class);
+    Logger LOGGER = Logger.getLogger(SpTranspError.class);
 
     String getErrorCodePrefix();
 
@@ -42,7 +42,7 @@ public interface SpTranspError {
         } catch(IllegalFormatException e) {
             String joinedArgs = StringUtils.join(args, ", ");
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Could not format message " + rawMessage + " with args: " + joinedArgs);
+                LOGGER.debug("Could not format message " + rawMessage + " with args: " + joinedArgs, e);
             }
             formattedMessage = rawMessage + ". Error with args: " + joinedArgs;
         }

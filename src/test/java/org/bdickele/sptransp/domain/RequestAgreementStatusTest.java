@@ -16,7 +16,7 @@ public class RequestAgreementStatusTest {
         Set<String> codes = new HashSet<>();
 
         for (RequestAgreementStatus status: RequestAgreementStatus.values()) {
-            String code = status.code;
+            String code = status.getCode();
             if (codes.contains(code)) {
                 Assert.fail("Database codes of RequestAgreementStatus are not unique, fix it ASAP");
             }

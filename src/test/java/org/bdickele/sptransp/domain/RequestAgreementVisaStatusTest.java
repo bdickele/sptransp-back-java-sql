@@ -16,7 +16,7 @@ public class RequestAgreementVisaStatusTest {
         Set<String> codes = new HashSet<>();
 
         for (RequestAgreementVisaStatus status: RequestAgreementVisaStatus.values()) {
-            String code = status.code;
+            String code = status.getCode();
             if (codes.contains(code)) {
                 Assert.fail("Database codes of AppliedAgreementVisaStatus are not unique, fix it ASAP");
             }

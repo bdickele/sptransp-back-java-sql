@@ -14,14 +14,22 @@ public enum RequestAgreementStatus {
 
     REFUSED("R", "Refused");
 
-    public final String code;
+    private final String code;
 
-    public final String label;
+    private final String label;
 
 
     RequestAgreementStatus(String code, String label) {
         this.code = code;
         this.label = label;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public static RequestAgreementStatus getByCode(String code) {

@@ -24,7 +24,7 @@ public class EmployeeRepositoryTest extends AbstractRepositoryTest {
         assertThat(employees.size()).isGreaterThanOrEqualTo(5);
         assertThat(employees)
                 .extracting("uid", "fullName", "department.code", "seniority.value").contains(
-                tuple("kvcquz31", "Kathleen Carpenter", "JOURNEY_SUPERVISION", 20),
-                tuple("whlofu42", "Helen Cox", "LAW_COMPLIANCE", 20));
+                tuple("kvcquz31", "Kathleen Carpenter", "JOURNEY_SUPERVISION", 80),
+                tuple("whlofu42", "Helen Cox", "LAW_COMPLIANCE", 60));
     }
 }

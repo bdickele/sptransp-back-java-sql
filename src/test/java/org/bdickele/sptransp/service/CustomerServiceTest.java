@@ -7,7 +7,6 @@ import com.ninja_squad.dbsetup.operation.Operation;
 import org.bdickele.sptransp.domain.Customer;
 import org.bdickele.sptransp.domain.UserProfile;
 import org.bdickele.sptransp.repository.CustomerRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,16 +38,10 @@ public class CustomerServiceTest extends AbstractServiceTest {
     private DataSource dataSource;
 
 
-    @Before
-    public void setUp() {
-        DbSetup dbSetup = new DbSetup(new DataSourceDestination(dataSource), sequenceOf(
-                TEST_CUSTOMER_DELETE));
-        // Use the tracker to launch the DbSetup.
-        dbSetupTracker.launchIfNecessary(dbSetup);
-    }
-
     @Test
     public void insertion_should_work() {
+        new DbSetup(new DataSourceDestination(dataSource), TEST_CUSTOMER_DELETE).launch();
+
         Customer customer = repository.findByUid("CUST1");
         assertThat(customer).isNull();
 

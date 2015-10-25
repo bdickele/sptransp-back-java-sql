@@ -38,7 +38,7 @@ public class RequestAgreementVisaDTO implements SpaceTranspDTO, Serializable {
         RequestAgreementVisaDTO dto = new RequestAgreementVisaDTO();
         dto.employeeUid = visa.getEmployee().getUid();
         dto.employeeName = visa.getEmployee().getFullName();
-        dto.statusCode = visa.getStatus().code;
+        dto.statusCode = visa.getStatus().getCode();
         dto.departmentCode = visa.getDepartment().getCode();
         dto.departmentName = visa.getDepartment().getName();
         dto.seniority = visa.getSeniority().getValue();
