@@ -14,7 +14,7 @@ public class AppliedAgreementVisaStatusConverter implements AttributeConverter<R
 
     @Override
     public String convertToDatabaseColumn(RequestAgreementVisaStatus status) {
-        return status.getCode();
+        return status==null ? null : status.getCode();
     }
 
     @Override

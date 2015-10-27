@@ -14,11 +14,16 @@ public class RequestAgreementVisaStatusConverterTest {
 
     @Test
     public void should_convert_from_code_to_enum() {
-        assertThat(converter.convertToEntityAttribute("D")).isEqualTo(RequestAgreementVisaStatus.DENIED);
+        RequestAgreementVisaStatus status = converter.convertToEntityAttribute(null);
+        assertThat(status).isEqualTo(null);
+
+        status = converter.convertToEntityAttribute("D");
+        assertThat(status).isEqualTo(RequestAgreementVisaStatus.DENIED);
     }
 
     @Test
     public void should_convert_from_enum_to_code() {
-        assertThat(converter.convertToDatabaseColumn(RequestAgreementVisaStatus.GRANTED)).isEqualTo("G");
+        String code = converter.convertToDatabaseColumn(RequestAgreementVisaStatus.GRANTED);
+        assertThat(code).isEqualTo("G");
     }
 }

@@ -4,14 +4,11 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
-import org.assertj.core.api.StrictAssertions;
 import org.bdickele.sptransp.controller.dto.EmployeeDTO;
-import org.bdickele.sptransp.domain.Employee;
-import org.bdickele.sptransp.repository.EmployeeRepository;
 import org.bdickele.sptransp.service.EmployeeServiceTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,12 +16,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.sql.DataSource;
-import java.security.Principal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.StrictAssertions.tuple;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,13 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class EmployeeControllerTest extends AbstractControllerTest {
 
     @Autowired
-    private EmployeeRepository repository;
-
-    @Autowired
     private DataSource dataSource;
-
-    @Mock
-    private Principal mockPrincipal;
 
 
     @Before
@@ -50,8 +39,11 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
         mapper = new ObjectMapper();
         reader = mapper.reader(EmployeeDTO.class);
+    }
 
-        when(mockPrincipal.getName()).thenReturn("testuser");
+    @After
+    public void after() {
+        new DbSetup(new DataSourceDestination(dataSource), EmployeeServiceTest.TEST_EMPLOYEE_DELETE).launch();
     }
 
     @Test
@@ -73,40 +65,46 @@ public class EmployeeControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void update_of_employee_should_work() throws Exception {
-        DbSetup dbSetup = new DbSetup(new DataSourceDestination(dataSource),
-                EmployeeServiceTest.TEST_EMPLOYEE_DELETE);
-        dbSetup.launch();
+    public void insertion_and_update_of_employee_should_work() throws Exception {
+        new DbSetup(new DataSourceDestination(dataSource), EmployeeServiceTest.TEST_EMPLOYEE_DELETE).launch();
 
-        String uid = "EMPLOYEE1";
-        Employee employee = repository.findByUid(uid);
-        StrictAssertions.assertThat(employee).isNull();
+        // ==== INSERTION ====
 
-        dbSetup = new DbSetup(new DataSourceDestination(dataSource),
-                EmployeeServiceTest.TEST_EMPLOYEE_INSERT);
-        dbSetup.launch();
-
-        employee = repository.findByUid(uid);
-        assertThat(employee).isNotNull();
-
-        assertThat(employee.getDepartment().getCode()).isEqualTo("LAW_COMPLIANCE");
-        assertThat(employee.getSeniority().getValue()).isEqualTo(60);
-
-        MvcResult mvcResult = mvc.perform(put("/employees/EMPLOYEE1")
+        MvcResult mvcResult = mvc.perform(post("/employees/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(
-                        "{\"uid\": \"EMPLOYEE1\", \"fullName\": \"EMPLOYEE1_NAME 2\", " +
-                        "\"profileCode\": \"ADMIN_READER\", \"departmentCode\": \"SHUTTLE_COMPLIANCE\", " +
-                        "\"seniority\": 80}")
-                .principal(mockPrincipal))
-                .andExpect(status().isOk())
+                        "{\"fullName\": \"EMPLOYEE_NAME\", \"profileCode\": \"ADMIN_ALL\", " +
+                        "\"departmentCode\": \"LAW_COMPLIANCE\", \"seniority\": 60}"))
+                .andExpect(status().isCreated())
                 .andReturn();
 
         String result = mvcResult.getResponse().getContentAsString();
 
+        EmployeeDTO employee = reader.readValue(result);
+        assertThat(employee).isNotNull();
+        assertThat(employee.getDepartmentCode()).isEqualTo("LAW_COMPLIANCE");
+        assertThat(employee.getSeniority()).isEqualTo(60);
+
+        String uid = employee.getUid();
+        assertThat(uid).isEqualTo("employ1");
+
+        // ==== UPDATE ====
+
+        mvcResult = mvc.perform(put("/employees/employ1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(
+                        "{\"uid\": \"employ1\", \"fullName\": \"EMPLOYEE_NAME 2\", " +
+                                "\"profileCode\": \"ADMIN_READER\", \"departmentCode\": \"SHUTTLE_COMPLIANCE\", " +
+                                "\"seniority\": 80}"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        result = mvcResult.getResponse().getContentAsString();
+
         EmployeeDTO dto = reader.readValue(result);
-        assertThat(dto.getFullName()).isEqualTo("EMPLOYEE1_NAME 2");
+        assertThat(dto.getFullName()).isEqualTo("EMPLOYEE_NAME 2");
         assertThat(dto.getProfileCode()).isEqualTo("ADMIN_READER");
         assertThat(dto.getDepartmentCode()).isEqualTo("SHUTTLE_COMPLIANCE");
         assertThat(dto.getSeniority()).isEqualTo(80);

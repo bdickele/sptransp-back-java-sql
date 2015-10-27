@@ -7,6 +7,7 @@ import com.ninja_squad.dbsetup.operation.Operation;
 import org.bdickele.sptransp.domain.Customer;
 import org.bdickele.sptransp.domain.UserProfile;
 import org.bdickele.sptransp.repository.CustomerRepository;
+import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CustomerServiceTest extends AbstractServiceTest {
 
     public static final Operation TEST_CUSTOMER_DELETE = sequenceOf(
-            sql("delete from ST_CUSTOMER where full_name = 'TESTCU_NAME' "),
+            sql("delete from ST_CUSTOMER where full_name like 'TESTCU_NAME%' "),
             sql("delete from ST_USER where uid_user like 'testcu%' "));
 
     // The tracker is static because JUnit uses a separate Test instance for every test method.
@@ -38,15 +39,19 @@ public class CustomerServiceTest extends AbstractServiceTest {
     private DataSource dataSource;
 
 
+    @After
+    public void after() {
+        new DbSetup(new DataSourceDestination(dataSource), TEST_CUSTOMER_DELETE).launch();
+    }
+
     @Test
-    public void insertion_should_work() {
+    public void insertion_and_update_should_work() {
         new DbSetup(new DataSourceDestination(dataSource), TEST_CUSTOMER_DELETE).launch();
 
-        Customer customer = repository.findByUid("CUST1");
-        assertThat(customer).isNull();
+        // ==== INSERTION ===
 
         // The test writes to the database, so dbSetupTracker.skipNextLaunch(); must NOT be called
-        customer = service.create("TESTCU_NAME", "testuser");
+        Customer customer = service.create("TESTCU_NAME", "testuser");
         Long createdId = customer.getId();
         String uid = customer.getUid();
 
@@ -55,5 +60,13 @@ public class CustomerServiceTest extends AbstractServiceTest {
         customer = repository.findByUid(uid);
         assertThat(customer.getId()).isEqualTo(createdId);
         assertThat(customer.getProfile()).isEqualTo(UserProfile.CUSTOMER);
+
+        // ==== UPDATE ===
+
+        service.update(uid, "TESTCU_NAME 2", "update user");
+
+        customer = repository.findByUid(uid);
+        assertThat(customer.getFullName()).isEqualTo("TESTCU_NAME 2");
+        assertThat(customer.getUpdateUser()).isEqualTo("update user");
     }
 }
