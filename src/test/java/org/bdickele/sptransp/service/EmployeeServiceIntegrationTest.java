@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by Bertrand DICKELE
  */
-public class EmployeeServiceTest extends AbstractServiceTest {
+public class EmployeeServiceIntegrationTest extends AbstractServiceIntegrationTest {
 
     public static final Operation TEST_EMPLOYEE_DELETE = sequenceOf(
             sql("delete from ST_EMPLOYEE_AUD where full_name like 'EMPLOYEE%' "),

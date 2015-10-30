@@ -23,12 +23,21 @@ public class LocalDateTimeConverterTest {
     }
 
     @Test
+    public void should_convert_from_null_localdatetime_to_null() {
+        Timestamp timestamp = converter.convertToDatabaseColumn(null);
+        assertThat(timestamp).isNull();
+    }
+
+    @Test
     public void should_convert_from_timestamp_to_localdatetime() {
+        Timestamp timestamp = new Timestamp(300);
+        LocalDateTime time = converter.convertToEntityAttribute(timestamp);
+        assertThat(timestamp.toLocalDateTime()).isEqualTo(time);
+    }
+
+    @Test
+    public void should_convert_from_null_timestamp_to_null() {
         LocalDateTime time = converter.convertToEntityAttribute(null);
         assertThat(time).isNull();
-
-        Timestamp timestamp = new Timestamp(300);
-        time = converter.convertToEntityAttribute(timestamp);
-        assertThat(timestamp.toLocalDateTime()).isEqualTo(time);
     }
 }

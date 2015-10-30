@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 import static org.assertj.core.api.StrictAssertions.assertThat;
@@ -27,8 +26,6 @@ public class RequestTest {
             .addVisa(13L, DEPARTMENT_JOURNEY_SUPERVISION, SENIORITY_50);
 
     private static final AgreementRuleAud RULE_AUD = AgreementRuleAud.build(RULE, 1);
-
-    private static final LocalDateTime NOW = LocalDateTime.now();
 
     private Request request;
 

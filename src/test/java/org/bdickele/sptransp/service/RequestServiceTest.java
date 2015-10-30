@@ -1,86 +1,60 @@
 package org.bdickele.sptransp.service;
 
-import com.ninja_squad.dbsetup.DbSetup;
-import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import org.bdickele.sptransp.domain.Request;
-import org.bdickele.sptransp.domain.RequestAgreementStatus;
-import org.bdickele.sptransp.domain.RequestAgreementVisa;
 import org.bdickele.sptransp.domain.RequestAgreementVisaStatus;
+import org.bdickele.sptransp.exception.SpTranspBizError;
+import org.bdickele.sptransp.exception.SpTranspException;
+import org.bdickele.sptransp.repository.EmployeeRepository;
 import org.bdickele.sptransp.repository.RequestRepository;
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import javax.sql.DataSource;
-import java.util.List;
-
-import static com.ninja_squad.dbsetup.Operations.sql;
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Bertrand DICKELE
  */
-public class RequestServiceTest extends AbstractServiceTest {
+public class RequestServiceTest {
 
-    @Autowired
-    private RequestService service;
+    @InjectMocks private RequestService service = new RequestService();
 
-    @Autowired
-    private RequestRepository requestRepository;
+    @Mock private RequestRepository requestRepository;
 
-    @Autowired
-    private DataSource dataSource;
+    @Mock private EmployeeRepository employeeRepository;
 
-    private Long requestId, visaId;
+    @Mock private Request request;
 
 
-    @After
-    public void after() {
-        if (visaId!=null) {
-            new DbSetup(new DataSourceDestination(dataSource), sql("delete from ST_REQUEST_AGR_VISA where ID = " + visaId)).launch();
-        }
+    @Before
+    public void before() {
+        MockitoAnnotations.initMocks(this);
+    }
 
-        if (requestId!=null) {
-            new DbSetup(new DataSourceDestination(dataSource), sql("delete from ST_REQUEST where ID = " + requestId)).launch();
+    @Test
+    public void when_updating_an_exception_is_thrown_when_request_reference_is_incorrect() {
+        when(requestRepository.findByReference(anyString())).thenReturn(null);
+        try {
+            service.update("reference", "employeeUid", RequestAgreementVisaStatus.GRANTED, "comment");
+            fail("Test should trow an exception");
+        } catch (SpTranspException e) {
+            assertThat(e.getError()).isEqualTo(SpTranspBizError.REQUEST_NOT_FOUND_FOR_REFERENCE);
         }
     }
 
     @Test
-    public void creation_and_update_of_a_request_should_work() {
-        // Current number of pending requests
-        List<Request> customerRequests = requestRepository.findByCustomerUidAndAgreementStatusInOrderByCreationDate("timulf70", RequestAgreementStatus.PENDING);
-        int numberBefore = customerRequests.size();
-
-        // ==== INSERTION ====
-
-        Request request = service.create("FOOD", "MOON", "EARTH", "timulf70");
-        requestId = request.getId();
-        String reference = request.getReference();
-        assertThat(reference).isNotNull();
-        assertThat(requestId).isNotNull();
-
-        customerRequests = requestRepository.findByCustomerUidAndAgreementStatusInOrderByCreationDate("timulf70", RequestAgreementStatus.PENDING);
-        int numberAfter = customerRequests.size();
-
-        assertThat(numberAfter).isEqualTo(numberBefore+1);
-
-        request = requestRepository.findOne(requestId);
-        assertThat(request).isNotNull();
-        assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.PENDING);
-        assertThat(request.getAgreementVisas().size()).isEqualTo(0);
-
-        // ==== UPDATE ====
-
-        // We apply the first visa required by someone who is from "Law compliance" department with a seniority >= 20
-        // whlofu42 is Helen Cox's UID (Law compliance / 60)
-        service.update(reference, "whlofu42", RequestAgreementVisaStatus.GRANTED, "ok");
-
-        request = requestRepository.findByReference(reference);
-        assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.PENDING);
-        assertThat(request.getAgreementVisas().size()).isEqualTo(1);
-
-        RequestAgreementVisa visa = request.getAgreementVisas().get(0);
-        visaId = visa.getId();
-        assertThat(visa.getStatus()).isEqualTo(RequestAgreementVisaStatus.GRANTED);
+    public void when_updating_an_exception_is_thrown_when_employee_uid_is_incorrect() {
+        when(requestRepository.findByReference(anyString())).thenReturn(request);
+        when(employeeRepository.findByUid(anyString())).thenReturn(null);
+        try {
+            service.update("reference", "employeeUid", RequestAgreementVisaStatus.GRANTED, "comment");
+            fail("Test should trow an exception");
+        } catch (SpTranspException e) {
+            assertThat(e.getError()).isEqualTo(SpTranspBizError.EMPLOYEE_NOT_FOUND);
+        }
     }
 }

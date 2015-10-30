@@ -19,7 +19,11 @@
         <hibernate.version>5.0.1.Final</hibernate.version>
         <guava.version>18.0</guava.version>
         <jackson.version>2.6.2</jackson.version>
+        <postgresql.version>9.4-1203-jdbc42</postgresql.version>
+        <lombok.version>1.16.6</lombok.version>
+        <junit.version>4.11</junit.version>
         <jacoco-maven-plugin.version>0.7.5.201505241946</jacoco-maven-plugin.version>
+        <cucumber.version>1.2.4</cucumber.version>
 
         <sonar.language>java</sonar.language>
         <sonar.host.url>http://localhost:9000</sonar.host.url>
@@ -135,19 +139,19 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4-1203-jdbc42</version>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.6</version>
+            <version>${lombok.version}</version>
         </dependency>
 
         <!-- TEST dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -159,12 +163,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.1.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -180,6 +178,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>pl.pragmatists</groupId>
             <artifactId>JUnitParams</artifactId>
             <version>1.0.4</version>
@@ -190,7 +194,24 @@
             <artifactId>mockito-core</artifactId>
             <version>2.0.31-beta</version>
         </dependency>
-
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-java8</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-spring</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

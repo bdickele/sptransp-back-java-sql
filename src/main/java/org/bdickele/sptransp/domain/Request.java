@@ -215,7 +215,7 @@ public class Request implements Serializable {
         if (!nextExpectedVisa.canBeAppliedBy(department, seniority)) {
             throw VISA_TO_APPLY_DOESNT_MATCH_NEXT_EXPECTED_ONE.exception(
                     department.getName(), seniority.getValue(),
-                    nextExpectedVisa.getDepartment(), nextExpectedVisa.getSeniority().getValue());
+                    nextExpectedVisa.getDepartment().getName(), nextExpectedVisa.getSeniority().getValue());
         }
 
         LocalDateTime now = LocalDateTime.now();

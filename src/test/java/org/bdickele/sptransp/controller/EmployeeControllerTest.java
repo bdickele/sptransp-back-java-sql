@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import org.bdickele.sptransp.controller.dto.EmployeeDTO;
-import org.bdickele.sptransp.service.EmployeeServiceTest;
+import org.bdickele.sptransp.service.EmployeeServiceIntegrationTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class EmployeeControllerTest extends AbstractControllerTest {
 
     @After
     public void after() {
-        new DbSetup(new DataSourceDestination(dataSource), EmployeeServiceTest.TEST_EMPLOYEE_DELETE).launch();
+        new DbSetup(new DataSourceDestination(dataSource), EmployeeServiceIntegrationTest.TEST_EMPLOYEE_DELETE).launch();
     }
 
     @Test
@@ -66,7 +66,7 @@ public class EmployeeControllerTest extends AbstractControllerTest {
 
     @Test
     public void insertion_and_update_of_employee_should_work() throws Exception {
-        new DbSetup(new DataSourceDestination(dataSource), EmployeeServiceTest.TEST_EMPLOYEE_DELETE).launch();
+        new DbSetup(new DataSourceDestination(dataSource), EmployeeServiceIntegrationTest.TEST_EMPLOYEE_DELETE).launch();
 
         // ==== INSERTION ====
 

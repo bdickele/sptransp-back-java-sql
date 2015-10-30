@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by Bertrand DICKELE
  */
-public class CustomerServiceTest extends AbstractServiceTest {
+public class CustomerServiceIntegrationTest extends AbstractServiceIntegrationTest {
 
     public static final Operation TEST_CUSTOMER_DELETE = sequenceOf(
             sql("delete from ST_CUSTOMER where full_name like 'TESTCU_NAME%' "),

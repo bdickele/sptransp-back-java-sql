@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "ST_AGREEMENT_RULE_AUD")
 @EqualsAndHashCode(of = "pk", doNotUseGetters = true)
-@ToString(of = {"pk", "destinationId", "goodsId"}, doNotUseGetters = true)
+@ToString(of = {"pk", "destination", "goods"}, doNotUseGetters = true)
 @Getter
 public class AgreementRuleAud implements Serializable {
 
