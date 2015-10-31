@@ -6,6 +6,8 @@ import cucumber.api.java8.En;
 import org.bdickele.sptransp.domain.*;
 import org.bdickele.sptransp.domain.audit.AgreementRuleAud;
 import org.bdickele.sptransp.domain.audit.AgreementRuleVisaAud;
+import org.bdickele.sptransp.exception.SpTranspError;
+import org.bdickele.sptransp.exception.SpTranspException;
 import org.junit.Assert;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.StrictAssertions.fail;
 import static org.bdickele.sptransp.domain.DomainTestData.*;
+import static org.bdickele.sptransp.exception.SpTranspBizError.VISA_TO_APPLY_DOESNT_MATCH_NEXT_EXPECTED_ONE;
 
 /**
  * Created by Bertrand DICKELE
@@ -33,6 +36,8 @@ public class CucumberStepdefs  implements En {
     private Destination destination;
 
     private Goods goods;
+
+    private SpTranspError error;
 
 
     public CucumberStepdefs() {
@@ -59,13 +64,23 @@ public class CucumberStepdefs  implements En {
         });
 
         When("^employee '([\\S\\s]+)' (\\d+) grants his visa$", (String departmentCode, Integer seniority) -> {
+            error = null;
             Employee employee = buildEmployee(departmentCode, seniority);
-            request.applyAgreementVisa(employee, RequestAgreementVisaStatus.GRANTED, "comment");
+            try {
+                request.applyAgreementVisa(employee, RequestAgreementVisaStatus.GRANTED, "comment");
+            } catch (SpTranspException e) {
+                error = e.getError();
+            }
         });
 
         When("^employee '([\\S\\s]+)' (\\d+) denies his visa$", (String departmentCode, Integer seniority) -> {
+            error = null;
             Employee employee = buildEmployee(departmentCode, seniority);
-            request.applyAgreementVisa(employee, RequestAgreementVisaStatus.DENIED, "comment");
+            try {
+                request.applyAgreementVisa(employee, RequestAgreementVisaStatus.DENIED, "comment");
+            } catch (SpTranspException e) {
+                error = e.getError();
+            }
         });
 
         Then("^agreement status of request is (\\S+)$", (String statusLabel) -> {
@@ -98,6 +113,11 @@ public class CucumberStepdefs  implements En {
             if (optionNextExpectedVisa.isPresent()) {
                 fail("We don't expect an agreement visa anymore");
             }
+        });
+
+        Then("^employee should not be allowed$", () -> {
+            assertThat(error).isNotNull();
+            assertThat(error).isEqualTo(VISA_TO_APPLY_DOESNT_MATCH_NEXT_EXPECTED_ONE);
         });
 
     }

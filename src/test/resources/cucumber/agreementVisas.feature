@@ -48,4 +48,47 @@ Feature: visas granted or denied for a request
     And rank of next expected agreement visa is -1
     And we don't expect any agreement visa
 
+  Scenario: first expected visa is denied. Request is therefore refused.
+
+    When employee 'law compliance' 50 denies his visa
+    Then agreement status of request is refused
+    And rank of next expected agreement visa is -1
+    And we don't expect any agreement visa
+
+  Scenario: employee wants to grant his visa but his seniority is not sufficient.
+  An error should be raised and nothing is changed regarding status of request
+
+    When employee 'law compliance' 40 grants his visa
+    Then employee should not be allowed
+    And agreement status of request is pending
+    And rank of next expected agreement visa is 0
+    And next expected agreement visa is 'law compliance' 50
+
+  Scenario: employee wants to deny his visa but his seniority is not sufficient.
+  An error should be raised and nothing is changed regarding status of request
+
+    When employee 'law compliance' 40 denies his visa
+    Then employee should not be allowed
+    And agreement status of request is pending
+    And rank of next expected agreement visa is 0
+    And next expected agreement visa is 'law compliance' 50
+
+  Scenario: employee wants to grant his visa but his department is not the good one.
+  An error should be raised and nothing is changed regarding status of request
+
+    When employee 'shuttle compliance' 80 grants his visa
+    Then employee should not be allowed
+    And agreement status of request is pending
+    And rank of next expected agreement visa is 0
+    And next expected agreement visa is 'law compliance' 50
+
+  Scenario: employee wants to deny his visa but his department is not the good one.
+  An error should be raised and nothing is changed regarding status of request
+
+    When employee 'shuttle compliance' 80 denies his visa
+    Then employee should not be allowed
+    And agreement status of request is pending
+    And rank of next expected agreement visa is 0
+    And next expected agreement visa is 'law compliance' 50
+
 
