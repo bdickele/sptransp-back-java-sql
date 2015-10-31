@@ -28,8 +28,8 @@ public final class DomainTestData {
 
     public static final Department DEPARTMENT_LAW_COMPLIANCE = Department.buidl(1L, "LAW_COMPLIANCE", "Law compliance");
     public static final Department DEPARTMENT_SHUTTLE_COMPLIANCE = Department.buidl(2L, "SHUTTLE_COMPLIANCE", "Shuttle compliance");
-    public static final Department DEPARTMENT_GOODS_INSPECTION = Department.buidl(3L, "GOODS_INSPECTION", "Good inspection");
-    public static final Department DEPARTMENT_JOURNEY_SUPERVISION = Department.buidl(4L, "JOURNEY_SUPERVISION", "Journey supervisor");
+    public static final Department DEPARTMENT_GOODS_INSPECTION = Department.buidl(3L, "GOODS_INSPECTION", "Goods inspection");
+    public static final Department DEPARTMENT_JOURNEY_SUPERVISION = Department.buidl(4L, "JOURNEY_SUPERVISION", "Journey supervision");
     public static final Department DEPARTMENT_HR = Department.buidl(5L, "HR", "Human resources");
 
     public static final Seniority SENIORITY_10 = Seniority.of(10);

@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bdickele.sptransp.exception.SpTranspBizError;
 import org.bdickele.sptransp.exception.SpTranspTechError;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -101,7 +102,7 @@ public class Customer extends User implements Serializable {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("uid", uid)
                 .append("fullName", fullName)

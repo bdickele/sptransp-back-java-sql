@@ -39,4 +39,12 @@ public enum RequestAgreementStatus {
 
         return null;
     }
+
+    public static RequestAgreementStatus getByLabel(String label) {
+        for (RequestAgreementStatus status : RequestAgreementStatus.values()) {
+            if (status.label.equalsIgnoreCase(label)) return status;
+        }
+
+        return null;
+    }
 }

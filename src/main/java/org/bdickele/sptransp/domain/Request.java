@@ -131,8 +131,9 @@ public class Request implements Serializable {
         r.creationDate = date;
         r.updateDate = date;
 
-        r.creationUser = customer.getUid();
-        r.updateUser = customer.getUid();
+        String customerUid = customer==null ? null : customer.getUid();
+        r.creationUser = customerUid;
+        r.updateUser = customerUid;
 
         r.checkValues();
 

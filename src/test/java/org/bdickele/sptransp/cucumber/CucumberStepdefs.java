@@ -5,10 +5,14 @@ import cucumber.api.Scenario;
 import cucumber.api.java8.En;
 import org.bdickele.sptransp.domain.*;
 import org.bdickele.sptransp.domain.audit.AgreementRuleAud;
+import org.bdickele.sptransp.domain.audit.AgreementRuleVisaAud;
 import org.junit.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.fail;
 import static org.bdickele.sptransp.domain.DomainTestData.*;
 
 /**
@@ -44,13 +48,13 @@ public class CucumberStepdefs  implements En {
             rule = AgreementRule.build(ID++, destination, goods, true, "test");
         });
 
-        And("^required visas are:$", (DataTable visaTable) -> {
+        Given("^required visas are:$", (DataTable visaTable) -> {
             List<Visa> visas = visaTable.asList(Visa.class);
-            visas.forEach(v-> rule.addVisa(ID++, getDepartment(v.department), Seniority.of(v.seniority)));
+            visas.forEach(v -> rule.addVisa(ID++, getDepartment(v.department), Seniority.of(v.seniority)));
             ruleAud = AgreementRuleAud.build(rule, rule.getVersion());
         });
 
-        And("^a new request is created for that goods and destination$", () -> {
+        When("^a new request is created for that goods and destination$", () -> {
             request = Request.build(ID++, "ref", CUSTOMER_FOO, goods, DESTINATION_TITAN, destination, ruleAud);
         });
 
@@ -62,6 +66,38 @@ public class CucumberStepdefs  implements En {
         When("^employee '([\\S\\s]+)' (\\d+) denies his visa$", (String departmentCode, Integer seniority) -> {
             Employee employee = buildEmployee(departmentCode, seniority);
             request.applyAgreementVisa(employee, RequestAgreementVisaStatus.DENIED, "comment");
+        });
+
+        Then("^agreement status of request is (\\S+)$", (String statusLabel) -> {
+            RequestAgreementStatus status = RequestAgreementStatus.getByLabel(statusLabel);
+            assertThat(request.getAgreementStatus()).isEqualTo(status);
+        });
+
+        Then("^rank of next expected agreement visa is ([-\\d]+)$", (Integer rank) -> {
+            assertThat(request.getNextAgreementVisaRank()).isEqualTo(rank);
+        });
+
+        Then("^next expected agreement visa is '([\\S\\s]+)' (\\d+)$", (String departmentCode, Integer seniorityValue) -> {
+            Optional<AgreementRuleVisaAud> optionNextExpectedVisa = request.getNextExpectedAgreementVisa();
+            if (!optionNextExpectedVisa.isPresent()) {
+                fail("We expected an agreement visa");
+            } else {
+                // Expected values
+                Department department = getDepartment(departmentCode);
+                Seniority seniority = Seniority.of(seniorityValue);
+                // Actual visa
+                AgreementRuleVisaAud visa = optionNextExpectedVisa.get();
+
+                assertThat(visa.getDepartment().getCode()).isEqualTo(department.getCode());
+                assertThat(visa.getSeniority()).isEqualTo(seniority);
+            }
+        });
+
+        Then("^we don't expect any agreement visa$", () -> {
+            Optional<AgreementRuleVisaAud> optionNextExpectedVisa = request.getNextExpectedAgreementVisa();
+            if (optionNextExpectedVisa.isPresent()) {
+                fail("We don't expect an agreement visa anymore");
+            }
         });
 
     }
