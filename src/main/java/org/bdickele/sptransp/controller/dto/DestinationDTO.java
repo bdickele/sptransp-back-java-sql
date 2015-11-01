@@ -1,7 +1,5 @@
 package org.bdickele.sptransp.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,7 +13,6 @@ import java.util.stream.Collectors;
  * Destination object returned by web services
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"code", "name"})
 @EqualsAndHashCode(of = "code", doNotUseGetters = true)
 @ToString(of = {"code", "name"}, doNotUseGetters = true)
 @Getter
@@ -23,11 +20,11 @@ public class DestinationDTO implements SpaceTranspDTO, Serializable {
 
     private static final long serialVersionUID = -4111120841917837925L;
 
-    @JsonProperty(value = "code")
     private String code;
 
-    @JsonProperty(value = "name")
     private String name;
+
+    private String comment;
 
 
     /**
@@ -39,6 +36,7 @@ public class DestinationDTO implements SpaceTranspDTO, Serializable {
         DestinationDTO dto = new DestinationDTO();
         dto.code = destination.getCode();
         dto.name = destination.getName();
+        dto.comment = destination.getComment();
         return dto;
     }
 

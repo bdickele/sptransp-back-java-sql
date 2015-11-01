@@ -30,8 +30,8 @@ public class AgreementRuleServiceIntegrationTest extends AbstractServiceIntegrat
     public static final Operation TEST_DESTINATION_DELETE = sql("delete from ST_DESTINATION where CODE = 'DEATH_STAR'");
 
     public static final Operation TEST_DESTINATION_INSERT = insertInto("ST_DESTINATION")
-            .columns("id", "code", "name")
-            .values(500, "DEATH_STAR", "Death star")
+            .columns("id", "code", "name", "destination_comment")
+            .values(500, "DEATH_STAR", "Death star", "Death star")
             .build();
 
     @Autowired

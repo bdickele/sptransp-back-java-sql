@@ -21,16 +21,14 @@ public final class DomainTestData {
     public static final Goods GOODS_MEDICINE = Goods.build(4L, "MEDICINE", "Medicine");
     public static final Goods GOODS_WEAPON = Goods.build(5L, "WEAPON", "Weapon");
 
-    public static final Destination DESTINATION_EARTH = Destination.build(1L, "EARTH", "Earth");
-    public static final Destination DESTINATION_MOON = Destination.build(2L, "MOON", "Moon");
-    public static final Destination DESTINATION_MARS = Destination.build(3L, "MARS", "Mars");
-    public static final Destination DESTINATION_TITAN = Destination.build(4L, "TITAN", "Titan");
+    public static final Destination DESTINATION_EARTH = Destination.build(1L, "EARTH", "Earth", "Earth");
+    public static final Destination DESTINATION_MOON = Destination.build(2L, "MOON", "Moon", "Moon");
+    public static final Destination DESTINATION_TITAN = Destination.build(9L, "TITAN", "Titan", "Titan");
 
     public static final Department DEPARTMENT_LAW_COMPLIANCE = Department.buidl(1L, "LAW_COMPLIANCE", "Law compliance");
     public static final Department DEPARTMENT_SHUTTLE_COMPLIANCE = Department.buidl(2L, "SHUTTLE_COMPLIANCE", "Shuttle compliance");
     public static final Department DEPARTMENT_GOODS_INSPECTION = Department.buidl(3L, "GOODS_INSPECTION", "Goods inspection");
     public static final Department DEPARTMENT_JOURNEY_SUPERVISION = Department.buidl(4L, "JOURNEY_SUPERVISION", "Journey supervision");
-    public static final Department DEPARTMENT_HR = Department.buidl(5L, "HR", "Human resources");
 
     public static final Seniority SENIORITY_10 = Seniority.of(10);
     public static final Seniority SENIORITY_50 = Seniority.of(50);

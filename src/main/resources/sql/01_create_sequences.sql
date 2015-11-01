@@ -1,6 +1,0 @@
-set SCHEMA 'sptransp';
-
-drop sequence if exists SEQ_MAIN;
-CREATE SEQUENCE SEQ_MAIN START WITH 1000 INCREMENT BY 1;
-
-GRANT ALL PRIVILEGES ON ALL SEQUENCES in SCHEMA sptransp to public;

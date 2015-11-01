@@ -116,7 +116,7 @@ public class IntegrationTestConfig {
                 .addScript("classpath:sql/01_create_sequences.sql")
                 .addScript("classpath:sql/create_tables.sql")
                 .addScript("classpath:sql/03_table_grants.sql")
-                .addScript("classpath:sql/04_basedata.sql")
+                .addScript("classpath:sql/02_basedata.sql")
                 .addScript("classpath:sql/testdata_users_requests.sql")
                 .addScript("classpath:sql/testdata_rules.sql")
                 .build();

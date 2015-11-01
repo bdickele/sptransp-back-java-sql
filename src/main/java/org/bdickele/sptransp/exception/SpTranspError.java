@@ -36,7 +36,7 @@ public interface SpTranspError {
     default String getFormattedMessage(Object... args) {
         String rawMessage = getRawMessage();
 
-        String formattedMessage = rawMessage;
+        String formattedMessage;
         try {
             formattedMessage = String.format(rawMessage, args);
         } catch(IllegalFormatException e) {
