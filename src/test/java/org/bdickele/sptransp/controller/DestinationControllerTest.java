@@ -30,6 +30,26 @@ public class DestinationControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void get_destination_should_work_for_an_existing_destination() throws Exception {
+        MvcResult mvcResult = mvc.perform(get("/destinations/EARTH"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String result = mvcResult.getResponse().getContentAsString();
+        DestinationDTO destination = reader.readValue(result);
+        assertThat(destination).isNotNull();
+        assertThat(destination.getCode()).isEqualTo("EARTH");
+        assertThat(destination.getName()).isEqualTo("Earth");
+    }
+
+    @Test
+    public void get_destination_should_return_404_for_a_non_existing_destination() throws Exception {
+        mvc.perform(get("/destinations/foobar"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+    }
+
+    @Test
     public void all_destinations_should_be_returned_as_json() throws Exception {
         MvcResult mvcResult = mvc.perform(get("/destinations"))
                 .andExpect(status().isOk())

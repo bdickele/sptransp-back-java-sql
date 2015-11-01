@@ -50,7 +50,8 @@ public class AgreementRuleController extends AbstractController {
     @ResponseStatus(HttpStatus.OK)
     public AgreementRuleDTO findByDestinationCodeAndGoodsCode(@PathVariable String destinationCode,
                                                               @PathVariable String goodsCode) {
-        AgreementRule rule = repository.findByDestinationCodeAndGoodsCode(destinationCode, goodsCode);
+        AgreementRule rule = repository.findByDestinationCodeAndGoodsCode(
+                destinationCode.trim().toUpperCase(), goodsCode.trim().toUpperCase());
 
         if (rule==null) {
             throw SpTranspBizError.AGR_RULE_DOESNT_EXIST.exception(destinationCode, goodsCode);
@@ -60,21 +61,21 @@ public class AgreementRuleController extends AbstractController {
     }
 
     @RequestMapping(
-            method= RequestMethod.PUT,
+            method= RequestMethod.POST,
             consumes="application/json")
-    @ResponseStatus(HttpStatus.OK)
-    public AgreementRuleDTO update(@RequestBody AgreementRuleDTO dto) {
-        AgreementRule rule = service.update(dto.getDestinationCode(), dto.getGoodsCode(), dto.isReqAllowed(),
+    @ResponseStatus(HttpStatus.CREATED)
+    public AgreementRuleDTO create(@RequestBody AgreementRuleDTO dto) {
+        AgreementRule rule = service.create(dto.getDestinationCode(), dto.getGoodsCode(), dto.isReqAllowed(),
                 createVisasForService(dto), TEMP_USER_UID);
         return AgreementRuleDTO.build(rule);
     }
 
     @RequestMapping(
-            method= RequestMethod.POST,
+            method= RequestMethod.PUT,
             consumes="application/json")
     @ResponseStatus(HttpStatus.OK)
-    public AgreementRuleDTO create(@RequestBody AgreementRuleDTO dto) {
-        AgreementRule rule = service.create(dto.getDestinationCode(), dto.getGoodsCode(), dto.isReqAllowed(),
+    public AgreementRuleDTO update(@RequestBody AgreementRuleDTO dto) {
+        AgreementRule rule = service.update(dto.getDestinationCode(), dto.getGoodsCode(), dto.isReqAllowed(),
                 createVisasForService(dto), TEMP_USER_UID);
         return AgreementRuleDTO.build(rule);
     }

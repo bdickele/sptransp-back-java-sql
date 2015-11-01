@@ -3,7 +3,7 @@ package org.bdickele.sptransp.domain.converter;
 import org.bdickele.sptransp.domain.RequestOverallStatus;
 import org.junit.Test;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by Bertrand DICKELE

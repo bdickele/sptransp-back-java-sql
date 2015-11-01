@@ -1,7 +1,6 @@
 package org.bdickele.sptransp.service;
 
 import com.ninja_squad.dbsetup.DbSetup;
-import com.ninja_squad.dbsetup.DbSetupTracker;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
 import org.bdickele.sptransp.domain.Customer;
@@ -26,9 +25,6 @@ public class CustomerServiceIntegrationTest extends AbstractServiceIntegrationTe
             sql("delete from ST_CUSTOMER where full_name like 'TESTCU_NAME%' "),
             sql("delete from ST_USER where uid_user like 'testcu%' "));
 
-    // The tracker is static because JUnit uses a separate Test instance for every test method.
-    private static DbSetupTracker dbSetupTracker = new DbSetupTracker();
-
     @Autowired
     private CustomerService service;
 
@@ -50,7 +46,6 @@ public class CustomerServiceIntegrationTest extends AbstractServiceIntegrationTe
 
         // ==== INSERTION ===
 
-        // The test writes to the database, so dbSetupTracker.skipNextLaunch(); must NOT be called
         Customer customer = service.create("TESTCU_NAME", "testuser");
         Long createdId = customer.getId();
         String uid = customer.getUid();

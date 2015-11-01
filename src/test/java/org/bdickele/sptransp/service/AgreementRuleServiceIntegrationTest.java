@@ -43,15 +43,22 @@ public class AgreementRuleServiceIntegrationTest extends AbstractServiceIntegrat
     @Autowired
     private DataSource dataSource;
 
-    private Long ruleId;
 
+    @After
+    public void after() {
+        deleteTestData();
+    }
 
     private void deleteTestData() {
+        AgreementRule rule = repository.findByDestinationCodeAndGoodsCode("DEATH_STAR", "FOOD");
+        List<Operation> sqlOperations = buildDeleteOperations(rule==null ? null : rule.getId());
+        new DbSetup(new DataSourceDestination(dataSource), sequenceOf(sqlOperations)).launch();
+    }
+
+    public static List<Operation> buildDeleteOperations(Long ruleId) {
         List<Operation> sqlOperations = new ArrayList<>();
 
-        AgreementRule rule = repository.findByDestinationCodeAndGoodsCode("DEATH_STAR", "FOOD");
-        if (rule!=null) {
-            Long ruleId = rule.getId();
+        if (ruleId!=null) {
             sqlOperations.add(sql("delete from ST_AGR_RULE_VISA_AUD where ID_RULE = " + ruleId));
             sqlOperations.add(sql("delete from ST_AGREEMENT_RULE_AUD where ID_RULE = " + ruleId));
             sqlOperations.add(sql("delete from ST_AGR_RULE_VISA where ID_RULE = " + ruleId));
@@ -60,12 +67,7 @@ public class AgreementRuleServiceIntegrationTest extends AbstractServiceIntegrat
 
         sqlOperations.add(TEST_DESTINATION_DELETE);
 
-        new DbSetup(new DataSourceDestination(dataSource), sequenceOf(sqlOperations)).launch();
-    }
-
-    @After
-    public void after() {
-        deleteTestData();
+        return sqlOperations;
     }
 
     @Test
@@ -81,9 +83,10 @@ public class AgreementRuleServiceIntegrationTest extends AbstractServiceIntegrat
 
         AgreementRule rule = repository.findByDestinationCodeAndGoodsCode("DEATH_STAR", "FOOD");
 
-        ruleId = rule.getId();
+        Long ruleId = rule.getId();
 
         List<AgreementRuleVisa> visas = rule.getVisas();
+        assertThat(visas.size()).isEqualTo(1);
         assertThat(visas).extracting("department.code", "seniority.value").containsExactly(
                 tuple("LAW_COMPLIANCE", 20));
 
@@ -99,6 +102,7 @@ public class AgreementRuleServiceIntegrationTest extends AbstractServiceIntegrat
         assertThat(rule.getAllowed()).isTrue();
 
         visas = rule.getVisas();
+        assertThat(visas.size()).isEqualTo(2);
         assertThat(visas).extracting("department.code", "seniority.value").containsExactly(
                 tuple("LAW_COMPLIANCE", 50),
                 tuple("SHUTTLE_COMPLIANCE", 40));

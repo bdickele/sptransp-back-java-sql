@@ -6,6 +6,7 @@ import org.bdickele.sptransp.controller.dto.RequestDetailsDTO;
 import org.bdickele.sptransp.domain.Request;
 import org.bdickele.sptransp.domain.RequestAgreementStatus;
 import org.bdickele.sptransp.domain.RequestAgreementVisaStatus;
+import org.bdickele.sptransp.exception.SpTranspBizError;
 import org.bdickele.sptransp.repository.RequestRepository;
 import org.bdickele.sptransp.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,12 @@ public class RequestController extends AbstractController {
             produces="application/json")
     public RequestDetailsDTO request(@PathVariable String requestReference) {
         Request request = repository.findByReference(requestReference);
-        return request==null ? null : RequestDetailsDTO.build(request);
+
+        if (request==null) {
+            throw SpTranspBizError.REQUEST_NOT_FOUND.exception(requestReference);
+        }
+
+        return RequestDetailsDTO.build(request);
     }
 
     @RequestMapping(

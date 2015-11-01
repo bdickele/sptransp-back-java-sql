@@ -16,6 +16,6 @@ public abstract class AbstractController {
     @ExceptionHandler(SpTranspException.class)
     public ResponseEntity<String> somethingWrong(SpTranspException e) {
         SpTranspError error = e.getError();
-        return new ResponseEntity<String>(e.getMessage(), error.getHttpStatus());
+        return new ResponseEntity<>(e.getMessage(), error.getHttpStatus());
     }
 }

@@ -28,6 +28,26 @@ public class GoodsControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void get_goods_should_work_for_an_existing_goods() throws Exception {
+        MvcResult mvcResult = mvc.perform(get("/goods/FOOD"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String result = mvcResult.getResponse().getContentAsString();
+        GoodsDTO goods = reader.readValue(result);
+        assertThat(goods).isNotNull();
+        assertThat(goods.getCode()).isEqualTo("FOOD");
+        assertThat(goods.getName()).isEqualTo("Food");
+    }
+
+    @Test
+    public void get_goods_should_return_404_for_a_non_existing_goods() throws Exception {
+        mvc.perform(get("/goods/foobar"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+    }
+
+    @Test
     public void all_destinations_should_be_returned_as_json() throws Exception {
         MvcResult mvcResult = mvc.perform(get("/goods"))
                 .andExpect(status().isOk())

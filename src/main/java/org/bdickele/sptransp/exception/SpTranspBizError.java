@@ -81,7 +81,9 @@ public enum SpTranspBizError implements SpTranspError {
 
     DESTINATION_AND_ARRIVAL_ARE_THE_SAME(701, "Departure and arrival are the same"),
 
-    REQUEST_NOT_ALLOWED(702, "We are not allowed to send %s to destination %s");
+    REQUEST_NOT_ALLOWED(702, "We are not allowed to send %s to destination %s"),
+
+    REQUEST_NOT_FOUND(703, "Request not found for reference [%s]", HttpStatus.NOT_FOUND),;
 
 
     private final int errorCode;

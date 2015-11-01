@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by Bertrand DICKELE

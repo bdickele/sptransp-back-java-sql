@@ -9,7 +9,6 @@ import org.bdickele.sptransp.service.EmployeeServiceIntegrationTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
@@ -34,8 +33,6 @@ public class EmployeeControllerTest extends AbstractControllerTest {
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
-
         mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
         mapper = new ObjectMapper();
         reader = mapper.reader(EmployeeDTO.class);
@@ -44,6 +41,26 @@ public class EmployeeControllerTest extends AbstractControllerTest {
     @After
     public void after() {
         new DbSetup(new DataSourceDestination(dataSource), EmployeeServiceIntegrationTest.TEST_EMPLOYEE_DELETE).launch();
+    }
+
+    @Test
+    public void get_employee_should_work_for_an_existing_employee() throws Exception {
+        MvcResult mvcResult = mvc.perform(get("/employees/kvcquz31"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String result = mvcResult.getResponse().getContentAsString();
+        EmployeeDTO employee = reader.readValue(result);
+        assertThat(employee).isNotNull();
+        assertThat(employee.getDepartmentCode()).isEqualTo("JOURNEY_SUPERVISION");
+        assertThat(employee.getSeniority()).isEqualTo(80);
+    }
+
+    @Test
+    public void get_employee_should_return_404_for_a_non_existing_employee() throws Exception {
+        mvc.perform(get("/employees/foobar"))
+                .andExpect(status().isNotFound())
+                .andReturn();
     }
 
     @Test
@@ -57,7 +74,6 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         MappingIterator<EmployeeDTO> mappingIterator = reader.readValues(result);
         List<EmployeeDTO> dtoList = mappingIterator.readAll();
 
-        // I check only one user (and not the modified one)
         assertThat(dtoList.size()).isGreaterThanOrEqualTo(5);
         assertThat(dtoList).extracting("uid", "fullName", "departmentCode", "seniority").contains(
                 tuple("kvcquz31", "Kathleen Carpenter", "JOURNEY_SUPERVISION", 80),

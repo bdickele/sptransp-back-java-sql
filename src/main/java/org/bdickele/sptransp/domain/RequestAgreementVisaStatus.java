@@ -24,10 +24,6 @@ public enum RequestAgreementVisaStatus {
         return code;
     }
 
-    public String getLabel() {
-        return label;
-    }
-
     public static RequestAgreementVisaStatus getByCode(String code) {
         for (RequestAgreementVisaStatus status : RequestAgreementVisaStatus.values()) {
             if (status.code.equals(code)) return status;

@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 import static com.ninja_squad.dbsetup.Operations.sql;
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by Bertrand DICKELE

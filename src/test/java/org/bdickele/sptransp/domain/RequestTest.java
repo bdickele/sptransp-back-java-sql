@@ -9,7 +9,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.function.Consumer;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.StrictAssertions.fail;
 import static org.bdickele.sptransp.domain.DomainTestData.*;
 import static org.bdickele.sptransp.exception.SpTranspBizError.*;
