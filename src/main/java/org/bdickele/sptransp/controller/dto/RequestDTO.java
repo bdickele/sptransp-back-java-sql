@@ -7,6 +7,7 @@ import org.bdickele.sptransp.domain.Request;
 import org.bdickele.sptransp.domain.audit.AgreementRuleVisaAud;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,44 +22,58 @@ public class RequestDTO implements SpaceTranspDTO, Serializable {
 
     private static final long serialVersionUID = -3314219597285942969L;
 
-    protected String reference;
+    private String reference;
 
-    protected String creationDate;
+    private String creationDate;
 
-    protected String updateDate;
+    private Long creationDateForComparison;
 
-    protected String customerUid;
+    private String updateDate;
 
-    protected String customerName;
+    private Long updateDateForComparison;
 
-    protected String goodsCode;
+    private String customerUid;
 
-    protected String goodsName;
+    private String customerName;
 
-    protected String departureCode;
+    private String goodsCode;
 
-    protected String departureName;
+    private String goodsName;
 
-    protected String arrivalCode;
+    private String departureCode;
 
-    protected String arrivalName;
+    private String departureName;
 
-    protected String overallStatusCode;
+    private String arrivalCode;
 
-    protected String overallStatusLabel;
+    private String arrivalName;
 
-    protected String agreementStatusCode;
+    private String overallStatusCode;
 
-    protected String agreementStatusLabel;
+    private String overallStatusLabel;
 
-    protected AgreementRuleVisaDTO nextExpectedAgreementVisa;
+    private String agreementStatusCode;
+
+    private String agreementStatusLabel;
+
+    private AgreementRuleVisaDTO nextExpectedAgreementVisa;
+
+    // Detailed informations
+
+    private Integer nextAgreementVisaRank;
+
+    private List<RequestAgreementVisaDTO> appliedAgreementVisas;
+
+    private List<AgreementRuleVisaDTO> requiredAgreementVisas;
 
 
-    public static RequestDTO build(Request request) {
+    public static RequestDTO build(Request request, boolean writeDetails) {
         RequestDTO dto = new RequestDTO();
         dto.reference = request.getReference();
         dto.creationDate = dto.formatDate(request.getCreationDate());
+        dto.creationDateForComparison = Long.valueOf(dto.formatDateForComparison(request.getCreationDate()));
         dto.updateDate = dto.formatDate(request.getUpdateDate());
+        dto.updateDateForComparison = Long.valueOf(dto.formatDateForComparison(request.getUpdateDate()));
         dto.customerUid = request.getCustomer().getUid();
         dto.customerName = request.getCustomer().getFullName();
         dto.goodsCode = request.getGoods().getCode();
@@ -71,17 +86,29 @@ public class RequestDTO implements SpaceTranspDTO, Serializable {
         dto.overallStatusLabel = request.getOverallStatus().getLabel();
         dto.agreementStatusCode = request.getAgreementStatus().getCode();
         dto.agreementStatusLabel = request.getAgreementStatus().getLabel();
+        dto.nextAgreementVisaRank = request.getNextAgreementVisaRank();
 
         Optional<AgreementRuleVisaAud> nextExpectedVisa = request.getNextExpectedAgreementVisa();
         dto.nextExpectedAgreementVisa = nextExpectedVisa.isPresent() ?
                 AgreementRuleVisaDTO.build(nextExpectedVisa.get()) : null;
 
+        if (writeDetails) {
+            dto.appliedAgreementVisas = request.getAgreementVisas()==null ? new ArrayList<>() :
+                    request.getAgreementVisas().stream()
+                            .map(RequestAgreementVisaDTO::build)
+                            .collect(Collectors.toList());
+
+            dto.requiredAgreementVisas = request.getRuleAud().getVisas().stream()
+                    .map(AgreementRuleVisaDTO::build)
+                    .collect(Collectors.toList());
+        }
+
         return dto;
     }
 
-    public static List<RequestDTO> build(List<Request> requests) {
+    public static List<RequestDTO> build(List<Request> requests, boolean writeDetails) {
         return requests.stream()
-                .map(RequestDTO::build)
+                .map(r -> RequestDTO.build(r, writeDetails))
                 .collect(Collectors.toList());
     }
 }

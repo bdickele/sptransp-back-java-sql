@@ -2,12 +2,10 @@ package org.bdickele.sptransp.controller;
 
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import org.bdickele.sptransp.controller.dto.RequestAgreementVisaDTO;
 import org.bdickele.sptransp.controller.dto.RequestDTO;
-import org.bdickele.sptransp.controller.dto.RequestDetailsDTO;
 import org.bdickele.sptransp.domain.Request;
 import org.bdickele.sptransp.domain.RequestAgreementStatus;
 import org.bdickele.sptransp.domain.RequestAgreementVisa;
@@ -68,16 +66,14 @@ public class RequestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        ObjectReader readerDetails = mapper.reader(RequestDetailsDTO.class);
-
         String result = mvcResult.getResponse().getContentAsString();
-        RequestDetailsDTO dto = readerDetails.readValue(result);
+        RequestDTO dto = reader.readValue(result);
         assertThat(dto).isNotNull();
         assertThat(dto.getReference()).isEqualTo("REFERE0001");
         assertThat(dto.getAgreementStatusCode()).isEqualTo("P");
 
         List<RequestAgreementVisaDTO> visas = dto.getAppliedAgreementVisas();
-        assertThat(visas.size()).isEqualTo(1);
+        assertThat(visas.size()).isGreaterThanOrEqualTo(1);
 
         RequestAgreementVisaDTO visa = visas.get(0);
         assertThat(visa.getDepartmentCode()).isEqualTo("LAW_COMPLIANCE");

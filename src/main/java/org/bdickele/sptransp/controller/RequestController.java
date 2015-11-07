@@ -2,7 +2,6 @@ package org.bdickele.sptransp.controller;
 
 import org.bdickele.sptransp.controller.dto.RequestAgreementVisaDTO;
 import org.bdickele.sptransp.controller.dto.RequestDTO;
-import org.bdickele.sptransp.controller.dto.RequestDetailsDTO;
 import org.bdickele.sptransp.domain.Request;
 import org.bdickele.sptransp.domain.RequestAgreementStatus;
 import org.bdickele.sptransp.domain.RequestAgreementVisaStatus;
@@ -35,14 +34,14 @@ public class RequestController extends AbstractController {
             value="/{requestReference}",
             method= RequestMethod.GET,
             produces="application/json")
-    public RequestDetailsDTO request(@PathVariable String requestReference) {
+    public RequestDTO request(@PathVariable String requestReference) {
         Request request = repository.findByReference(requestReference);
 
         if (request==null) {
             throw SpTranspBizError.REQUEST_NOT_FOUND.exception(requestReference);
         }
 
-        return RequestDetailsDTO.build(request);
+        return RequestDTO.build(request, true);
     }
 
     @RequestMapping(
@@ -79,12 +78,12 @@ public class RequestController extends AbstractController {
 
     private List<RequestDTO> getRequestsPerStatus(RequestAgreementStatus... agreementStatus) {
         List<Request> requests  = repository.findByAgreementStatusInOrderByCreationDate(agreementStatus);
-        return RequestDTO.build(requests);
+        return RequestDTO.build(requests, false);
     }
 
     private List<RequestDTO> getRequestsPerCustomerAndStatus(String customerUid, RequestAgreementStatus... agreementStatus) {
         List<Request> requests  = repository.findByCustomerUidAndAgreementStatusInOrderByCreationDate(customerUid, agreementStatus);
-        return RequestDTO.build(requests);
+        return RequestDTO.build(requests, false);
     }
 
     @RequestMapping(
@@ -93,7 +92,7 @@ public class RequestController extends AbstractController {
     @ResponseStatus(HttpStatus.CREATED)
     public RequestDTO create(@RequestBody RequestDTO dto) {
         Request request = service.create(dto.getGoodsCode(), dto.getDepartureCode(), dto.getArrivalCode(), dto.getCustomerUid());
-        return RequestDTO.build(request);
+        return RequestDTO.build(request, true);
     }
 
     @RequestMapping(
@@ -104,6 +103,6 @@ public class RequestController extends AbstractController {
     public RequestDTO applyVisa(@PathVariable String requestReference, @RequestBody RequestAgreementVisaDTO dto) {
         Request request = service.update(requestReference, dto.getEmployeeUid(),
                 RequestAgreementVisaStatus.getByCode(dto.getStatusCode()), dto.getComment());
-        return RequestDTO.build(request);
+        return RequestDTO.build(request, true);
     }
 }
