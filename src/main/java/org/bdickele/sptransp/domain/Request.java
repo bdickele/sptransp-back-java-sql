@@ -26,7 +26,7 @@ import static org.bdickele.sptransp.exception.SpTranspBizError.*;
  */
 @Entity
 @Table(name = "ST_REQUEST")
-@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME, allocationSize = DomainConst.ALLOCATION_SIZE)
+@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_REQUEST, allocationSize = DomainConst.SEQ_ALLOCATION_SIZE)
 @EqualsAndHashCode(of = "id", doNotUseGetters = true)
 @ToString(of = {"id", "reference", "customer", "departure", "arrival", "goods", "overallStatus", "agreementStatus"}, doNotUseGetters = true)
 @Getter

@@ -114,20 +114,20 @@ public class CreateTestData {
         if (destinationCode.startsWith("JUPITER") || destinationCode.startsWith("SATURN")) {
             return seniority(6, 10);
         } else if (destinationCode.startsWith("MARS")) {
-            return seniority(3, 6);
+            return seniority(3, 7);
         } else {
-            return seniority(1, 3);
+            return seniority(1, 4);
         }
     }
 
     private Seniority createGoodsSeniority(String goodsCode) {
         switch (goodsCode) {
-            case "OIL" : return seniority(4, 7);
-            case "FOOD" : return seniority(1, 3);
-            case "MACHINE_TOOL" : return seniority(3, 6);
-            case "MEDICINE" : return seniority(4, 8);
-            case "WEAPON" : return seniority(8, 9);
-            default: return seniority(1, 9);
+            case "OIL" : return seniority(4, 8);
+            case "FOOD" : return seniority(1, 4);
+            case "MACHINE_TOOL" : return seniority(3, 7);
+            case "MEDICINE" : return seniority(4, 9);
+            case "WEAPON" : return seniority(8, 10);
+            default: return seniority(1, 10);
         }
     }
 
