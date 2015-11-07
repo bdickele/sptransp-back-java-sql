@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "ST_AGREEMENT_RULE")
-@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
+@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME, allocationSize = DomainConst.ALLOCATION_SIZE)
 @EqualsAndHashCode(of = "id", doNotUseGetters = true)
 @ToString(of = {"id", "destination", "goods"}, doNotUseGetters = true)
 @Getter

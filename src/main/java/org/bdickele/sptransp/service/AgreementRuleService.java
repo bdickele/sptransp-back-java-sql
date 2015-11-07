@@ -35,7 +35,12 @@ public class AgreementRuleService extends AbstractService {
                                 List<Pair<Department, Seniority>> departmentAndSeniorities, String creationUser) {
         Destination destination = destinationRepository.findByCode(destinationCode);
         Goods goods = goodsRepository.findByCode(goodsCode);
+        return create(destination, goods, allowed, departmentAndSeniorities, creationUser);
+    }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public AgreementRule create(Destination destination, Goods goods, boolean allowed,
+                                List<Pair<Department, Seniority>> departmentAndSeniorities, String creationUser) {
         AgreementRule rule = AgreementRule.build(null, destination, goods, allowed, creationUser);
         departmentAndSeniorities.forEach(pair -> rule.addVisa(null, pair.getLeft(), pair.getRight()));
 

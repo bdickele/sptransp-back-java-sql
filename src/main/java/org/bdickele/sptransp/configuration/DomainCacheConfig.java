@@ -17,7 +17,7 @@ public class DomainCacheConfig {
     public static final String DEPARTMENT = "department";
     public static final String DESTINATION = "destination";
     public static final String EMPLOYEE = "employee";
-    public static final String GOOD = "good";
+    public static final String GOODS = "goods";
 
     @Bean
     public CacheManager cacheManager() {

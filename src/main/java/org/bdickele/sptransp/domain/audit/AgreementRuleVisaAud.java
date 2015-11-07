@@ -34,16 +34,24 @@ public class AgreementRuleVisaAud implements Serializable {
     @Convert(converter = SeniorityConverter.class)
     private Seniority seniority;
 
+    @ManyToOne()
+    @JoinColumns({
+            @JoinColumn(name="ID_RULE", referencedColumnName="ID_RULE", insertable = false, updatable = false),
+            @JoinColumn(name="RULE_VERSION", referencedColumnName="VERSION", insertable = false, updatable = false)
+    })
+    private AgreementRuleAud ruleAud;
+
 
     /**
-     * Builds a new version of an Agreement Rule for audit, based on an existing rule (increments version by 1)
+     * Builds a new version of an Agreement Rule for audit, based on an existing ruleAud (increments version by 1)
      * @return New instance of AgreementRuleVisaAud
      */
-    public static AgreementRuleVisaAud build(AgreementRuleAud rule, AgreementRuleVisa visa) {
+    public static AgreementRuleVisaAud build(AgreementRuleAud ruleAud, AgreementRuleVisa visa) {
         AgreementRuleVisaAud audit = new AgreementRuleVisaAud();
-        audit.pk = AgreementRuleVisaAudPK.build(rule.getPk().getId(), rule.getPk().getVersion(), visa.getRank());
+        audit.pk = AgreementRuleVisaAudPK.build(ruleAud.getPk().getId(), ruleAud.getPk().getVersion(), visa.getRank());
         audit.department = visa.getDepartment();
         audit.seniority = visa.getSeniority();
+        audit.ruleAud = ruleAud;
         return audit;
     }
 

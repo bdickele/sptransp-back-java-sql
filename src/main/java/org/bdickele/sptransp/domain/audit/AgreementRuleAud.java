@@ -40,11 +40,7 @@ public class AgreementRuleAud implements Serializable {
     @Column(name = "REQ_ALLOWED")
     private Boolean allowed;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumns({
-        @JoinColumn(name="ID_RULE", referencedColumnName="ID_RULE"),
-        @JoinColumn(name="RULE_VERSION", referencedColumnName="VERSION")
-    })
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "ruleAud")
     @OrderBy("VISA_RANK ASC")
     private List<AgreementRuleVisaAud> visas;
 

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "ST_USER")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "USER_TYPE", discriminatorType = DiscriminatorType.STRING)
-@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME)
+@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_NAME, allocationSize = DomainConst.ALLOCATION_SIZE)
 @EqualsAndHashCode(of = "id", doNotUseGetters = true)
 @Getter
 public class User {
