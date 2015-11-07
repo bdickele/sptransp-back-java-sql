@@ -39,6 +39,13 @@ public class AgreementRuleControllerTest extends AbstractControllerTest {
     private DataSource dataSource;
 
 
+    @Before
+    public void setUp() {
+        mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+        mapper = new ObjectMapper();
+        reader = mapper.reader(AgreementRuleDTO.class);
+    }
+
     @After
     public void after() {
         deleteTestData();
@@ -48,13 +55,6 @@ public class AgreementRuleControllerTest extends AbstractControllerTest {
         AgreementRule rule = repository.findByDestinationCodeAndGoodsCode("DEATH_STAR", "FOOD");
         List<Operation> sqlOperations = AgreementRuleServiceIntegrationTest.buildDeleteOperations(rule == null ? null : rule.getId());
         new DbSetup(new DataSourceDestination(dataSource), sequenceOf(sqlOperations)).launch();
-    }
-
-    @Before
-    public void setUp() {
-        mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
-        mapper = new ObjectMapper();
-        reader = mapper.reader(AgreementRuleDTO.class);
     }
 
     @Test
@@ -78,12 +78,14 @@ public class AgreementRuleControllerTest extends AbstractControllerTest {
 
     @Test
     public void find_by_destination_and_goods_codes_should_work() throws Exception {
-        MvcResult mvcResult = mvc.perform(get("/agreementRules/earth/food"))
+        MvcResult mvcResult = mvc.perform(get("/agreementRules/earth/food")
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
         String result = mvcResult.getResponse().getContentAsString();
         AgreementRuleDTO rule = reader.readValue(result);
+
         assertThat(rule).isNotNull();
         assertThat(rule.getDestinationCode()).isEqualTo("EARTH");
         assertThat(rule.getGoodsCode()).isEqualTo("FOOD");
