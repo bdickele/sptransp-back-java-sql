@@ -12,7 +12,7 @@ import org.bdickele.sptransp.domain.Seniority;
 import org.bdickele.sptransp.repository.DestinationRepository;
 import org.bdickele.sptransp.repository.GoodsRepository;
 import org.bdickele.sptransp.service.AgreementRuleService;
-import org.junit.Test;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -65,7 +65,7 @@ public class CreateTestData {
     private AgreementRuleService ruleService;
 
 
-    @Test
+    @Ignore
     public void createTestData() {
         deleteAllRequests();
         deleteAllAgreementRules();

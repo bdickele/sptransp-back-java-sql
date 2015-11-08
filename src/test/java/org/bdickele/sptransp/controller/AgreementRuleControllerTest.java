@@ -68,12 +68,52 @@ public class AgreementRuleControllerTest extends AbstractControllerTest {
         MappingIterator<AgreementRuleDTO> mappingIterator = reader.readValues(result);
         List<AgreementRuleDTO> dtoList = mappingIterator.readAll();
 
-        assertThat(dtoList.size()).isGreaterThanOrEqualTo(5);
+        assertThat(dtoList.size()).isGreaterThanOrEqualTo(20);
         assertThat(dtoList).extracting("destinationCode", "goodsCode").contains(
                 tuple("EARTH", "OIL"),
                 tuple("EARTH", "FOOD"),
                 tuple("EARTH", "WEAPON"),
-                tuple("MOON", "OIL"));
+                tuple("MOON", "MACHINE_TOOL"));
+    }
+
+    @Test
+    public void find_by_destination_code_should_work() throws Exception {
+        MvcResult mvcResult = mvc.perform(get("/agreementRules?d=EARTH"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String result = mvcResult.getResponse().getContentAsString();
+
+        MappingIterator<AgreementRuleDTO> mappingIterator = reader.readValues(result);
+        List<AgreementRuleDTO> dtoList = mappingIterator.readAll();
+
+        assertThat(dtoList.size()).isEqualTo(5);
+        assertThat(dtoList).extracting("destinationCode", "goodsCode").contains(
+                tuple("EARTH", "OIL"),
+                tuple("EARTH", "FOOD"),
+                tuple("EARTH", "MEDICINE"),
+                tuple("EARTH", "WEAPON"),
+                tuple("EARTH", "MACHINE_TOOL"));
+    }
+
+    @Test
+    public void find_by_goods_code_should_work() throws Exception {
+        MvcResult mvcResult = mvc.perform(get("/agreementRules?g=FOOD"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String result = mvcResult.getResponse().getContentAsString();
+
+        MappingIterator<AgreementRuleDTO> mappingIterator = reader.readValues(result);
+        List<AgreementRuleDTO> dtoList = mappingIterator.readAll();
+
+        assertThat(dtoList.size()).isGreaterThanOrEqualTo(5);
+        assertThat(dtoList).extracting("destinationCode", "goodsCode").contains(
+                tuple("EARTH", "FOOD"),
+                tuple("MOON", "FOOD"),
+                tuple("MARS", "FOOD"),
+                tuple("SATURN_TITAN", "FOOD"),
+                tuple("JUPITER_IO", "FOOD"));
     }
 
     @Test
@@ -105,7 +145,7 @@ public class AgreementRuleControllerTest extends AbstractControllerTest {
 
         // ==== INSERTION ====
 
-        mvc.perform(post("/agreementRules/")
+        mvc.perform(post("/agreementRules")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content("{\"destinationCode\": \"DEATH_STAR\", \"goodsCode\": \"FOOD\", \"reqAllowed\": false, " +

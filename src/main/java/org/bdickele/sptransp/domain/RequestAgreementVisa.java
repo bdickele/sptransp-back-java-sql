@@ -17,7 +17,9 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "ST_REQUEST_AGR_VISA")
-@SequenceGenerator(name="SEQ_MAIN", sequenceName=DomainConst.SEQUENCE_REQUEST_AGR_VISA, allocationSize = DomainConst.SEQ_ALLOCATION_SIZE)
+@SequenceGenerator(name="SEQ_MAIN",
+        sequenceName=DomainConst.SEQUENCE_REQUEST_AGR_VISA,
+        allocationSize = DomainConst.SEQ_ALLOCATION_SIZE)
 @EqualsAndHashCode(of = "id", doNotUseGetters = true)
 @ToString(of = {"id", "employee", "status", "rank", "department", "seniority"}, doNotUseGetters = true)
 @Getter

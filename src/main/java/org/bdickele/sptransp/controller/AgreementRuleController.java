@@ -1,5 +1,6 @@
 package org.bdickele.sptransp.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bdickele.sptransp.controller.dto.AgreementRuleDTO;
 import org.bdickele.sptransp.controller.dto.AgreementRuleVisaDTO;
@@ -36,10 +37,33 @@ public class AgreementRuleController extends AbstractController {
     private DepartmentRepository departmentRepository;
 
 
-    @RequestMapping(method= RequestMethod.GET,
+    @RequestMapping(
+            method= RequestMethod.GET,
             produces="application/json")
-    public List<AgreementRuleDTO> rules() {
+    @ResponseStatus(HttpStatus.OK)
+    public List<AgreementRuleDTO> findRules(@RequestParam(value = "d", required = false) String destinationCode,
+                                            @RequestParam(value = "g", required = false) String goodsCode) {
+        if (!StringUtils.isEmpty(destinationCode)) {
+            return findByDestinationCode(destinationCode);
+        } else if (!StringUtils.isEmpty(goodsCode)) {
+            return findByGoodsCode(goodsCode);
+        } else {
+            return findAll();
+        }
+    }
+
+    private List<AgreementRuleDTO> findAll() {
         List<AgreementRule> rules = repository.findAll();
+        return AgreementRuleDTO.build(rules);
+    }
+
+    private List<AgreementRuleDTO> findByDestinationCode(String destinationCode) {
+        List<AgreementRule> rules = repository.findByDestinationCode(destinationCode.trim().toUpperCase());
+        return AgreementRuleDTO.build(rules);
+    }
+
+    private List<AgreementRuleDTO> findByGoodsCode(String goodsCode) {
+        List<AgreementRule> rules = repository.findByGoodsCode(goodsCode.trim().toUpperCase());
         return AgreementRuleDTO.build(rules);
     }
 
