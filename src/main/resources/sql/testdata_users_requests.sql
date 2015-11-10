@@ -13,13 +13,11 @@ DELETE FROM ST_USER;
 -- #################################################################
 -- EMPLOYEES
 -- #################################################################
-insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (999, 1, 'E', 'dev', 'dev', 'ADMIN_ALL', '2015-04-10 19:11:57', 'script', '2015-04-10 19:11:57', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (1, 1, 'E', 'changeme', 'kvcquz31', 'AGR_VISA_APPLIER', '2015-04-10 19:11:57', 'script', '2015-04-10 19:11:57', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (2, 1, 'E', 'changeme', 'whlofu42', 'AGR_VISA_APPLIER', '2015-03-08 10:08:53', 'script', '2015-03-08 10:08:53', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (3, 1, 'E', 'changeme', 'xhtqyi65', 'AGR_VISA_APPLIER', '2015-03-30 09:44:37', 'script', '2015-03-30 09:44:37', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (4, 1, 'E', 'changeme', 'xzjwsm38', 'AGR_VISA_APPLIER', '2015-08-17 00:47:25', 'script', '2015-08-17 00:47:25', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (5, 1, 'E', 'changeme', 'loncvj78', 'AGR_VISA_APPLIER', '2015-02-27 10:45:32', 'script', '2015-02-27 10:45:32', 'script');
-/*
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (6, 1, 'E', 'changeme', 'tbikem91', 'AGR_VISA_APPLIER', '2015-08-27 16:37:36', 'script', '2015-08-27 16:37:36', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (7, 1, 'E', 'changeme', 'dryiwn36', 'AGR_VISA_APPLIER', '2015-03-16 15:33:15', 'script', '2015-03-16 15:33:15', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (8, 1, 'E', 'changeme', 'rajoqm34', 'AGR_VISA_APPLIER', '2015-09-16 16:42:37', 'script', '2015-09-16 16:42:37', 'script');
@@ -30,6 +28,7 @@ insert into ST_USER (id, version, user_type, user_password, uid_user, user_profi
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (13, 1, 'E', 'changeme', 'kvieon14', 'AGR_VISA_APPLIER', '2015-07-22 17:26:54', 'script', '2015-07-22 17:26:54', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (14, 1, 'E', 'changeme', 'figlva46', 'AGR_VISA_APPLIER', '2015-04-23 22:20:40', 'script', '2015-04-23 22:20:40', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (15, 1, 'E', 'changeme', 'ponley99', 'AGR_VISA_APPLIER', '2015-09-29 04:44:46', 'script', '2015-09-29 04:44:46', 'script');
+/*
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (16, 1, 'E', 'changeme', 'mytlas83', 'ADMIN_ALL', '2015-05-10 22:40:10', 'script', '2015-05-10 22:40:10', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (17, 1, 'E', 'changeme', 'dfgbkr92', 'ADMIN_READER', '2015-04-22 20:42:49', 'script', '2015-04-22 20:42:49', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (18, 1, 'E', 'changeme', 'dsejil08', 'RULE_WRITER', '2015-01-08 13:26:31', 'script', '2015-01-08 13:26:31', 'script');
@@ -46,23 +45,22 @@ insert into ST_USER (id, version, user_type, user_password, uid_user, user_profi
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (29, 1, 'E', 'changeme', 'aliejv72', 'HR_READER', '2015-02-11 01:00:01', 'script', '2015-02-11 01:00:01', 'script');
 insert into ST_USER (id, version, user_type, user_password, uid_user, user_profile, creation_date, creation_user, update_date, update_user) values (30, 1, 'E', 'changeme', 'ulesgh33', 'HR_WRITER', '2015-06-12 07:15:58', 'script', '2015-06-12 07:15:58', 'script');
 */
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (999, 'Bertrand DICKELE', 5, 60);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (1, 'Kathleen Carpenter', 4, 80);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (2, 'Helen Cox', 1, 60);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (3, 'Paula Spencer', 2, 80);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (4, 'Juan Hughes', 2, 10);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (5, 'Ashley Wheeler', 3, 80);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (1, 'Kathleen Carpenter', 1, 20);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (2, 'Helen Cox', 2, 20);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (3, 'Paula Spencer', 3, 20);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (4, 'Juan Hughes', 4, 20);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (5, 'Ashley Wheeler', 5, 20);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (6, 'Ruby Rogers', 1, 60);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (7, 'Joyce Cruz', 2, 60);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (8, 'Jack Henry', 3, 60);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (9, 'Denise Rodriguez', 4, 60);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (10, 'Justin Williamson', 5, 60);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (11, 'Gregory Bradley', 1, 90);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (12, 'Julie Lopez', 2, 90);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (13, 'Maria Dunn', 3, 90);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (14, 'Randy Richards', 4, 90);
+insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (15, 'Russell Burke', 5, 90);
 /*
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (6, 'Ruby Rogers', 2, 50);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (7, 'Joyce Cruz', 3, 30);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (8, 'Jack Henry', 1, 60);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (9, 'Denise Rodriguez', 4, 10);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (10, 'Justin Williamson', 2, 30);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (11, 'Gregory Bradley', 2, 50);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (12, 'Julie Lopez', 2, 20);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (13, 'Maria Dunn', 4, 20);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (14, 'Randy Richards', 4, 30);
-insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (15, 'Russell Burke', 4, 50);
 insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (16, 'Adam Pierce', 5, 60);
 insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (17, 'Gloria Sims', 5, 60);
 insert into ST_EMPLOYEE (id, full_name, id_department, seniority) values (18, 'Judith Gardner', 5, 80);
@@ -124,20 +122,3 @@ insert into ST_CUSTOMER (id, full_name) values (47, 'Zoonoodle');
 insert into ST_CUSTOMER (id, full_name) values (48, 'Jamia');
 insert into ST_CUSTOMER (id, full_name) values (49, 'Skiptube');
 insert into ST_CUSTOMER (id, full_name) values (50, 'Plajo');
-
--- #################################################################
--- REQUEST
--- #################################################################
--- Pending request with first visa applied
-INSERT INTO ST_REQUEST(ID, VERSION, REFERENCE, ID_CUSTOMER, ID_GOODS, ID_DEPARTURE, ID_ARRIVAL, OVERALL_STATUS,
-  ID_RULE, RULE_VERSION, AGREEMENT_STATUS, NEXT_AGREEMENT_VISA_RANK, CREATION_DATE, CREATION_USER, UPDATE_DATE, UPDATE_USER)
-VALUES(1, 2, 'REFERE0001', 31, 2, 2, 1, 'WV', 1, 1, 'P', 1, CURRENT_TIMESTAMP, 'admin', CURRENT_TIMESTAMP, 'admin');
-INSERT INTO ST_REQUEST_AGR_VISA(ID, ID_REQUEST, ID_EMPLOYEE, STATUS, VISA_RANK, ID_DEPARTMENT, SENIORITY, VISA_COMMENT, CREATION_DATE)
-VALUES(1, 1, 2, 'G', 0, 1, 60, 'ok', CURRENT_TIMESTAMP);
-
--- Request refused because first visa was denied
-INSERT INTO ST_REQUEST(ID, VERSION, REFERENCE, ID_CUSTOMER, ID_GOODS, ID_DEPARTURE, ID_ARRIVAL, OVERALL_STATUS,
-  ID_RULE, RULE_VERSION, AGREEMENT_STATUS, NEXT_AGREEMENT_VISA_RANK, CREATION_DATE, CREATION_USER, UPDATE_DATE, UPDATE_USER)
-VALUES(2, 2, 'REFERE0002', 31, 2, 2, 1, 'R', 1, 1, 'R', -1, CURRENT_TIMESTAMP, 'admin', CURRENT_TIMESTAMP, 'admin');
-INSERT INTO ST_REQUEST_AGR_VISA(ID, ID_REQUEST, ID_EMPLOYEE, STATUS, VISA_RANK, ID_DEPARTMENT, SENIORITY, VISA_COMMENT, CREATION_DATE)
-VALUES(2, 2, 2, 'D', 0, 1, 60, 'not ok', CURRENT_TIMESTAMP);

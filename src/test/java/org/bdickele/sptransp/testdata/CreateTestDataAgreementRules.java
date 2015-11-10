@@ -30,19 +30,14 @@ import static com.ninja_squad.dbsetup.Operations.deleteAllFrom;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = IntegrationTestConfig.class)
-public class CreateTestData {
+@Ignore
+public class CreateTestDataAgreementRules {
 
     // Les IDs doivent etre les memes qu'en base sinon ca va donner n'importe quoi
     private static final Department DEPARTMENT_LAW_COMPLIANCE = Department.buidl(1L, "LAW_COMPLIANCE", "Law compliance");
     private static final Department DEPARTMENT_SHUTTLE_COMPLIANCE = Department.buidl(2L, "SHUTTLE_COMPLIANCE", "Shuttle compliance");
     private static final Department DEPARTMENT_GOODS_INSPECTION = Department.buidl(3L, "GOODS_INSPECTION", "Goods inspection");
     private static final Department DEPARTMENT_JOURNEY_SUPERVISION = Department.buidl(4L, "JOURNEY_SUPERVISION", "Journey supervision");
-
-    public static final Goods GOODS_OIL = Goods.build(1L, "OIL", "Oil");
-    public static final Goods GOODS_FOOD = Goods.build(2L, "FOOD", "Food");
-    public static final Goods GOODS_MACHINE = Goods.build(3L, "MACHINE_TOOL", "Machine tool");
-    public static final Goods GOODS_MEDICINE = Goods.build(4L, "MEDICINE", "Medicine");
-    public static final Goods GOODS_WEAPON = Goods.build(5L, "WEAPON", "Weapon");
 
     public static final Operation DELETE_REQUESTS = deleteAllFrom("ST_REQUEST_AGR_VISA", "ST_REQUEST");
 

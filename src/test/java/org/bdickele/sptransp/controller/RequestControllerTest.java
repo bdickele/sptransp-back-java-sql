@@ -61,7 +61,7 @@ public class RequestControllerTest extends AbstractControllerTest {
 
     @Test
     public void get_request_by_reference_should_work() throws Exception {
-        MvcResult mvcResult = mvc.perform(get("/requests/REFERE0001")
+        MvcResult mvcResult = mvc.perform(get("/requests/DBSKRQ8415")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -69,15 +69,11 @@ public class RequestControllerTest extends AbstractControllerTest {
         String result = mvcResult.getResponse().getContentAsString();
         RequestDTO dto = reader.readValue(result);
         assertThat(dto).isNotNull();
-        assertThat(dto.getReference()).isEqualTo("REFERE0001");
+        assertThat(dto.getReference()).isEqualTo("DBSKRQ8415");
         assertThat(dto.getAgreementStatusCode()).isEqualTo("P");
 
         List<RequestAgreementVisaDTO> visas = dto.getAppliedAgreementVisas();
-        assertThat(visas.size()).isGreaterThanOrEqualTo(1);
-
-        RequestAgreementVisaDTO visa = visas.get(0);
-        assertThat(visa.getDepartmentCode()).isEqualTo("LAW_COMPLIANCE");
-        assertThat(visa.getSeniority()).isEqualTo(60);
+        assertThat(visas.size()).isEqualTo(3);
     }
 
     @Test
@@ -87,57 +83,31 @@ public class RequestControllerTest extends AbstractControllerTest {
                 .andReturn();
     }
 
+    // On pourrait vouloir utiliser JUnitParams pour ces 4 tests, malheureusement ce n'est pas possible
+    // car le runner JUnit desactiverait le runner SpringJUnit
+
     @Test
     public void get_requests_being_validated_should_work() throws Exception {
-        MvcResult mvcResult = mvc.perform(get("/requests/beingValidated")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String result = mvcResult.getResponse().getContentAsString();
-
-        MappingIterator<RequestDTO> mappingIterator = reader.readValues(result);
-        List<RequestDTO> list = mappingIterator.readAll();
-
-        assertThat(list.size()).isGreaterThanOrEqualTo(1);
-        assertThat(list).extracting("reference").contains("REFERE0001");
+        get_requests_should_work("/requests/beingValidated", "DBSKRQ8415");
     }
 
     @Test
     public void get_requests_being_validated_for_a_customer_should_work() throws Exception {
-        MvcResult mvcResult = mvc.perform(get("/requests/beingValidated/timulf70")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String result = mvcResult.getResponse().getContentAsString();
-
-        MappingIterator<RequestDTO> mappingIterator = reader.readValues(result);
-        List<RequestDTO> list = mappingIterator.readAll();
-
-        assertThat(list.size()).isGreaterThanOrEqualTo(1);
-        assertThat(list).extracting("reference").contains("REFERE0001");
+        get_requests_should_work("/requests/beingValidated/pfdxtv63", "DBSKRQ8415");
     }
 
     @Test
-    public void get_requests_validated_or_refused_should_work() throws Exception {
-        MvcResult mvcResult = mvc.perform(get("/requests/grantedOrRefused")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String result = mvcResult.getResponse().getContentAsString();
-
-        MappingIterator<RequestDTO> mappingIterator = reader.readValues(result);
-        List<RequestDTO> list = mappingIterator.readAll();
-
-        assertThat(list.size()).isGreaterThanOrEqualTo(1);
-        assertThat(list).extracting("reference").contains("REFERE0002");
+    public void get_requests_granted_or_refused_should_work() throws Exception {
+        get_requests_should_work("/requests/grantedOrRefused", "EWDNDE0601");
     }
 
     @Test
-    public void get_requests_validated_or_refused_for_a_customer_should_work() throws Exception {
-        MvcResult mvcResult = mvc.perform(get("/requests/grantedOrRefused/timulf70")
+    public void get_requests_granted_or_refused_for_a_customer_should_work() throws Exception {
+        get_requests_should_work("/requests/grantedOrRefused/timulf70", "EWDNDE0601");
+    }
+
+    private void get_requests_should_work(String url, String reference) throws Exception {
+        MvcResult mvcResult = mvc.perform(get(url)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -148,7 +118,7 @@ public class RequestControllerTest extends AbstractControllerTest {
         List<RequestDTO> list = mappingIterator.readAll();
 
         assertThat(list.size()).isGreaterThanOrEqualTo(1);
-        assertThat(list).extracting("reference").contains("REFERE0002");
+        assertThat(list).extracting("reference").contains(reference);
     }
 
     @Test
@@ -186,12 +156,11 @@ public class RequestControllerTest extends AbstractControllerTest {
 
         // ==== UPDATE ====
 
-        // We apply the first visa required by someone who is from "Law compliance" department with a seniority >= 20
-        // whlofu42 is Helen Cox's UID (Law compliance / 60)
+        // We apply the first visa required by someone who is from "Law compliance" department with a sufficient seniority
         mvc.perform(put("/requests/" + reference)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content("{\"employeeUid\": \"whlofu42\", \"statusCode\": \"G\", " +
+                .content("{\"employeeUid\": \"qlomny06\", \"statusCode\": \"G\", " +
                         "\"comment\": \"for test\"}"))
                 .andExpect(status().isOk())
                 .andReturn();

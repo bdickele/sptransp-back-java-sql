@@ -52,8 +52,8 @@ public class EmployeeControllerTest extends AbstractControllerTest {
         String result = mvcResult.getResponse().getContentAsString();
         EmployeeDTO employee = reader.readValue(result);
         assertThat(employee).isNotNull();
-        assertThat(employee.getDepartmentCode()).isEqualTo("JOURNEY_SUPERVISION");
-        assertThat(employee.getSeniority()).isEqualTo(80);
+        assertThat(employee.getDepartmentCode()).isEqualTo("LAW_COMPLIANCE");
+        assertThat(employee.getSeniority()).isEqualTo(20);
     }
 
     @Test
@@ -76,8 +76,8 @@ public class EmployeeControllerTest extends AbstractControllerTest {
 
         assertThat(dtoList.size()).isGreaterThanOrEqualTo(5);
         assertThat(dtoList).extracting("uid", "fullName", "departmentCode", "seniority").contains(
-                tuple("kvcquz31", "Kathleen Carpenter", "JOURNEY_SUPERVISION", 80),
-                tuple("whlofu42", "Helen Cox", "LAW_COMPLIANCE", 60));
+                tuple("kvcquz31", "Kathleen Carpenter", "LAW_COMPLIANCE", 20),
+                tuple("rajoqm34", "Jack Henry", "GOODS_INSPECTION", 60));
     }
 
     @Test

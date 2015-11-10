@@ -44,23 +44,30 @@ public class RequestService extends AbstractService {
         Goods goods = goodsRepository.findByCode(goodsCode);
         Destination departure = destinationRepository.findByCode(departureCode);
         Destination arrival = destinationRepository.findByCode(arrivalCode);
-        AgreementRuleAud ruleAud = ruleAudRepository.findTopByDestinationIdAndGoodsIdOrderByPkVersionDesc(arrival.getId(), goods.getId());
+        return create(goods, departure, arrival, customer);
+    }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Request create(Goods goods, Destination departure, Destination arrival, Customer customer) {
+        AgreementRuleAud ruleAud = ruleAudRepository.findTopByDestinationIdAndGoodsIdOrderByPkVersionDesc(arrival.getId(), goods.getId());
         Request request = Request.build(null, generateRequestReference(), customer, goods, departure, arrival, ruleAud);
         em().persist(request);
-
         return request;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public Request update(String requestReference, String employeeUid, RequestAgreementVisaStatus visaStatus,
-                          String comment) {
+    public Request update(String requestReference, String employeeUid, RequestAgreementVisaStatus visaStatus, String comment) {
         Request request = requestRepository.findByReference(requestReference);
         if (request==null) throw SpTranspBizError.REQUEST_NOT_FOUND_FOR_REFERENCE.exception(requestReference);
 
         Employee employee = employeeRepository.findByUid(employeeUid);
         if (employee==null) throw SpTranspBizError.EMPLOYEE_NOT_FOUND.exception(employeeUid);
 
+        return update(request, employee, visaStatus, comment);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Request update(Request request, Employee employee, RequestAgreementVisaStatus visaStatus, String comment) {
         request.applyAgreementVisa(employee, visaStatus, comment);
         return request;
     }

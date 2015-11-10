@@ -72,8 +72,7 @@ public class RequestServiceIntegrationTest extends AbstractServiceIntegrationTes
         // ==== UPDATE ====
 
         // We apply the first visa required by someone who is from "Law compliance" department with a seniority >= 20
-        // whlofu42 is Helen Cox's UID (Law compliance / 60)
-        service.update(reference, "whlofu42", RequestAgreementVisaStatus.GRANTED, "ok");
+        service.update(reference, "qlomny06", RequestAgreementVisaStatus.GRANTED, "ok");
 
         request = requestRepository.findByReference(reference);
         assertThat(request.getAgreementStatus()).isEqualTo(RequestAgreementStatus.PENDING);
