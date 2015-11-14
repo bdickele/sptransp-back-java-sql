@@ -94,7 +94,7 @@ public class RequestController extends AbstractController {
     }
 
     private Pageable createPageRequest(int page, int size) {
-        return new PageRequest(page, size, Sort.Direction.DESC, "creationDate");
+        return new PageRequest(page, size, Sort.Direction.ASC, "creationDate");
     }
 
     private List<RequestDTO> getRequestsPerCustomerAndStatus(String customerUid, RequestAgreementStatus... agreementStatus) {
