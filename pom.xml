@@ -24,6 +24,7 @@
         <junit.version>4.11</junit.version>
         <jacoco-maven-plugin.version>0.7.5.201505241946</jacoco-maven-plugin.version>
         <cucumber.version>1.2.4</cucumber.version>
+        <gatling.version>2.1.7</gatling.version>
 
         <sonar.language>java</sonar.language>
         <sonar.host.url>http://localhost:9000</sonar.host.url>
@@ -145,6 +146,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.gatling.highcharts</groupId>
+            <artifactId>gatling-charts-highcharts</artifactId>
+            <version>${gatling.version}</version>
         </dependency>
 
         <!-- TEST dependencies -->

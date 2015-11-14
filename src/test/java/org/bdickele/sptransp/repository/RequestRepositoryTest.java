@@ -17,7 +17,7 @@ public class RequestRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void find_by_reference_should_work() {
-        String reference = repository.findAll().get(0).getReference();
+        String reference = repository.findAll().iterator().next().getReference();
         Request request  = repository.findByReference(reference);
         assertThat(request).isNotNull();
     }
