@@ -31,7 +31,7 @@ public class AgreementRuleDTO implements SpaceTranspDTO, Serializable {
     @JsonProperty(value = "destinationName")
     private String destinationName;
 
-    @JsonProperty(value = "goodsCode")
+    @JsonProperty(value = "goodsCode", access = JsonProperty.Access.READ_ONLY)
     private String goodsCode;
 
     @JsonProperty(value = "goodsName")

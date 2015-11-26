@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import static org.bdickele.sptransp.domain.RequestAgreementStatus.*;
 
@@ -65,8 +64,10 @@ public class RequestController extends AbstractController {
             value="/beingValidated/{customerUid}",
             method= RequestMethod.GET,
             produces="application/json")
-    public List<RequestDTO> requestsBeingValidated(@PathVariable String customerUid) {
-        return getRequestsPerCustomerAndStatus(customerUid, PENDING);
+    public Page<RequestDTO> requestsBeingValidated(@PathVariable String customerUid,
+                                                   @RequestParam(value = "page", required = false, defaultValue = DEFAULT_PAGE) int page,
+                                                   @RequestParam(value = "size", required = false, defaultValue = DEFAULT_SIZE) int size) {
+        return getRequestsPerCustomerAndStatus(createPageRequest(page, size), customerUid, PENDING);
     }
 
     @RequestMapping(
@@ -83,8 +84,10 @@ public class RequestController extends AbstractController {
             value="/grantedOrRefused/{customerUid}",
             method= RequestMethod.GET,
             produces="application/json")
-    public List<RequestDTO> requestsGrantedOrRefused(@PathVariable String customerUid) {
-        return getRequestsPerCustomerAndStatus(customerUid, GRANTED, REFUSED);
+    public Page<RequestDTO> requestsGrantedOrRefused(@PathVariable String customerUid,
+                                                     @RequestParam(value = "page", required = false, defaultValue = DEFAULT_PAGE) int page,
+                                                     @RequestParam(value = "size", required = false, defaultValue = DEFAULT_SIZE) int size) {
+        return getRequestsPerCustomerAndStatus(createPageRequest(page, size), customerUid, GRANTED, REFUSED);
     }
 
     private Page<RequestDTO> getRequestsPerStatus(Pageable pageable, RequestAgreementStatus... agreementStatus) {
@@ -97,9 +100,10 @@ public class RequestController extends AbstractController {
         return new PageRequest(page, size, Sort.Direction.ASC, "creationDate");
     }
 
-    private List<RequestDTO> getRequestsPerCustomerAndStatus(String customerUid, RequestAgreementStatus... agreementStatus) {
-        List<Request> requests  = repository.findByCustomerUidAndAgreementStatusInOrderByCreationDate(customerUid, agreementStatus);
-        return RequestDTO.build(requests, false);
+    private Page<RequestDTO> getRequestsPerCustomerAndStatus(Pageable pageable, String customerUid, RequestAgreementStatus... agreementStatus) {
+        Collection<RequestAgreementStatus> statusList = Arrays.asList(agreementStatus);
+        Page<Request> requests  = repository.findByCustomerUidAndAgreementStatusInOrderByCreationDate(customerUid, statusList, pageable);
+        return new PageImpl(RequestDTO.build(requests.getContent(), false), pageable, requests.getTotalElements());
     }
 
     @RequestMapping(

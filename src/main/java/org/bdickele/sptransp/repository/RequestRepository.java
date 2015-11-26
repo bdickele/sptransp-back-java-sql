@@ -8,7 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by bdickele
@@ -24,5 +23,8 @@ public interface RequestRepository extends PagingAndSortingRepository<Request, L
     Page<Request> findByAgreementStatusIn(@Param("agreementStatus") Collection<RequestAgreementStatus> agreementStatus,
                                           Pageable pageRequest);
 
-    List<Request> findByCustomerUidAndAgreementStatusInOrderByCreationDate(String customerUid, RequestAgreementStatus... agreementStatus);
+    Page<Request> findByCustomerUidAndAgreementStatusInOrderByCreationDate(
+            @Param("customerUid") String customerUid,
+            @Param("agreementStatus") Collection<RequestAgreementStatus> agreementStatus,
+            Pageable pageRequest);
 }

@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
-import java.util.List;
 
 import static com.ninja_squad.dbsetup.Operations.sql;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,9 +46,6 @@ public class RequestServiceIntegrationTest extends AbstractServiceIntegrationTes
 
     @Test
     public void creation_and_update_of_a_request_should_work() {
-        // Current number of pending requests
-        List<Request> customerRequests = requestRepository.findByCustomerUidAndAgreementStatusInOrderByCreationDate("timulf70", RequestAgreementStatus.PENDING);
-        int numberBefore = customerRequests.size();
 
         // ==== INSERTION ====
 
@@ -58,11 +54,6 @@ public class RequestServiceIntegrationTest extends AbstractServiceIntegrationTes
         String reference = request.getReference();
         assertThat(reference).isNotNull();
         assertThat(requestId).isNotNull();
-
-        customerRequests = requestRepository.findByCustomerUidAndAgreementStatusInOrderByCreationDate("timulf70", RequestAgreementStatus.PENDING);
-        int numberAfter = customerRequests.size();
-
-        assertThat(numberAfter).isEqualTo(numberBefore+1);
 
         request = requestRepository.findOne(requestId);
         assertThat(request).isNotNull();

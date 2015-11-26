@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Class that wraps the notion of Seniority
  * Created by Bertrand DICKELE
  */
-public class Seniority implements Serializable {
+public final class Seniority implements Serializable {
 
     private static final long serialVersionUID = -5289664116290695740L;
 

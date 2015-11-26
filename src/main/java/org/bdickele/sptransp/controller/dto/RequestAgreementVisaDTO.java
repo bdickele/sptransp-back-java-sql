@@ -1,5 +1,6 @@
 package org.bdickele.sptransp.controller.dto;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.bdickele.sptransp.domain.RequestAgreementVisa;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
  * Created by Bertrand DICKELE
  */
 @ToString(of = {"departmentCode", "seniority", "employeeUid"})
+@EqualsAndHashCode(of = {"employeeUid", "statusCode", "departmentCode", "seniority"}, doNotUseGetters = true)
 @Getter
 public class RequestAgreementVisaDTO implements SpaceTranspDTO, Serializable {
 
