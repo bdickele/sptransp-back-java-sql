@@ -1,6 +1,9 @@
 package org.bdickele.sptransp.domain;
 
+import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
+
+import java.util.function.Predicate;
 
 /**
  * Created by Bertrand DICKELE
@@ -12,18 +15,21 @@ public class DomainTestClassProvider {
 
     private static final String AUDIT_PACKAGE = "org.bdickele.sptransp.domain.audit";
 
+    private static final Predicate<PojoClass> NOT_A_TEST_CLASS =
+            pojoClass -> !pojoClass.getClazz().getSimpleName().contains("Test");
+
 
     public static Object[] provideDomainClasses() {
         return PojoClassFactory.getPojoClasses(DOMAIN_PACKAGE, null)
                 .stream()
-                .filter(pojoClass -> !pojoClass.getClazz().getSimpleName().contains("Test"))
+                .filter(NOT_A_TEST_CLASS)
                 .toArray();
     }
 
     public static Object[] provideAuditClasses() {
         return PojoClassFactory.getPojoClasses(AUDIT_PACKAGE, null)
                 .stream()
-                .filter(pojoClass -> !pojoClass.getClazz().getSimpleName().contains("Test"))
+                .filter(NOT_A_TEST_CLASS)
                 .toArray();
     }
 }
