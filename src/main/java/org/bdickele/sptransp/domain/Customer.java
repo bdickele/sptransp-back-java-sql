@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bdickele.sptransp.exception.SpTranspBizError;
-import org.bdickele.sptransp.exception.SpTranspTechError;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
@@ -88,16 +87,6 @@ public class Customer extends User implements Serializable {
 
     public void checkFullName() {
         if (StringUtils.isEmpty(fullName)) throw SpTranspBizError.CUSTOMER_MISSING_VALUE.exception("name");
-    }
-
-    public void checkCreationInfo() {
-        if (StringUtils.isEmpty(creationUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("creation user");
-        if (creationDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("creation date");
-    }
-
-    public void checkUpdateInfo() {
-        if (StringUtils.isEmpty(updateUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("update user");
-        if (updateDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("update date");
     }
 
     @Override

@@ -2,8 +2,10 @@ package org.bdickele.sptransp.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.bdickele.sptransp.domain.converter.LocalDateTimeConverter;
 import org.bdickele.sptransp.domain.converter.ProfileConverter;
+import org.bdickele.sptransp.exception.SpTranspTechError;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -54,4 +56,15 @@ public class User {
 
     @Column(name = "UPDATE_USER")
     protected String updateUser;
+
+
+    public void checkCreationInfo() {
+        if (StringUtils.isEmpty(creationUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("creation user");
+        if (creationDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("creation date");
+    }
+
+    public void checkUpdateInfo() {
+        if (StringUtils.isEmpty(updateUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("update user");
+        if (updateDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("update date");
+    }
 }

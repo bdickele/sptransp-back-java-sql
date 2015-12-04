@@ -1,7 +1,6 @@
 package org.bdickele.sptransp.exception;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 
 import java.util.IllegalFormatException;
@@ -11,8 +10,6 @@ import java.util.IllegalFormatException;
  * Created by bdickele
  */
 public interface SpTranspError {
-
-    Logger LOGGER = Logger.getLogger(SpTranspError.class);
 
     String getErrorCodePrefix();
 
@@ -39,12 +36,8 @@ public interface SpTranspError {
         String formattedMessage;
         try {
             formattedMessage = String.format(rawMessage, args);
-        } catch(IllegalFormatException e) {
-            String joinedArgs = StringUtils.join(args, ", ");
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Could not format message " + rawMessage + " with args: " + joinedArgs, e);
-            }
-            formattedMessage = rawMessage + ". Error with args: " + joinedArgs;
+        } catch(IllegalFormatException e) { //NOSONAR
+            formattedMessage = rawMessage + ". Error with args: " + StringUtils.join(args, ", ");
         }
 
         return getFormattedErrorCode() + " - " + formattedMessage;

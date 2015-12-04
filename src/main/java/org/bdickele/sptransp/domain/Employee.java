@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bdickele.sptransp.domain.converter.SeniorityConverter;
 import org.bdickele.sptransp.exception.SpTranspBizError;
-import org.bdickele.sptransp.exception.SpTranspTechError;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -121,16 +120,6 @@ public class Employee extends User implements Serializable {
         if (seniority.lt(SENIORITY_MIN) || seniority.gt(SENIORITY_MAX))
             throw SpTranspBizError.EMPLOYEE_INCORRECT_SENIORITY.exception(
                     SENIORITY_MIN.getValue(), SENIORITY_MAX.getValue());
-    }
-
-    public void checkCreationInfo() {
-        if (StringUtils.isEmpty(creationUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("creation user");
-        if (creationDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("creation date");
-    }
-
-    public void checkUpdateInfo() {
-        if (StringUtils.isEmpty(updateUser)) throw SpTranspTechError.MISSING_INFORMATION.exception("update user");
-        if (updateDate==null) throw SpTranspTechError.MISSING_INFORMATION.exception("update date");
     }
 
     @Override
