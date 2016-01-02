@@ -1,6 +1,5 @@
 package org.bdickele.sptransp.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,43 +15,33 @@ import java.util.stream.Collectors;
 /**
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"destinationCode", "destinationName", "goodsCode", "goodsName", "reqAllowed",
-    "creationDate", "creationUser", "updateDate", "updateUser", "agreementVisas"})
+@JsonPropertyOrder({"destinationCode", "destinationName", "goodsCode", "goodsName", "allowed",
+    "creationDate", "creationUser", "updateDate", "updateUser", "visas"})
 @EqualsAndHashCode(of = {"destinationCode", "goodsCode"}, doNotUseGetters = true)
-@ToString(of = {"destinationCode", "goodsCode", "reqAllowed", "agreementVisas"})
+@ToString(of = {"destinationCode", "goodsCode", "allowed", "visas"})
 @Getter
 public class AgreementRuleDTO implements SpaceTranspDTO, Serializable {
 
     private static final long serialVersionUID = -4265473341596792743L;
 
-    @JsonProperty(value = "destinationCode")
     private String destinationCode;
 
-    @JsonProperty(value = "destinationName")
     private String destinationName;
 
-    @JsonProperty(value = "goodsCode", access = JsonProperty.Access.READ_ONLY)
     private String goodsCode;
 
-    @JsonProperty(value = "goodsName")
     private String goodsName;
 
-    @JsonProperty(value = "reqAllowed")
-    private boolean reqAllowed;
+    private boolean allowed;
 
-    @JsonProperty(value = "agreementVisas")
-    private List<AgreementRuleVisaDTO> agreementVisas;
+    private List<AgreementRuleVisaDTO> visas;
 
-    @JsonProperty(value = "creationDate")
     protected String creationDate;
 
-    @JsonProperty(value = "creationUser")
     protected String creationUser;
 
-    @JsonProperty(value = "updateDate")
     protected String updateDate;
 
-    @JsonProperty(value = "updateUser")
     protected String updateUser;
 
 
@@ -66,14 +55,14 @@ public class AgreementRuleDTO implements SpaceTranspDTO, Serializable {
         dto.destinationName = rule.getDestination().getName();
         dto.goodsCode = rule.getGoods().getCode();
         dto.goodsName = rule.getGoods().getName();
-        dto.reqAllowed = rule.getAllowed();
+        dto.allowed = rule.getAllowed();
         dto.creationDate = dto.formatDate(rule.getCreationDate());
         dto.creationUser = rule.getCreationUser();
         dto.updateDate = dto.formatDate(rule.getUpdateDate());
         dto.updateUser = rule.getUpdateUser();
-        dto.agreementVisas = new ArrayList<>();
+        dto.visas = new ArrayList<>();
         if (rule.getVisas()!= null) {
-            dto.agreementVisas = rule.getVisas().stream().map(v -> AgreementRuleVisaDTO.build(v)).collect(Collectors.toList());
+            dto.visas = rule.getVisas().stream().map(v -> AgreementRuleVisaDTO.build(v)).collect(Collectors.toList());
         }
         return dto;
     }
@@ -84,10 +73,10 @@ public class AgreementRuleDTO implements SpaceTranspDTO, Serializable {
         dto.destinationName = rule.getDestination().getName();
         dto.goodsCode = rule.getGoods().getCode();
         dto.goodsName = rule.getGoods().getName();
-        dto.reqAllowed = rule.getAllowed();
-        dto.agreementVisas = new ArrayList<>();
+        dto.allowed = rule.getAllowed();
+        dto.visas = new ArrayList<>();
         if (rule.getVisas()!= null) {
-            dto.agreementVisas = rule.getVisas().stream().map(v -> AgreementRuleVisaDTO.build(v)).collect(Collectors.toList());
+            dto.visas = rule.getVisas().stream().map(v -> AgreementRuleVisaDTO.build(v)).collect(Collectors.toList());
         }
         return dto;
     }

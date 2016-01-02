@@ -1,6 +1,5 @@
 package org.bdickele.sptransp.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
  * Employee object returned by web services
  * Created by Bertrand DICKELE
  */
-@JsonPropertyOrder({"uid", "fullName", "profileCode", "profileLabel", "departmentCode", "departmentLabel",
+@JsonPropertyOrder({"uid", "fullName", "profileCode", "profileName", "departmentCode", "departmentName",
         "seniority", "creationDate", "creationUser", "updateDate", "updateUser"})
 @EqualsAndHashCode(callSuper = true, of = {}, doNotUseGetters = true)
 @Getter
@@ -23,16 +22,12 @@ public class EmployeeDTO extends UserDTO implements Serializable {
 
     private static final long serialVersionUID = -603242397122687641L;
 
-    @JsonProperty(value = "fullName")
     private String fullName;
 
-    @JsonProperty(value = "departmentCode")
     private String departmentCode;
 
-    @JsonProperty(value = "departmentLabel")
-    private String departmentLabel;
+    private String departmentName;
 
-    @JsonProperty(value = "seniority")
     private Integer seniority;
 
 
@@ -45,10 +40,10 @@ public class EmployeeDTO extends UserDTO implements Serializable {
         EmployeeDTO dto = new EmployeeDTO();
         dto.uid = employee.getUid();
         dto.profileCode = employee.getProfile().getCode();
-        dto.profileLabel = employee.getProfile().getLabel();
+        dto.profileName = employee.getProfile().getLabel();
         dto.fullName = employee.getFullName();
         dto.departmentCode = employee.getDepartment().getCode();
-        dto.departmentLabel = employee.getDepartment().getName();
+        dto.departmentName = employee.getDepartment().getName();
         dto.seniority = employee.getSeniority().getValue();
         dto.creationDate = dto.formatDate(employee.getCreationDate());
         dto.creationUser = employee.getCreationUser();

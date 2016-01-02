@@ -31,7 +31,7 @@ public class DestinationController extends AbstractController {
 
     @RequestMapping(value="/{code}", method= RequestMethod.GET,
             produces="application/json")
-    public DestinationDTO goods(@PathVariable String code) {
+    public DestinationDTO destination(@PathVariable String code) {
         Destination destination = repository.findByCode(code);
 
         if (destination==null) {

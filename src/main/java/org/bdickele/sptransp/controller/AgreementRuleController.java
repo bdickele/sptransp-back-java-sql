@@ -89,7 +89,7 @@ public class AgreementRuleController extends AbstractController {
             consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public AgreementRuleDTO create(@RequestBody AgreementRuleDTO dto) {
-        AgreementRule rule = service.create(dto.getDestinationCode(), dto.getGoodsCode(), dto.isReqAllowed(),
+        AgreementRule rule = service.create(dto.getDestinationCode(), dto.getGoodsCode(), dto.isAllowed(),
                 createVisasForService(dto), TEMP_USER_UID);
         return AgreementRuleDTO.build(rule);
     }
@@ -99,13 +99,13 @@ public class AgreementRuleController extends AbstractController {
             consumes="application/json")
     @ResponseStatus(HttpStatus.OK)
     public AgreementRuleDTO update(@RequestBody AgreementRuleDTO dto) {
-        AgreementRule rule = service.update(dto.getDestinationCode(), dto.getGoodsCode(), dto.isReqAllowed(),
+        AgreementRule rule = service.update(dto.getDestinationCode(), dto.getGoodsCode(), dto.isAllowed(),
                 createVisasForService(dto), TEMP_USER_UID);
         return AgreementRuleDTO.build(rule);
     }
 
     private List<Pair<Department, Seniority>> createVisasForService(AgreementRuleDTO dto) {
-        List<AgreementRuleVisaDTO> visaDTOs = dto.getAgreementVisas();
+        List<AgreementRuleVisaDTO> visaDTOs = dto.getVisas();
 
         if (visaDTOs==null || visaDTOs.isEmpty()) return new ArrayList<>();
 

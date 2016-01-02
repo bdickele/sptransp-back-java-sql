@@ -50,9 +50,6 @@ public class CreateTestDataRequests {
     private RequestService requestService;
 
     @Autowired
-    private RequestRepository requestRepository;
-
-    @Autowired
     private DataSource dataSource;
 
     private CustomerGenerator customerGenerator;
