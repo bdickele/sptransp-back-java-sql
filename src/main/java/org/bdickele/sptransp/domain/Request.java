@@ -289,7 +289,7 @@ public class Request implements Serializable {
      */
     public Optional<AgreementRuleVisaAud> getNextExpectedAgreementVisa() {
         return ruleAud.getVisas().stream()
-                .filter(v -> v.getRank().equals(nextAgreementVisaRank))
+                .filter(v -> v.getRank().compareTo(nextAgreementVisaRank)==0)
                 .findFirst();
     }
 }
